@@ -1,0 +1,6 @@
+framework module Pods_IosBonusRunningBeforeYou {
+  umbrella header "Pods-IosBonusRunningBeforeYou-umbrella.h"
+
+  export *
+  module * { export * }
+}
