@@ -19,6 +19,7 @@
 		189C82732195AD460012A017 /* Social.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 189C82722195AD460012A017 /* Social.storyboard */; };
 		189C82752195AE3E0012A017 /* Shop.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 189C82742195AE3E0012A017 /* Shop.storyboard */; };
 		189C82772195B4A20012A017 /* Member.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 189C82762195B4A20012A017 /* Member.storyboard */; };
+		441FD552219D54FE000D89A8 /* RunningCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441FD551219D54FE000D89A8 /* RunningCommunicator.swift */; };
 		44A634CB219C18BA0091B1AB /* RunningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A634CA219C18BA0091B1AB /* RunningViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -36,6 +37,7 @@
 		189C82722195AD460012A017 /* Social.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Social.storyboard; sourceTree = "<group>"; };
 		189C82742195AE3E0012A017 /* Shop.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Shop.storyboard; sourceTree = "<group>"; };
 		189C82762195B4A20012A017 /* Member.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Member.storyboard; sourceTree = "<group>"; };
+		441FD551219D54FE000D89A8 /* RunningCommunicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningCommunicator.swift; sourceTree = "<group>"; };
 		44A634CA219C18BA0091B1AB /* RunningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningViewController.swift; sourceTree = "<group>"; };
 		9CFC6C5DF9E8A2F2C638AC34 /* Pods-IosBonusRunningBeforeYou.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IosBonusRunningBeforeYou.release.xcconfig"; path = "Pods/Target Support Files/Pods-IosBonusRunningBeforeYou/Pods-IosBonusRunningBeforeYou.release.xcconfig"; sourceTree = "<group>"; };
 		B27C918BC83B098C1F3FB523 /* Pods-IosBonusRunningBeforeYou.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IosBonusRunningBeforeYou.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IosBonusRunningBeforeYou/Pods-IosBonusRunningBeforeYou.debug.xcconfig"; sourceTree = "<group>"; };
@@ -82,8 +84,8 @@
 		1860268C219AD5F70060B27F /* Running Group */ = {
 			isa = PBXGroup;
 			children = (
+				441FD550219D5452000D89A8 /* Model */,
 				44A634C7219C175E0091B1AB /* Controller */,
-				44A634C6219C161E0091B1AB /* Model */,
 				1860268F219AD6260060B27F /* View */,
 			);
 			path = "Running Group";
@@ -182,9 +184,10 @@
 			path = IosBonusRunningBeforeYou;
 			sourceTree = "<group>";
 		};
-		44A634C6219C161E0091B1AB /* Model */ = {
+		441FD550219D5452000D89A8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				441FD551219D54FE000D89A8 /* RunningCommunicator.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -339,6 +342,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1860269E219AD74F0060B27F /* SocialViewController.swift in Sources */,
+				441FD552219D54FE000D89A8 /* RunningCommunicator.swift in Sources */,
 				189C8259219598BB0012A017 /* ViewController.swift in Sources */,
 				44A634CB219C18BA0091B1AB /* RunningViewController.swift in Sources */,
 				189C8257219598BB0012A017 /* AppDelegate.swift in Sources */,
