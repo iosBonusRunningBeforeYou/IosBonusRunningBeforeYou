@@ -50,7 +50,6 @@ class RunningCommunicator{
     static let BASEURL = "http://192.168.50.246:8080/Running_MySQL_Web"
     let UPDATA_URL = BASEURL + "RunningServlet.java"
     
-    
 //    let RETRIVE_MESSAGES_URL = BASEURL + "retriveMessages2.php"
 //    let SEND_MESSAGE_URL = BASEURL + "sendMessage.php"
 //    let SEND_PHOTOMESSAGE_URL = BASEURL + "sendPhotoMessage.php"
