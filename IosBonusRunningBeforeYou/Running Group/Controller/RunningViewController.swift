@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import Alamofire
 
 class RunningViewController: UIViewController {
     
@@ -28,6 +29,7 @@ class RunningViewController: UIViewController {
     
     var time = 0
     var timer = Timer()
+    var point = Double()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,8 +97,14 @@ class RunningViewController: UIViewController {
         playButtonView.isHidden = false
         timer.fireDate = Date.distantFuture
         locationmanager.stopUpdatingLocation()
+        showAlert()
+        
     }
     
+    @IBAction func CancelPressed(_ sender: UIBarButtonItem) {
+        
+        showAlert()
+    }
     
     
     //    @IBAction func reset(_ sender: Any) {
@@ -111,6 +119,36 @@ class RunningViewController: UIViewController {
         timerLabel.text = transToHourMinSec(time: Float(time))
     }
     
+    func showAlert(){
+    // 無條件進位
+    self.point = point.rounded( .towardZero)
+    let alertText = "您這次獲得了\(Int(point))點,\n是否結束此次運動?"
+    let alert = UIAlertController(title: alertText , message: "", preferredStyle: .alert)
+    
+    let ok = UIAlertAction(title: "確定", style: .default){(action) in
+        
+    // unwind to frontPage
+    
+        self.performSegue(withIdentifier: "unwind", sender: self)
+    // upload data to dataBase
+    
+    
+    //把點數加到會員資料表
+    //            sumToTotalPoint(email,points);
+    
+    //把公里數加到每日、每週、每月的會員資料表.
+    //            sumToTotalmetra(email);
+    
+    }
+    
+    let cancel = UIAlertAction(title: "取消", style: .destructive){(action) in
+    //...
+    }
+    
+    alert.addAction(ok)
+    alert.addAction(cancel)
+    present(alert, animated: true, completion: nil) // present由下往上跳全螢幕.
+    }
     
     // MARK: - Mapkit delegate
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
@@ -120,14 +158,14 @@ class RunningViewController: UIViewController {
         return renderer
     }
     
+    
     // MARK: - 把秒数转换成时分秒（00:00:00）格式
-    ///
     /// - Parameter time: time(Float格式)
     /// - Returns: String格式(00:00:00)
     
     func transToHourMinSec(time: Float) -> String
     {
-        let allTime: Int = Int(time)
+        let allTime = Int(time)
         var hours = 0
         var minutes = 0
         var seconds = 0
@@ -240,15 +278,18 @@ extension RunningViewController : CLLocationManagerDelegate{
             return
         }
         
-        // get distance Data
-        
+        // MARK: get distance Data
         if startLocation == nil {
             startLocation = locations.first
             
         } else if let location = locations.last {
             
             traveledDistance += lastLocation.distance(from: location)
-            kiloMetreLabel.text = "\(Int(traveledDistance)) 公尺"
+            
+            point = traveledDistance / 10
+            
+            traveledDistance = traveledDistance.rounded(.towardZero)
+            kiloMetreLabel.text = "\(traveledDistance/1000) 公里"
         }
         lastLocation = locations.last
         
@@ -257,8 +298,6 @@ extension RunningViewController : CLLocationManagerDelegate{
         DispatchQueue.main.asyncAfter(deadline: .now() + 3 ){
             self.draw2D(latitude: coordinate.latitude, longitude: coordinate.longitude)
         }
-        
-        
     }
     
     func draw2D(latitude: Double , longitude: Double ) {
@@ -311,5 +350,3 @@ class StoreAnnotation :NSObject, MKAnnotation{
     }
     
 }
-
-
