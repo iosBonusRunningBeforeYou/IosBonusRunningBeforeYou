@@ -37,13 +37,6 @@ let TOTALPOINT_KEY = "totalPoint"
 let RESULT_KEY = "result"
 let DATA_KEY = ""
 
-
-//[String:Any]? dictionary 的型別. 因為json 拿回來的是dictionary
-typealias DoneHandler1 = (_ result: [String:Any]?, _ error: Error?) -> Void
-
-// 10/26 新增
-typealias DownloadDoneHandler1 = (_ result: Data? , _ error: Error?) -> Void
-
 //標準的singleton 寫法.
 class RunningCommunicator{
 
