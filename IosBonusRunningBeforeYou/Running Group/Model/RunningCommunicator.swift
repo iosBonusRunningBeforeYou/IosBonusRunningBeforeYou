@@ -39,17 +39,17 @@ let DATA_KEY = ""
 
 
 //[String:Any]? dictionary 的型別. 因為json 拿回來的是dictionary
-typealias DoneHandler = (_ result: [String:Any]?, _ error: Error?) -> Void
+typealias DoneHandler1 = (_ result: [String:Any]?, _ error: Error?) -> Void
 
 // 10/26 新增
-typealias DownloadDoneHandler = (_ result: Data? , _ error: Error?) -> Void
+typealias DownloadDoneHandler1 = (_ result: Data? , _ error: Error?) -> Void
 
 //標準的singleton 寫法.
 class RunningCommunicator{
-    
+
     static let BASEURL = "http://192.168.50.246:8080/Running_MySQL_Web"
     let UPDATA_URL = BASEURL + "RunningServlet.java"
-    
+
 //    let RETRIVE_MESSAGES_URL = BASEURL + "retriveMessages2.php"
 //    let SEND_MESSAGE_URL = BASEURL + "sendMessage.php"
 //    let SEND_PHOTOMESSAGE_URL = BASEURL + "sendPhotoMessage.php"
@@ -58,18 +58,18 @@ class RunningCommunicator{
     static let shared = RunningCommunicator()
     private init(){
     }
-    
-    
+
+
     // step1:   準備 startTime, endTime, totalTime ,distance, email 的資料 包成 runningData
     // step2:   準備 name, points, endTime, email 的資料 包成 pointData
     // MARK: - Public methods
-    func updateLocation(completion: @escaping DoneHandler) {
+    func updateLocation(completion: @escaping DoneHandler1) {
         let parameters = [USERNAME_KEY: "user"]
         doPost(urlString: UPDATA_URL, parameters: parameters, completion: completion)
     }
-    
-    
-    private func doPost(urlString: String, parameters: [String: Any], data : Data ,completion: @escaping DoneHandler) {
+
+
+    private func doPost(urlString: String, parameters: [String: Any], data : Data ,completion: @escaping DoneHandler1) {
         let jsonData = try! JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
         Alamofire.upload(multipartFormData: { (formData) in
             formData.append(jsonData, withName: DATA_KEY)
@@ -89,23 +89,23 @@ class RunningCommunicator{
             }
         }
     }
-    
-    private func doPost(urlString: String, parameters: [String: Any], completion: @escaping DoneHandler) {
+
+    private func doPost(urlString: String, parameters: [String: Any], completion: @escaping DoneHandler1) {
         let jsonData = try! JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted) //用try! 因為對
         let jsonString = String(data: jsonData, encoding: .utf8)! // 將json 轉成 .utf8
         let finalParamters : [String: Any] = [DATA_KEY: jsonString]
-        
+
         // URLEncoding.default 會將key,value 轉成key = value , 上傳的東西是 data=.....
         // JSONEncoding.default 上傳的東西是 {"data"="....."}
         // let header = ["AuthorizarionKey":"......"]
         Alamofire.request(urlString, method: .post, parameters: finalParamters, encoding: URLEncoding.default).responseJSON { (response) in
-            
+
             self.handleJSON(response: response, completion: completion)
         }
-        
+
     }
-    
-    private func handleJSON(response: DataResponse<Any>, completion: DoneHandler)
+
+    private func handleJSON(response: DataResponse<Any>, completion: DoneHandler1)
     {
         switch response.result{
         case .success(let json): print("Get success response: \(json)")   // enum的特殊用法 (let json)
@@ -121,7 +121,7 @@ class RunningCommunicator{
             return
         }
         completion(finalJson, nil)
-            
+
         case .failure(let error): print("Server respond error: \(error)")
         completion(nil,error)
         }

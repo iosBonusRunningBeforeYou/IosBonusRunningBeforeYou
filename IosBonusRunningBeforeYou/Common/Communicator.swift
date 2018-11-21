@@ -8,7 +8,7 @@ import Foundation
 import Alamofire
 
 
-//共用參數
+//共用參數 
 let EMAIL_ACCOUNT_KEY = "emailAccount"
 let ACTION_KEY = "action"
 let GET_ALL_KEY = "getAll"
@@ -20,11 +20,10 @@ let FIND_BY_EMAIL_KEY = "findByEmail"
 typealias DoneHandler = (_ result:Any?, _ error: Error?) -> Void
 typealias DownloadDoneHandler = (_ result:Data?, _ error: Error?) -> Void
 
-
 class Communicator {
     // Constants
     
-    static let BASEURL = "http://172.20.10.9:8080/Running_MySQL_Web"//ip自己要再改
+    static let BASEURL = "http://192.168.50.246:8080/Running_MySQL_Web"//ip自己要再改
     
     //各個功能的URL
     let GameServlet_URL = BASEURL + "/GameServlet"
@@ -62,7 +61,7 @@ class Communicator {
     }
     
     //取文字用
-    private func doPost(urlString: String, parameters: [String: Any], completion: @escaping DoneHandler){
+     func doPost(urlString: String, parameters: [String: Any], completion: @escaping DoneHandler){
         
         Alamofire.request(urlString, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
             
@@ -78,7 +77,7 @@ class Communicator {
         }
     }
     //取圖片用
-    private func doPostForImage(urlString: String,
+     func doPostForImage(urlString: String,
                                 parameters: [String: Any],
                                 completion: @escaping DownloadDoneHandler) {
         
@@ -96,5 +95,4 @@ class Communicator {
         }
         completion(data, nil)
     }
-    
 }
