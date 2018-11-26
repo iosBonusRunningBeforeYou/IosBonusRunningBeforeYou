@@ -8,42 +8,27 @@
 
 import Foundation
 
-struct Running {
-    var time : CLong
-    var totalTime : Double
-    var startTime : CLong
-    var endTime : CLong
-    var mail : String
-    var password : String
-    var name : String
-    var points : Double
-    var latitude : Double
-    var longitude : Double
-    var distance : Double
+struct Running: Codable {
+    
+    var id: Int = 0
+    var time: Int = 0
+    var totalTime: Double = 0
+    var startTime: Int = 0
+    var endTime: Int = 0
+    var mail: String = ""
+    var password: String = ""
+    var name: String = ""
+    var points: Double = 0
+    var latitude: Double = 0
+    var longitude: Double = 0
+    var distance: Double = 0
+    
+//    func getTime() -> CLong {
+//        guard let time = time else {
+//           return 0
+//        }
+//        return time
+//    }
     
 }
 
-////共用參數
-//let EMAIL_ACCOUNT_KEY = "emailAccount"
-//let ACTION_KEY = "action"
-//let GET_ALL_KEY = "getAll"
-//let GET_IMAGE_KEY = "getImage"
-//let EMAIL_KEY = "email"
-//let IMAGE_SIZE_KEY = "imageSize"
-//let FIND_BY_EMAIL_KEY = "findByEmail"
-
-
-//public class Running {
-//    private int id ;
-//    private long time ;
-//    private double totalTime;
-//    private long startTime;
-//    private long endTime;
-//    private String mail;
-//    private String password;
-//    private String name;
-//    private double points;
-//    private double latitude;
-//    private double longitude;
-//    private double distance;
-//}

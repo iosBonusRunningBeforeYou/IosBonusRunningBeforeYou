@@ -25,13 +25,18 @@ class RunningViewController: UIViewController {
     
     var startLocation: CLLocation!
     var lastLocation: CLLocation!
-    var traveledDistance: Double = 0
+    var traveledDistance = Double()
     
     var time = 0
     var timer = Timer()
-    var point = Double()
+    var oldPoint = Double()
+    var old_target_daily = Double()
+    var old_target_weekly = Double()
+    var old_target_monthly = Double()
     
     let communicator = Communicator.shared
+    var running = Running()
+    var tempUserData = TempUserData()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,6 +71,11 @@ class RunningViewController: UIViewController {
         pauseButtonView.layer.cornerRadius = 5.0
         
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(RunningViewController.action), userInfo: nil, repeats: true)
+        
+
+        let now = Date()
+        running.startTime = Int(now.timeIntervalSince1970 * 1000)
+        
     }
     
     func moveAndZoomMap(){
@@ -101,6 +111,11 @@ class RunningViewController: UIViewController {
         locationmanager.stopUpdatingLocation()
         showAlert()
         
+        let now:Date = Date()
+        
+        running.endTime = Int(now.timeIntervalSince1970 * 1000)
+        running.totalTime = Double(running.endTime - running.startTime)
+        
     }
     
     @IBAction func CancelPressed(_ sender: UIBarButtonItem) {
@@ -109,22 +124,17 @@ class RunningViewController: UIViewController {
     }
     
     
-    //    @IBAction func reset(_ sender: Any) {
-    //
-    //        time = 0
-    //        timeScreen.text = "0"
-    //    }
-    
     @objc func action(){
         
         time += 1
         timerLabel.text = transToHourMinSec(time: Float(time))
+        
     }
     
     func showAlert(){
     // 無條件進位
-    self.point = point.rounded( .towardZero)
-    let alertText = "您這次獲得了\(Int(point))點,\n是否結束此次運動?"
+    self.running.points = running.points.rounded( .towardZero)
+    let alertText = "您這次獲得了\(Int(running.points))點,\n是否結束此次運動?"
     let alert = UIAlertController(title: alertText , message: "", preferredStyle: .alert)
     
     let ok = UIAlertAction(title: "確定", style: .default){(action) in
@@ -132,15 +142,78 @@ class RunningViewController: UIViewController {
     // unwind to frontPage
     
         self.performSegue(withIdentifier: "unwind", sender: self)
+        
     // upload data to dataBase
-    
-    
-    //把點數加到會員資料表
-    //            sumToTotalPoint(email,points);
-    
-    //把公里數加到每日、每週、每月的會員資料表.
-    //            sumToTotalmetra(email);
-    
+        
+        print("\(self.running.startTime),\(self.running.endTime)")
+        
+        self.getFakeData()
+        
+        let runningData = try! JSONEncoder().encode(self.running)
+        let runningString = String(data: runningData, encoding: .utf8)
+        self.communicator.insertRunningDataAndPointData(runningData: runningString!, pointData: runningString!){ (result, error) in
+            print("insertRunningDataAndPointData = \(String(describing: result))")
+        }
+        
+        // MARK:把點數加到會員資料表 sumToTotalPoint(email,points);
+        
+        self.communicator.findTotalPoint(email: self.running.mail) {(result, error) in
+            print("findTotalPoint = \(String(describing: result))")
+            
+            if let error = error {
+                print("Get point error:\(error)")
+                return
+            }
+            guard let result = result else {
+                print("point is nil")
+                return
+            }
+            self.oldPoint = result as! Double
+            print("\(self.oldPoint)")
+            self.running.points += self.oldPoint
+            print("\(self.running.points)")
+            
+            self.communicator.updateTotalPoint(email: self.running.mail, totalPoint: Int(self.running.points)) { (result, error) in
+                print("updateTotalPoint = \(String(describing: result))")
+            }
+        }
+        
+        // MARK:把公里數加到每日、每週、每月的會員資料表. sumToTotalmetra(email);
+        
+        self.communicator.findByEmail (email: self.running.mail) {(result, error) in
+            print("findByEmail = \(String(describing: result))")
+            
+            if let error = error {
+                print("Get user error:\(error)")
+                return
+            }
+            guard let result = result else {
+                print("result is nil")
+                return
+            }
+            print("Get user  OK")
+            
+            guard let jsonDate = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)else {
+                print("Fail to generate jsonData.")
+                return
+            }
+            let decoder = JSONDecoder()
+            guard let resultObject = try? decoder.decode(TempUserData.self, from: jsonDate) else
+            {
+                print("Fail to decode jsonData.")
+                return
+            }
+            
+                self.tempUserData.target_daily = resultObject.target_daily + self.traveledDistance
+                self.tempUserData.target_weekly = resultObject.target_weekly + self.traveledDistance
+                self.tempUserData.target_monthly = resultObject.target_monthly + self.traveledDistance
+            
+                let runningData = try! JSONEncoder().encode(self.tempUserData)
+                let runningString = String(data: runningData, encoding: .utf8)
+                self.communicator.updateTarget(email: self.running.mail, user: runningString!){ (result, error) in
+                    print("updateTarget = \(String(describing: result))")
+                }
+        }
     }
     
     let cancel = UIAlertAction(title: "取消", style: .destructive){(action) in
@@ -183,7 +256,7 @@ class RunningViewController: UIViewController {
         
         seconds = allTime % 3600 % 60
         secondsText = seconds > 9 ? "\(seconds)" : "0\(seconds)"
-        
+    
         return "\(hoursText):\(minutesText):\(secondsText)"
     }
     
@@ -191,6 +264,17 @@ class RunningViewController: UIViewController {
         super.didReceiveMemoryWarning()
         
     }
+    
+    func getFakeData() {
+        self.running.mail = "234@gmail.com"
+        self.running.password = "234"
+        self.running.name = "Chris"
+        self.running.id = 1
+        self.tempUserData.email_account = self.running.mail
+    }
+    
+
+    
 }
 
 
@@ -198,81 +282,25 @@ class RunningViewController: UIViewController {
 // MARK : - MKMapViewDelegate Methods.
 extension RunningViewController  :  MKMapViewDelegate {
     
-    //當地圖的region被改變時 regionDidChangeAnimated 就會被呼叫.
-    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        let coordinate = mapView.region.center
-        print("Map Center: \(coordinate.latitude), \(coordinate.longitude)")
-    }
-    
     //將圖示改為大頭針.
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation{ //用is檢查型別
             return nil
         }
         
-        //用自創的Protocol 簽協定.
-        //annotation as? StoreAnnotation(轉型)
-        //Cast annotation as StoreAnnotation type.
-        guard let annotation = annotation as? StoreAnnotation else{
-            assertionFailure("Fail to cast as StoreAnnotation.") //assertionFailure, DEBUG用, 用來看不該出現的問題. 不影響使用者.
-            return nil
-        }
-        let identifier = "store"
-        //到dequeueReusableAnnotationView回收機制中, 找View.
-        //identifier 的設計是for唯一的識別使用.
-        var result = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) //as? MKPinAnnotationView(將大頭針換成圖示 step1) //轉型.
-        if result == nil{
-            //            result = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            result = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-        }else{
-            result?.annotation = annotation
-        }
-        result?.canShowCallout = true
-        //        result?.pinTintColor = .blue //(將大頭針換成圖示 step2)
-        //        result?.animatesDrop = true
-        
-        let image = UIImage(named: "pointRed.png") //(將大頭針換成圖示 step3)
-        result?.image = image   //(將大頭針換成圖示 step3)
-        
-        // Left-calloutaccessoryview.
-        let imageView = UIImageView(image: image)
-        result?.leftCalloutAccessoryView = imageView
-        
-        // Right-calloutaccessoryview.
-        let button  = UIButton(type: .detailDisclosure) //detailDisclosure apple內建紐之一
-        // 用程式碼建立touchUpInside的監聽.
-        button.addTarget(self, action: #selector(accessoryBtnPressed(sender:)), for: .touchUpInside)  //這是IBAcion平常幫我們做的事情.
-        result?.rightCalloutAccessoryView = button
-        
-        return result
-    }
-    
-    @objc
-    func accessoryBtnPressed(sender : Any){
-        //.alert .actionSheet, 選項少訊息多時, 用.alert.  選項多訊息少時,用.actionSheet.
-        let alertText = "即將前往\(title ?? "")的位置"
-        let alert = UIAlertController(title: alertText , message: "導航前往這個地點? (若地點不正確,則會導航至台北市館前路45號)", preferredStyle: .alert)
-        //        let ok = UIAlertAction(title: "ok", style: .default , handler: nil)
-        
-        //((action) in 的後面放要做的事情)
-        let ok = UIAlertAction(title: "ok", style: .default){(action) in
-            
-        }
-        let cancel = UIAlertAction(title: "Cancel", style: .destructive){(action) in
-            //...
+        var annView = mapView.dequeueReusableAnnotationView(withIdentifier: "Pin")
+        if annView == nil{
+            annView = MKAnnotationView(annotation: annotation, reuseIdentifier: "Pin")
         }
         
-        alert.addAction(ok)
-        alert.addAction(cancel)
-        present(alert, animated: true, completion: nil) // present由下往上跳全螢幕.
+        annView?.image = UIImage(named: "when_running_finish.png")
+        
+        return annView
     }
 }
 
-
 extension RunningViewController : CLLocationManagerDelegate{
     //MARK : -CLLocationManagerDelegate Methods.
-    // 每個Protocol 第一個參數,都會放自己本身.  locations: [CLLocation] 當位置改變時, apple的CPU 在閒暇時, 把點存進[CLLocation]中.(最後面的最新)
-    //didUpdateLocations 只有在位置改變時, 才會存點.
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         guard let coordinate = locations.last?.coordinate else{
@@ -288,7 +316,7 @@ extension RunningViewController : CLLocationManagerDelegate{
             
             traveledDistance += lastLocation.distance(from: location)
             
-            point = traveledDistance / 10
+            running.points = traveledDistance / 10
             
             traveledDistance = traveledDistance.rounded(.towardZero)
             kiloMetreLabel.text = "\(traveledDistance/1000) 公里"
@@ -296,6 +324,22 @@ extension RunningViewController : CLLocationManagerDelegate{
         lastLocation = locations.last
         
         print ("Current Location :  \(coordinate.latitude), \(coordinate.longitude)")
+        
+        // get Data to upload
+        running.latitude = coordinate.latitude
+        running.longitude = coordinate.longitude
+        running.distance = traveledDistance
+        let now = Date()
+        running.time = Int(now.timeIntervalSince1970 * 1000 )
+        
+        // upload to server
+        getFakeData()
+
+        let runningData = try! JSONEncoder().encode(self.running)
+        let runningString = String(data: runningData, encoding: .utf8)
+        communicator.insertRunning(running: runningString!) {(result, error) in
+        print("runningInsert = \(String(describing: result))")
+        }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 3 ){
             self.draw2D(latitude: coordinate.latitude, longitude: coordinate.longitude)
@@ -339,16 +383,51 @@ extension RunningViewController : CLLocationManagerDelegate{
     
 }
 
-//Protocol 利用.
-class StoreAnnotation :NSObject, MKAnnotation{
-    //Basic properties
-    var coordinate: CLLocationCoordinate2D = CLLocationCoordinate2DMake(0, 0) //語法上要給予起始值.
-    var title : String?
-    var subtitle: String?
+
+extension Communicator{
     
-    override init(){
-        super.init()
+    func insertRunningDataAndPointData(runningData: String , pointData: String ,completion:@escaping DoneHandler){
+        
+        // startTime, endTime, totalTime ,distance, email
+        
+        let parameters:[String:Any] = [ACTION_KEY : "runningDataInsert","runningData": runningData, "pointData": pointData]
+        doPost(urlString: RunningDataServlet_URL, parameters: parameters, completion:completion)
         
     }
     
+    func insertRunning(running: String ,completion:@escaping DoneHandler){
+        
+        // time, latitude, longitude, id;
+        
+        let parameters:[String:Any] = [ACTION_KEY : "runningInsert","running":running]
+        doPost(urlString: RunningServlet_URL, parameters: parameters, completion:completion)
+        
+    }
+    
+    func findTotalPoint(email: String ,completion:@escaping DoneHandler) {
+        
+        let parameters:[String:Any] = [ACTION_KEY : "findTotalPoint","email":email]
+        doPost(urlString: PointsRecordServlet_URL, parameters: parameters, completion:completion)
+    }
+    
+    func updateTotalPoint(email: String, totalPoint: Int,completion:@escaping DoneHandler) {
+        
+        let parameters:[String:Any] = [ACTION_KEY : "updateTotalPoint", "email": email , "totalPoint": totalPoint ]
+        doPost(urlString: PointsRecordServlet_URL, parameters: parameters, completion:completion)
+    }
+    
+    func findByEmail(email: String ,completion:@escaping DoneHandler) {
+        
+        let parameters:[String:Any] = [ACTION_KEY : "findByEmail","email":email]
+        doPost(urlString: UserServlet_URL, parameters: parameters, completion:completion)
+    }
+
+    func updateTarget(email: String, user:String ,completion:@escaping DoneHandler) {
+        
+        let parameters:[String:Any] = [ACTION_KEY : "updateTarget", "user": user]
+        doPost(urlString: UserServlet_URL, parameters: parameters, completion:completion)
+    }
+
 }
+
+
