@@ -54,7 +54,6 @@ class GameViewController: UIViewController {
             //            print("gameItem = \(self.gameItem)")
         }
     }
-    
     func getImage (_ image:UIImageView,_ email:String){
         communicator.getImage(url: communicator.GameDetailServlet_URL, email: email) { (data, error) in
             if let error = error {
@@ -74,14 +73,10 @@ class GameViewController: UIViewController {
         NotificationCenter.default.post(name: Notification.Name(rawValue: "currentPageChanged"), object: 0)
         showAllGame()
     }
-    
     override func viewWillDisappear(_ animated: Bool) {
         gameItem.removeAll()
     }
-    
-    
     // MARK: - Navigation
-
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
@@ -92,12 +87,8 @@ class GameViewController: UIViewController {
             return
         }
         print("prepare index = \(index.row)")
-      
         gameDetailVC.gameItem = gameItem[index.row]
-        
     }
-    
-
 }
 
 //MARK: - UITableViewDataSource
@@ -120,11 +111,11 @@ extension GameViewController: UITableViewDataSource {
         //        cell.titleLabel.text = movie.title
         let item = gameItem[indexPath.row]
         
-        getImage(cell.userImageView,"123@gamil.com")
+        
         cell.titleLabel.text = item.gameName
         cell.finalTimeLabel.text = "\(item.lastDay)\(item.lastHour)\(item.lastMinute)"
         cell.joinPeopleLabel.text = item.gameJoinPeople
-      
+       
         return cell
     }
 }

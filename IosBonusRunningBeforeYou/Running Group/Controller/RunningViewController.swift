@@ -29,10 +29,12 @@ class RunningViewController: UIViewController {
     
     var time = 0
     var timer = Timer()
+
     var oldPoint = Double()
     var old_target_daily = Double()
     var old_target_weekly = Double()
     var old_target_monthly = Double()
+
     
     let communicator = Communicator.shared
     var running = Running()

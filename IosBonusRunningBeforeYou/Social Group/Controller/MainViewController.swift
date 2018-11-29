@@ -40,12 +40,16 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-
+        
         pageViewController = self.children.first as! UIPageViewController
+        let pageViewHeight = pageViewController.view.frame.height
+        let pageViewWidth = pageViewController.view.frame.width
+        
         //根據Storyboard ID 創建viewcontroller
         gameViewController = storyboard?.instantiateViewController(withIdentifier: "GameVC") as! GameViewController
         goFriendsViewController = storyboard?.instantiateViewController(withIdentifier: "GoFriendsVC") as! GoFriendsViewController
-      
+        goFriendsViewController.view.bounds = CGRect(x: 0, y: 0, width: pageViewWidth, height: pageViewHeight)
+        
         pageViewController.dataSource = self
         
         //為pageViewController提供一個畫面
