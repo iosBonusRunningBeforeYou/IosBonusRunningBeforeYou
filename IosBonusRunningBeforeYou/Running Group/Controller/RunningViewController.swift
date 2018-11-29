@@ -24,7 +24,7 @@ class RunningViewController: UIViewController {
     
     
     var startLocation: CLLocation!
-    var lastLocation: CLLocation!
+    var lastLocation : CLLocation!
     var traveledDistance = Double()
     
     var time = 0
@@ -37,6 +37,10 @@ class RunningViewController: UIViewController {
     let communicator = Communicator.shared
     var running = Running()
     var tempUserData = TempUserData()
+    var oldCoordinate = StoreAnnotation()
+    
+    // Group Running Data
+    var groupRunningId = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,11 +60,48 @@ class RunningViewController: UIViewController {
         locationmanager.requestAlwaysAuthorization()
         locationmanager.requestWhenInUseAuthorization()
         
-        //Prepare locationManager.
+        // Prepare locationManager.
         locationmanager.delegate = self  //Important! 將CLLocationManagerDelegate的協定,綁在身上.
         locationmanager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters //設定精確度 = (GPS. Wifi 定位,cell定位 擇佳者)
         locationmanager.activityType = .fitness  //位移類型設定 .fitness 用行走的, 也可以選擇其他交通工具.
         locationmanager.startUpdatingLocation() //startUpdatingLocation() 給位置.  startUpdatingHeading() 給羅盤(面向的方向)
+        
+        // Prepare GroupRunning data
+        getFakeData()
+        communicator.getGroupEmail(id: groupRunningId) { (result, error) in
+            print("getGroupEmail = \(String(describing: result))")
+            
+            if let error = error {
+                print("Get user error:\(error)")
+                return
+            }
+            guard let result = result else {
+                print("result is nil")
+                return
+            }
+            print("Get user  OK")
+            
+            guard let jsonDate = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)else {
+                print("Fail to generate jsonData.")
+                return
+            }
+            let decoder = JSONDecoder()
+            guard let resultObject = try? decoder.decode(TempUserData.self, from: jsonDate) else
+            {
+                print("Fail to decode jsonData.")
+                return
+            }
+            
+            self.tempUserData.target_daily = resultObject.target_daily + self.traveledDistance
+            self.tempUserData.target_weekly = resultObject.target_weekly + self.traveledDistance
+            self.tempUserData.target_monthly = resultObject.target_monthly + self.traveledDistance
+            
+            let runningData = try! JSONEncoder().encode(self.tempUserData)
+            let runningString = String(data: runningData, encoding: .utf8)
+            self.communicator.updateTarget(email: self.running.mail, user: runningString!){ (result, error) in
+                print("updateTarget = \(String(describing: result))")
+            }
+        }
         
         
         playButtonView.isHidden = true
@@ -116,6 +157,12 @@ class RunningViewController: UIViewController {
         running.endTime = Int(now.timeIntervalSince1970 * 1000)
         running.totalTime = Double(running.endTime - running.startTime)
         
+        let ann = MKPointAnnotation()
+        ann.coordinate = CLLocationCoordinate2D(latitude: lastLocation.coordinate.latitude, longitude: lastLocation.coordinate.longitude)
+        ann.title = "暫停的位置"
+        mainMapView.addAnnotation(ann)
+        // move map
+        mainMapView.setCenter(ann.coordinate, animated: true)
     }
     
     @IBAction func CancelPressed(_ sender: UIBarButtonItem) {
@@ -146,8 +193,6 @@ class RunningViewController: UIViewController {
     // upload data to dataBase
         
         print("\(self.running.startTime),\(self.running.endTime)")
-        
-        self.getFakeData()
         
         let runningData = try! JSONEncoder().encode(self.running)
         let runningString = String(data: runningData, encoding: .utf8)
@@ -229,7 +274,7 @@ class RunningViewController: UIViewController {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(overlay: overlay)
         renderer.strokeColor = UIColor.red
-        renderer.lineWidth = 10.0
+        renderer.lineWidth = 6.0
         return renderer
     }
     
@@ -271,9 +316,12 @@ class RunningViewController: UIViewController {
         self.running.name = "Chris"
         self.running.id = 1
         self.tempUserData.email_account = self.running.mail
+        groupRunningId = 1
     }
     
-
+    @IBAction func unwindTOList(_ segue: UIStoryboardSegue){
+//        groupRunningStart
+    }
     
 }
 
@@ -341,46 +389,33 @@ extension RunningViewController : CLLocationManagerDelegate{
         print("runningInsert = \(String(describing: result))")
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3 ){
-            self.draw2D(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1 ){
+            self.draw2D(coordinate: coordinate)
         }
     }
     
-    func draw2D(latitude: Double , longitude: Double ) {
+    func draw2D(coordinate: CLLocationCoordinate2D) {
         
-        newPoint = CLLocationCoordinate2D(latitude: latitude , longitude: longitude)
-        
-        if (lastPoint == nil) {
-            lastPoint = newPoint;
+        if oldCoordinate.coordinate.latitude != 0.0 && oldCoordinate.coordinate.longitude != 0.0 {
+            
+            let polyline = MKPolyline(coordinates: [coordinate, oldCoordinate.coordinate], count: 2)
+            self.mainMapView.addOverlay(polyline)
+
         }
-        
-        let sourceLocation = lastPoint
-        let destinationLocation = newPoint
-        let sourcePlaceMark = MKPlacemark(coordinate: sourceLocation!)
-        let destinationPlaceMark = MKPlacemark(coordinate: destinationLocation!)
-        
-        let directionRequest = MKDirections.Request()
-        directionRequest.source = MKMapItem(placemark: sourcePlaceMark)
-        directionRequest.destination = MKMapItem(placemark: destinationPlaceMark)
-        directionRequest.transportType = .walking
-        
-        let directions = MKDirections(request: directionRequest)
-        directions.calculate { (response, error) in
-            guard let directionResonse = response else {
-                if let error = error {
-                    print("we have error getting directions==\(error.localizedDescription)")
-                }
-                return
-            }
-            let route = directionResonse.routes[0]
-            self.mainMapView.addOverlay(route.polyline, level: .aboveLabels)
-            // Set to zoomin
-            //        let rect = route.polyline.boundingMapRect
-            //        self.mainMapView.setRegion(MKCoordinateRegion(rect), animated: true)
-        }
-        lastPoint = newPoint
+        oldCoordinate.coordinate = coordinate
     }
     
+    func drawGroup2D(coordinate: CLLocationCoordinate2D ) {
+        
+        if oldCoordinate.coordinate.latitude != 0.0 && oldCoordinate.coordinate.longitude != 0.0 {
+            
+            let polyline = MKPolyline(coordinates: [coordinate, oldCoordinate.coordinate], count: 2)
+            self.mainMapView.addOverlay(polyline)
+            
+        }
+        oldCoordinate.coordinate = coordinate
+    }
+
 }
 
 
@@ -427,7 +462,26 @@ extension Communicator{
         let parameters:[String:Any] = [ACTION_KEY : "updateTarget", "user": user]
         doPost(urlString: UserServlet_URL, parameters: parameters, completion:completion)
     }
+    
+    func getGroupEmail(id: Int ,completion:@escaping DoneHandler) {
+        
+        let parameters:[String:Any] = [ACTION_KEY : "findByGroupId", "group_running_id_group_running": id]
+        doPost(urlString: RunningDataServlet_URL, parameters: parameters, completion:completion)
+    }
+    
 
 }
 
-
+//Protocol 利用.
+class StoreAnnotation :NSObject, MKAnnotation{
+    //Basic properties
+    var coordinate: CLLocationCoordinate2D = CLLocationCoordinate2DMake(0, 0) //語法上要給予起始值.
+    var title : String?
+    var subtitle: String?
+    
+    override init(){
+        super.init()
+        
+    }
+    
+}
