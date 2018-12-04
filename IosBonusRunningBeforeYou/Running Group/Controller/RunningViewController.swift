@@ -18,6 +18,13 @@ class RunningViewController: UIViewController {
     @IBOutlet weak var mainMapView: MKMapView!
     @IBOutlet weak var kiloMetreLabel: UILabel!
     
+    @IBOutlet weak var blackLabel: UILabel!
+    @IBOutlet weak var pinkLabel: UILabel!
+    @IBOutlet weak var blueLabel: UILabel!
+    @IBOutlet weak var orangeLabel: UILabel!
+    @IBOutlet weak var yellowLabel: UILabel!
+    @IBOutlet weak var greenLabel: UILabel!
+    
     var locationmanager = CLLocationManager()
     var lastPoint : CLLocationCoordinate2D? = nil
     var newPoint : CLLocationCoordinate2D? = nil
@@ -35,14 +42,45 @@ class RunningViewController: UIViewController {
     var old_target_weekly = Double()
     var old_target_monthly = Double()
 
-    
     let communicator = Communicator.shared
     var running = Running()
     var tempUserData = TempUserData()
     var oldCoordinate = StoreAnnotation()
+    var firstCoordinate = StoreAnnotation()
+    var secondCoordinate = StoreAnnotation()
+    var thirdCoordinate = StoreAnnotation()
+    var fourthCoordinate = StoreAnnotation()
+    var fifthCoordinate = StoreAnnotation()
+    var sixthCoordinate = StoreAnnotation()
     
     // Group Running Data
     var groupRunningId = Int()
+    var firstGroupMember = FirstGroupMember()
+    var firstGroupMail = String()
+    
+    var secondGroupMember = SecondGroupMember()
+    var secondGroupMail = String()
+    
+    var thirdGroupMember = ThirdGroupMember()
+    var thirdGroupMail = String()
+    
+    var fourthGroupMember = FourthGroupMember()
+    var fourthGroupMail = String()
+    
+    var fifthGroupMember = FifthGroupMember()
+    var fifthGroupMail = String()
+    
+    var sixthGroupMember = SixthGroupMember()
+    var sixthGroupMail = String()
+    
+    // Boolean to judge polyline color
+    var firstNameColor = false
+    var secondNameColor = false
+    var thirdNameColor = false
+    var fourthNameColor = false
+    var fifthNameColor = false
+    var sixthNameColor = false
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,34 +115,27 @@ class RunningViewController: UIViewController {
                 print("Get user error:\(error)")
                 return
             }
-            guard let result = result else {
+            guard let result = (result as? [String]) else {
                 print("result is nil")
                 return
             }
             print("Get user  OK")
             
-            guard let jsonDate = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)else {
-                print("Fail to generate jsonData.")
-                return
-            }
-            let decoder = JSONDecoder()
-            guard let resultObject = try? decoder.decode(TempUserData.self, from: jsonDate) else
-            {
-                print("Fail to decode jsonData.")
-                return
-            }
+            // MARK: let groupMember show on the UI View
+            self.blackLabel.text = self.mailFilter(result[0])
+            self.pinkLabel.text = self.mailFilter(result[1])
+            self.blueLabel.text = self.mailFilter(result[2])
+            self.orangeLabel.text = self.mailFilter(result[3])
+            self.yellowLabel.text = self.mailFilter(result[4])
+            self.greenLabel.text = self.mailFilter(result[5])
             
-            self.tempUserData.target_daily = resultObject.target_daily + self.traveledDistance
-            self.tempUserData.target_weekly = resultObject.target_weekly + self.traveledDistance
-            self.tempUserData.target_monthly = resultObject.target_monthly + self.traveledDistance
-            
-            let runningData = try! JSONEncoder().encode(self.tempUserData)
-            let runningString = String(data: runningData, encoding: .utf8)
-            self.communicator.updateTarget(email: self.running.mail, user: runningString!){ (result, error) in
-                print("updateTarget = \(String(describing: result))")
-            }
+            self.firstGroupMail = result[0]
+            self.secondGroupMail = result[1]
+            self.thirdGroupMail = result[2]
+            self.fourthGroupMail = result[3]
+            self.fifthGroupMail = result[4]
+            self.sixthGroupMail = result[5]
         }
-        
         
         playButtonView.isHidden = true
         pauseButtonView.isHidden = false
@@ -130,12 +161,9 @@ class RunningViewController: UIViewController {
         
         // Move and zoom the map.
         let span = MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)   //Span 地圖縮放 ()
-        
         let region = MKCoordinateRegion(center: location.coordinate, span: span)  //把span的參數 設定給Region
         mainMapView.setRegion(region, animated: true)
     }
-    
-    
     
     @IBAction func playButton(_ sender: UIButton) {
         
@@ -144,7 +172,6 @@ class RunningViewController: UIViewController {
         timer.fireDate = Date.distantPast
         locationmanager.startUpdatingLocation()
     }
-    
     
     @IBAction func pauseButton(_ sender: UIButton) {
         
@@ -275,8 +302,24 @@ class RunningViewController: UIViewController {
     // MARK: - Mapkit delegate
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(overlay: overlay)
-        renderer.strokeColor = UIColor.red
-        renderer.lineWidth = 6.0
+        
+        if firstNameColor {
+            renderer.strokeColor = UIColor.black
+        } else if secondNameColor{
+            renderer.strokeColor = UIColor.lightGray
+        } else if thirdNameColor{
+            renderer.strokeColor = UIColor.blue
+        } else if fourthNameColor{
+            renderer.strokeColor = UIColor.orange
+        } else if fifthNameColor{
+            renderer.strokeColor = UIColor.yellow
+        } else if sixthNameColor{
+            renderer.strokeColor = UIColor.green
+        } else {
+            renderer.strokeColor = UIColor.red
+        }
+        
+        renderer.lineWidth = 7.0
         return renderer
     }
     
@@ -313,9 +356,9 @@ class RunningViewController: UIViewController {
     }
     
     func getFakeData() {
-        self.running.mail = "234@gmail.com"
-        self.running.password = "234"
-        self.running.name = "Chris"
+        self.running.mail = "2346@gmail.com"
+        self.running.password = "1234"
+        self.running.name = "Mary"
         self.running.id = 1
         self.tempUserData.email_account = self.running.mail
         groupRunningId = 1
@@ -394,6 +437,229 @@ extension RunningViewController : CLLocationManagerDelegate{
         DispatchQueue.main.asyncAfter(deadline: .now() + 1 ){
             self.draw2D(coordinate: coordinate)
         }
+        
+        // MARK: GroupDate upload and drawing
+        // firstMember
+        self.communicator.getTrackByMail(email: firstGroupMail){ (result, error) in
+            print("getTrackByMail = \(String(describing: result))")
+            print("firstGroupMail:\(self.firstGroupMail)")
+            
+            if let error = error {
+                print("Get user error:\(error)")
+                return
+            }
+            
+            guard let result = result else {
+                print("result is nil")
+                return
+            }
+            print("Get track  OK")
+            
+            guard let jsonDate = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)else {
+                print("Fail to generate jsonData.")
+                return
+            }
+            let decoder = JSONDecoder()
+            guard let resultObject = try? decoder.decode([FirstGroupMember].self, from: jsonDate) else
+            {
+                print("Fail to decode jsonData.")
+                return
+            }
+            
+            for data in resultObject{
+                self.firstGroupMember.id = data.id
+                self.firstGroupMember.latitude = data.latitude
+                self.firstGroupMember.longitude = data.longitude
+            }
+        }
+        
+        // secondMember
+        self.communicator.getTrackByMail(email: secondGroupMail){ (result, error) in
+            print("getTrackByMail = \(String(describing: result))")
+            print("firstGroupMail:\(self.secondGroupMail)")
+            
+            if let error = error {
+                print("Get user error:\(error)")
+                return
+            }
+            
+            guard let result = result else {
+                print("result is nil")
+                return
+            }
+            print("Get track  OK")
+            
+            guard let jsonDate = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)else {
+                print("Fail to generate jsonData.")
+                return
+            }
+            let decoder = JSONDecoder()
+            guard let resultObject = try? decoder.decode([SecondGroupMember].self, from: jsonDate) else
+            {
+                print("Fail to decode jsonData.")
+                return
+            }
+            
+            for data in resultObject{
+                self.secondGroupMember.id = data.id
+                self.secondGroupMember.latitude = data.latitude
+                self.secondGroupMember.longitude = data.longitude
+            }
+        }
+        
+        // thirdMember
+        self.communicator.getTrackByMail(email: thirdGroupMail){ (result, error) in
+            print("getTrackByMail = \(String(describing: result))")
+            print("firstGroupMail:\(self.thirdGroupMail)")
+            
+            if let error = error {
+                print("Get user error:\(error)")
+                return
+            }
+            
+            guard let result = result else {
+                print("result is nil")
+                return
+            }
+            print("Get track  OK")
+            
+            guard let jsonDate = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)else {
+                print("Fail to generate jsonData.")
+                return
+            }
+            let decoder = JSONDecoder()
+            guard let resultObject = try? decoder.decode([ThirdGroupMember].self, from: jsonDate) else
+            {
+                print("Fail to decode jsonData.")
+                return
+            }
+            
+            for data in resultObject{
+                self.thirdGroupMember.id = data.id
+                self.thirdGroupMember.latitude = data.latitude
+                self.thirdGroupMember.longitude = data.longitude
+            }
+        }
+        
+        // fourthMember
+        self.communicator.getTrackByMail(email: fourthGroupMail){ (result, error) in
+            print("getTrackByMail = \(String(describing: result))")
+            print("firstGroupMail:\(self.fourthGroupMail)")
+            
+            if let error = error {
+                print("Get user error:\(error)")
+                return
+            }
+            
+            guard let result = result else {
+                print("result is nil")
+                return
+            }
+            print("Get track  OK")
+            
+            guard let jsonDate = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)else {
+                print("Fail to generate jsonData.")
+                return
+            }
+            let decoder = JSONDecoder()
+            guard let resultObject = try? decoder.decode([FourthGroupMember].self, from: jsonDate) else
+            {
+                print("Fail to decode jsonData.")
+                return
+            }
+            
+            for data in resultObject{
+                self.fourthGroupMember.id = data.id
+                self.fourthGroupMember.latitude = data.latitude
+                self.fourthGroupMember.longitude = data.longitude
+            }
+        }
+        
+        // fifthMember
+        self.communicator.getTrackByMail(email: fifthGroupMail){ (result, error) in
+            print("getTrackByMail = \(String(describing: result))")
+            print("firstGroupMail:\(self.fifthGroupMail)")
+            
+            if let error = error {
+                print("Get user error:\(error)")
+                return
+            }
+            
+            guard let result = result else {
+                print("result is nil")
+                return
+            }
+            print("Get track  OK")
+            
+            guard let jsonDate = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)else {
+                print("Fail to generate jsonData.")
+                return
+            }
+            let decoder = JSONDecoder()
+            guard let resultObject = try? decoder.decode([FifthGroupMember].self, from: jsonDate) else
+            {
+                print("Fail to decode jsonData.")
+                return
+            }
+            
+            for data in resultObject{
+                self.fifthGroupMember.id = data.id
+                self.fifthGroupMember.latitude = data.latitude
+                self.fifthGroupMember.longitude = data.longitude
+            }
+        }
+        
+        // sixthMember
+        self.communicator.getTrackByMail(email: sixthGroupMail){ (result, error) in
+            print("getTrackByMail = \(String(describing: result))")
+            print("firstGroupMail:\(self.sixthGroupMail)")
+            
+            if let error = error {
+                print("Get user error:\(error)")
+                return
+            }
+            
+            guard let result = result else {
+                print("result is nil")
+                return
+            }
+            print("Get track  OK")
+            
+            guard let jsonDate = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)else {
+                print("Fail to generate jsonData.")
+                return
+            }
+            let decoder = JSONDecoder()
+            guard let resultObject = try? decoder.decode([SixthGroupMember].self, from: jsonDate) else
+            {
+                print("Fail to decode jsonData.")
+                return
+            }
+            
+            for data in resultObject{
+                self.sixthGroupMember.id = data.id
+                self.sixthGroupMember.latitude = data.latitude
+                self.sixthGroupMember.longitude = data.longitude
+            }
+        }
+        
+        let oldFirstCoordinate = CLLocationCoordinate2DMake(self.firstGroupMember.latitude, self.firstGroupMember.longitude)
+        self.drawFirstMember2D(coordinate: oldFirstCoordinate)
+        
+        let oldsecondCoordinate = CLLocationCoordinate2DMake(self.secondGroupMember.latitude, self.secondGroupMember.longitude)
+        self.drawSecondMember2D(coordinate: oldsecondCoordinate)
+        
+        let oldthirdCoordinate = CLLocationCoordinate2DMake(self.thirdGroupMember.latitude, self.thirdGroupMember.longitude)
+        self.drawThirdMember2D(coordinate: oldthirdCoordinate)
+        
+        let oldfourthCoordinate = CLLocationCoordinate2DMake(self.fourthGroupMember.latitude, self.fourthGroupMember.longitude)
+        self.drawFourthMember2D(coordinate: oldfourthCoordinate)
+        
+        let oldfifthCoordinate = CLLocationCoordinate2DMake(self.fifthGroupMember.latitude, self.fifthGroupMember.longitude)
+        self.drawFifthMember2D(coordinate: oldfifthCoordinate)
+        
+        let oldsixthCoordinate = CLLocationCoordinate2DMake(self.sixthGroupMember.latitude, self.sixthGroupMember.longitude)
+        self.drawSixthMember2D(coordinate: oldsixthCoordinate)
     }
     
     func draw2D(coordinate: CLLocationCoordinate2D) {
@@ -407,15 +673,110 @@ extension RunningViewController : CLLocationManagerDelegate{
         oldCoordinate.coordinate = coordinate
     }
     
-    func drawGroup2D(coordinate: CLLocationCoordinate2D ) {
+    func drawFirstMember2D(coordinate: CLLocationCoordinate2D ) {
         
-        if oldCoordinate.coordinate.latitude != 0.0 && oldCoordinate.coordinate.longitude != 0.0 {
-            
-            let polyline = MKPolyline(coordinates: [coordinate, oldCoordinate.coordinate], count: 2)
-            self.mainMapView.addOverlay(polyline)
-            
+        // first
+        firstNameColor = true
+        if firstGroupMember.latitude != 0 && firstGroupMember.longitude != 0 {
+            if coordinate.latitude != firstCoordinate.coordinate.latitude {
+                let polyline = MKPolyline(coordinates: [coordinate, firstCoordinate.coordinate], count: 2)
+                if firstCoordinate.coordinate.latitude != 0{
+                self.mainMapView.addOverlay(polyline)
+                }
+            }
         }
-        oldCoordinate.coordinate = coordinate
+        firstCoordinate.coordinate = coordinate
+        firstNameColor = false
+    }
+    
+     func drawSecondMember2D(coordinate: CLLocationCoordinate2D ) {
+        // second
+        secondNameColor = true
+        if secondGroupMember.latitude != 0 && secondGroupMember.longitude != 0 {
+            if coordinate.latitude != secondCoordinate.coordinate.latitude {
+                let polyline = MKPolyline(coordinates: [coordinate, secondCoordinate.coordinate], count: 2)
+                if secondCoordinate.coordinate.latitude != 0{
+                    self.mainMapView.addOverlay(polyline)
+                }
+            }
+        }
+        secondCoordinate.coordinate = coordinate
+        secondNameColor = false
+    }
+    
+    func drawThirdMember2D(coordinate: CLLocationCoordinate2D ) {
+        // third
+        thirdNameColor = true
+        if thirdGroupMember.latitude != 0 && thirdGroupMember.longitude != 0 {
+            if coordinate.latitude != thirdCoordinate.coordinate.latitude {
+                let polyline = MKPolyline(coordinates: [coordinate, thirdCoordinate.coordinate], count: 2)
+                if thirdCoordinate.coordinate.latitude != 0{
+                    self.mainMapView.addOverlay(polyline)
+                }
+            }
+        }
+        thirdCoordinate.coordinate = coordinate
+        thirdNameColor = false
+    }
+    
+    func drawFourthMember2D(coordinate: CLLocationCoordinate2D ) {
+        // fourth
+        fourthNameColor = true
+        if fourthGroupMember.latitude != 0 && fourthGroupMember.longitude != 0 {
+            if coordinate.latitude != fourthCoordinate.coordinate.latitude {
+                let polyline = MKPolyline(coordinates: [coordinate, fourthCoordinate.coordinate], count: 2)
+                if fourthCoordinate.coordinate.latitude != 0{
+                    self.mainMapView.addOverlay(polyline)
+                }
+            }
+        }
+        fourthCoordinate.coordinate = coordinate
+        fourthNameColor = false
+    }
+    
+    func drawFifthMember2D(coordinate: CLLocationCoordinate2D ) {
+        // fifth
+        fifthNameColor = true
+        if fifthGroupMember.latitude != 0 && fifthGroupMember.longitude != 0 {
+            if coordinate.latitude != fifthCoordinate.coordinate.latitude {
+                let polyline = MKPolyline(coordinates: [coordinate, fifthCoordinate.coordinate], count: 2)
+                if fifthCoordinate.coordinate.latitude != 0{
+                    self.mainMapView.addOverlay(polyline)
+                }
+            }
+        }
+        fifthCoordinate.coordinate = coordinate
+        fifthNameColor = false
+    }
+    
+    func drawSixthMember2D(coordinate: CLLocationCoordinate2D ) {
+        // sixth
+        sixthNameColor = true
+        if sixthGroupMember.latitude != 0 && sixthGroupMember.longitude != 0 {
+            if coordinate.latitude != sixthCoordinate.coordinate.latitude {
+                let polyline = MKPolyline(coordinates: [coordinate, sixthCoordinate.coordinate], count: 2)
+                if sixthCoordinate.coordinate.latitude != 0{
+                    self.mainMapView.addOverlay(polyline)
+                }
+            }
+        }
+        sixthCoordinate.coordinate = coordinate
+        sixthNameColor = false
+    }
+    
+    func mailFilter(_ input :String) -> String {
+        
+        var newStr = String()
+        if input.contains("@gamil.com"){
+            newStr = input.replacingOccurrences(of: "@gamil.com", with: "")
+            print("replacingOccurrences:\(newStr)")
+            return newStr
+        } else {
+            newStr = input.replacingOccurrences(of: "@gmail.com", with: "")
+            print("replacingOccurrences:\(newStr)")
+            return newStr
+        }
+        
     }
 
 }
@@ -467,11 +828,15 @@ extension Communicator{
     
     func getGroupEmail(id: Int ,completion:@escaping DoneHandler) {
         
-        let parameters:[String:Any] = [ACTION_KEY : "findByGroupId", "group_running_id_group_running": id]
+        let parameters:[String:Any] = [ACTION_KEY : "getMailById", "group_running_id_group_running": id]
         doPost(urlString: RunningDataServlet_URL, parameters: parameters, completion:completion)
     }
     
-
+    func getTrackByMail(email: String ,completion:@escaping DoneHandler) {
+        let parameters:[String:Any] = [ACTION_KEY : "getTrackByMail", "member_data_email_account": email]
+        doPost(urlString: RunningServlet_URL, parameters: parameters, completion:completion)
+    }
+    
 }
 
 //Protocol 利用.
