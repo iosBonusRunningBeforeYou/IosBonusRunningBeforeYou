@@ -10,5 +10,6 @@ target 'IosBonusRunningBeforeYou' do
   # Pods for IosBonusRunningBeforeYou
 pod 'Alamofire'
 pod 'SQLite.swift'
+pod 'SVProgressHUD'
 
 end

@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    var groupId:Int?
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -17,7 +17,13 @@ class ViewController: UIViewController {
     
     // Unwind Segue
     @IBAction func unwindTOList(_ segue: UIStoryboardSegue){
-//       guard segue.identifier == "save" else {return}
-        
+
+        guard let groupDetailVC = segue.source as? GroupDeatilViewController  else{
+            return
+        }
+        guard let  groupId = groupDetailVC.groupDetail.groupId else {
+            return
+        }
+        print("unwindTOList groupId = \(groupId)")
     }
 }

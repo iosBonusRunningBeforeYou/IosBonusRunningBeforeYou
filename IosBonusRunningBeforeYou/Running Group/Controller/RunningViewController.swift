@@ -73,6 +73,8 @@ class RunningViewController: UIViewController {
     var sixthGroupMember = SixthGroupMember()
     var sixthGroupMail = String()
     
+    var groupId: Int?
+    
     // Boolean to judge polyline color
     var firstNameColor = false
     var secondNameColor = false
@@ -295,7 +297,9 @@ class RunningViewController: UIViewController {
     }
     
     alert.addAction(ok)
+       
     alert.addAction(cancel)
+        
     present(alert, animated: true, completion: nil) // present由下往上跳全螢幕.
     }
     
@@ -364,13 +368,11 @@ class RunningViewController: UIViewController {
         groupRunningId = 1
     }
     
-    @IBAction func unwindTOList(_ segue: UIStoryboardSegue){
-//        groupRunningStart
+    @IBAction func unwindToRunning(_ segue: UIStoryboardSegue){
+        
     }
     
 }
-
-
 //擴充,可以讓各協定(Protocols),做拆分的動作. (以便放在自創.swift中)
 // MARK : - MKMapViewDelegate Methods.
 extension RunningViewController  :  MKMapViewDelegate {

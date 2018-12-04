@@ -10,5 +10,6 @@ import UIKit
 
 class UserJoinGroupCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var textLabel: UILabel!
+    @IBOutlet weak var userJoinImageView: UIImageView!
     
 }

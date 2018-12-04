@@ -1,15 +1,17 @@
 //
 //  GoFriendsViewController.swift
-//  pageViewDemo
+//
 //
 //  Created by Apple on 2018/11/19.
 //  Copyright © 2018 Apple. All rights reserved.
 //
+// @Justin
 
 import UIKit
+import SVProgressHUD
 
 class GoFriendsViewController: UIViewController {
-//    var goFriendsItem = ["5","6","7","8","9"]
+    
     @IBOutlet weak var goFriendsTVC: UITableView!
     @IBOutlet weak var goFriendCV: UICollectionView!
     let communicator = Communicator.shared
@@ -19,7 +21,7 @@ class GoFriendsViewController: UIViewController {
     var userJoinGroup = [GoFriendItem]()
     let tag = "goFriendViewController"
     var isfromCreatNewGroup = false
-    
+    var indexPathForCV:Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,59 +29,82 @@ class GoFriendsViewController: UIViewController {
         goFriendsTVC.delegate = self
         goFriendCV.dataSource = self
         goFriendCV.delegate = self
-        // Do any additional setup after loading the view.
+        
+        //接收頁面的廣播通知
+        NotificationCenter.default.addObserver(self, selector: #selector(GoFriendsViewController.reloadDatas(notification:)), name: Notification.Name(rawValue: "creatGroupOk"), object: nil)
+    }
+    
+    //通知方法
+    @objc
+    func reloadDatas(notification: Notification) {
+        //        showAlert(title: "reloadData", message: "")
+        SVProgressHUD.show()
+        showJoinGroup()
+        showGroup()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         NotificationCenter.default.post(name: Notification.Name(rawValue: "currentPageChanged"), object: 1)
-        if isfromCreatNewGroup == false {
+        if isfromCreatNewGroup {
+        }else{
             showJoinGroup()
             showGroup()
+            SVProgressHUD.show()
         }
     }
     override func viewWillDisappear(_ animated: Bool) {
         isfromCreatNewGroup = false
         groupItems.removeAll()
         userJoinGroup.removeAll()
+        goFriendsTVC.reloadData()
+        goFriendCV.reloadData()
     }
     @IBAction func unwindToGroupList(_ segue: UIStoryboardSegue){
-        
-        isfromCreatNewGroup = true
-            showJoinGroup()
-            showGroup()
- 
-        
-        guard  segue.identifier == "save"  else {
-            return
+        if  segue.identifier == "save" {
+            isfromCreatNewGroup = true
         }
-        guard let creatNewGroupCV = segue.source as? CreatNewGroupViewController else{
-            return
-        }
-       print("creatNewGroupCV.newGroup = \(creatNewGroupCV.newGroup), \(creatNewGroupCV.newGroup.groupName), \(creatNewGroupCV.newGroup.groupRunningLastTime), \(creatNewGroupCV.newGroup.groupRunningIntroduce), \(creatNewGroupCV.newGroup.startPointLatitude)") 
+        //        guard let creatNewGroupCV = segue.source as? CreatNewGroupViewController else{
+        //            return
+        //        }
+        //       print("creatNewGroupCV.newGroup = \(creatNewGroupCV.newGroup), \(creatNewGroupCV.newGroup.groupName), \(creatNewGroupCV.newGroup.groupRunningLastTime), \(creatNewGroupCV.newGroup.groupRunningIntroduce), \(creatNewGroupCV.newGroup.startPointLatitude)")
         
     }
-    /*
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        
+        if segue.identifier == "nonJoinSegue" || segue.identifier == "joinSegue"{
+            let groupDetailViewController = segue.destination as!
+            GroupDeatilViewController
+            groupDetailViewController.segue = segue.identifier!
+        }
+        if segue.identifier == "nonJoinSegue" {
+            guard let indextPath = goFriendsTVC.indexPathForSelectedRow ,
+                let groupDetailVC = segue.destination as? GroupDeatilViewController else {
+                    return
+            }
+            groupDetailVC.groupDetail = groupItems[indextPath.row]
+        }else if segue.identifier == "joinSegue" {
+            guard let indexPath = goFriendCV.indexPathsForSelectedItems?.first,
+                let groupDetailVC = segue.destination as? GroupDeatilViewController else {
+                    return
+            }
+            groupDetailVC.groupDetail = userJoinGroup[indexPath.row]
+            print("prepare:indexPath =  \(indexPath.row)")
+        }
     }
-    */
+    
     func showJoinGroup(){
         communicator.getUserJoinGroup(emailAccount: userEmail) { (result, error) in
             if let error = error {
-                print("Get showJoinGroup error:\(error)")
+                print("Get getUserJoinGroup error:\(error)")
                 return
             }
             guard let result = result else {
                 print("result is nil")
                 return
             }
-            
             self.userJoinGroupId = result as! [Int]
-            PrintHelper.println(tag: self.tag, line: 57, "showJoinGroup = \(result)")
+            PrintHelper.println(tag: self.tag, line: 135, "getUserJoinGroup = \(result)")
         }
     }
     
@@ -94,7 +119,7 @@ class GoFriendsViewController: UIViewController {
                 return
             }
             print("Get all  OK")
-           
+            
             guard let jsonDate = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)else {
                 print("Fail to generate jsonData.")
                 return
@@ -105,9 +130,8 @@ class GoFriendsViewController: UIViewController {
                 print("Fail to decode jsonData.")
                 return
             }
-            
+            //將取得的資料分為已參加及未參加
             for group in resultObject {
-                //                print("\(#line)\(game)")
                 var i = 0
                 for joinId in self.userJoinGroupId {
                     if group.groupId == joinId {
@@ -117,19 +141,17 @@ class GoFriendsViewController: UIViewController {
                     }
                 }
                 if i == 0{
-                self.groupItems.append(group)
+                    self.groupItems.append(group)
                     print("group = \(group)")
                 }
             }
             
-            PrintHelper.println(tag: self.tag, line: 93, "userJoinGroup = \(self.userJoinGroup), groupItems = \(self.groupItems)")
-            
+            PrintHelper.println(tag: self.tag, line: 149, "userJoinGroup = \(self.userJoinGroup),@@@@@@ groupItems = \(self.groupItems)")
             self.goFriendCV.reloadData()
             self.goFriendsTVC.reloadData()
-
+            SVProgressHUD.dismiss()
         }
     }
-
 }
 
 extension GoFriendsViewController: UICollectionViewDelegate, UICollectionViewDataSource{
@@ -137,80 +159,72 @@ extension GoFriendsViewController: UICollectionViewDelegate, UICollectionViewDat
         return userJoinGroup.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath )
-        cell!.layer.cornerRadius = 4
-        cell?.backgroundColor = UIColor.yellow
-    }
-    
-    
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath )
         cell!.layer.cornerRadius = 4
         cell?.backgroundColor = UIColor.white
     }
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "userJoinCell", for: indexPath)
         guard let finalCell = cell as? UserJoinGroupCollectionViewCell else{
             return cell
         }
-           let item = userJoinGroup[indexPath.row]
-        
+        let item = userJoinGroup[indexPath.row]
         finalCell.textLabel.text = item.groupName
+        finalCell.userJoinImageView.layer.cornerRadius = 10
         cell.layer.cornerRadius = 10
-        
         return cell
     }
-    
-    
 }
-
-
 
 extension GoFriendsViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        
         return groupItems.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "GoFriendsCell", for: indexPath)
-        //        cell.coverImageView.sd_setImage(with: URL(string: movie.imageURL))
-        //        cell.titleLabel.text = movie.title
+        let cell = tableView.dequeueReusableCell(withIdentifier: "GoFriendsCell", for: indexPath) as! JoinGroupTableViewCell
+
         let item = groupItems[indexPath.row]
-        cell.textLabel?.text = item.groupName
-        cell.detailTextLabel?.text = item.groupJoinPeople
+        
+        guard let groupName = item.groupName, let groupJoinPeople = item.groupJoinPeople,
+            let lastDay = item.lastDay, let lastHour = item.lastHour,
+            let lastMinute = item.lastMinute else {
+                return cell
+        }
+        
+        cell.groupNameLabel.text = groupName
+        cell.joinPeopleLabel.text = groupJoinPeople
+        cell.lastTimeLabel.text = "\(lastDay)\(lastHour)\(lastMinute)"
+        cell.nunJoinCellView.layer.cornerRadius = 20
         return cell
     }
 }
-
 //MARK: - UITableViewDelegate
 extension GoFriendsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
-
 extension Communicator {
+    //取得user參加的項目
     func getUserJoinGroup(emailAccount:String,completion:@escaping DoneHandler){
         let parameters:[String:Any] = [ACTION_KEY:"getUserJoinGroup",
                                        EMAIL_ACCOUNT_KEY:emailAccount]
-        
         doPost(urlString: GoFriendsServlet_URL, parameters: parameters, completion: completion)
     }
-    
-    
+}
+
+extension GoFriendsViewController: UICollectionViewDelegateFlowLayout {
+    //collectionViewCell大小
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width/2 - 5, height: collectionView.frame.width/2 + 10 )
+    }
 }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		09502005D1673B65F7EE2520 /* Pods_IosBonusRunningBeforeYou.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C953E18E3FD390A2E51FFC81 /* Pods_IosBonusRunningBeforeYou.framework */; };
+		18085E0921B11D4800FF30A1 /* MapHelperViewControlle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18085E0821B11D4800FF30A1 /* MapHelperViewControlle.swift */; };
 		180A18E821ACFFCA00632238 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180A18E721ACFFCA00632238 /* MapViewController.swift */; };
 		1812BEF621A3B0F700B22993 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1812BEF521A3B0F700B22993 /* GameViewController.swift */; };
 		1812BEF821A3B0FE00B22993 /* GoFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1812BEF721A3B0FE00B22993 /* GoFriendsViewController.swift */; };
@@ -22,6 +23,8 @@
 		1863635A219C5D87001F9B52 /* Communicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18636359219C5D87001F9B52 /* Communicator.swift */; };
 		1863635D219C6205001F9B52 /* GameItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1863635C219C6205001F9B52 /* GameItem.swift */; };
 		186A0F2021AC2F31003F69C1 /* CreatNewGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186A0F1F21AC2F31003F69C1 /* CreatNewGroupViewController.swift */; };
+		188AE89E21B4F4DB00C9A7C1 /* JoinPeopleCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188AE89D21B4F4DB00C9A7C1 /* JoinPeopleCollectionViewController.swift */; };
+		188AE8A021B4F63100C9A7C1 /* JoinPeopleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188AE89F21B4F63100C9A7C1 /* JoinPeopleCollectionViewCell.swift */; };
 		189C8257219598BB0012A017 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189C8256219598BB0012A017 /* AppDelegate.swift */; };
 		189C8259219598BB0012A017 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189C8258219598BB0012A017 /* ViewController.swift */; };
 		189C825C219598BB0012A017 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 189C825A219598BB0012A017 /* Main.storyboard */; };
@@ -32,16 +35,17 @@
 		189C82732195AD460012A017 /* Social.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 189C82722195AD460012A017 /* Social.storyboard */; };
 		189C82752195AE3E0012A017 /* Shop.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 189C82742195AE3E0012A017 /* Shop.storyboard */; };
 		189C82772195B4A20012A017 /* Member.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 189C82762195B4A20012A017 /* Member.storyboard */; };
-
 		18A542AD21ABABE400C7CCB9 /* GoFriendItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A542AC21ABABE400C7CCB9 /* GoFriendItem.swift */; };
 		18A542AF21ABB82800C7CCB9 /* UserJoinGroupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A542AE21ABB82800C7CCB9 /* UserJoinGroupCollectionViewCell.swift */; };
-
+		18BADF4121B5927A00C963A1 /* JoinGroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BADF4021B5927A00C963A1 /* JoinGroupTableViewCell.swift */; };
+		18F227D021AFF0BD00A66903 /* GroupDeatilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F227CF21AFF0BD00A66903 /* GroupDeatilViewController.swift */; };
 		44A4C79521A57D4B0042E7A1 /* Running.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A4C79421A57D4B0042E7A1 /* Running.swift */; };
 		44A4C79721A57DBB0042E7A1 /* TempUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A4C79621A57DBB0042E7A1 /* TempUserData.swift */; };
 		44A634CB219C18BA0091B1AB /* RunningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A634CA219C18BA0091B1AB /* RunningViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		18085E0821B11D4800FF30A1 /* MapHelperViewControlle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapHelperViewControlle.swift; sourceTree = "<group>"; };
 		180A18E721ACFFCA00632238 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		1812BEF521A3B0F700B22993 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		1812BEF721A3B0FE00B22993 /* GoFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoFriendsViewController.swift; sourceTree = "<group>"; };
@@ -56,6 +60,8 @@
 		18636359219C5D87001F9B52 /* Communicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Communicator.swift; sourceTree = "<group>"; };
 		1863635C219C6205001F9B52 /* GameItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameItem.swift; sourceTree = "<group>"; };
 		186A0F1F21AC2F31003F69C1 /* CreatNewGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatNewGroupViewController.swift; sourceTree = "<group>"; };
+		188AE89D21B4F4DB00C9A7C1 /* JoinPeopleCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinPeopleCollectionViewController.swift; sourceTree = "<group>"; };
+		188AE89F21B4F63100C9A7C1 /* JoinPeopleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinPeopleCollectionViewCell.swift; sourceTree = "<group>"; };
 		189C8253219598BB0012A017 /* IosBonusRunningBeforeYou.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IosBonusRunningBeforeYou.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		189C8256219598BB0012A017 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		189C8258219598BB0012A017 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -68,10 +74,10 @@
 		189C82722195AD460012A017 /* Social.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Social.storyboard; sourceTree = "<group>"; };
 		189C82742195AE3E0012A017 /* Shop.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Shop.storyboard; sourceTree = "<group>"; };
 		189C82762195B4A20012A017 /* Member.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Member.storyboard; sourceTree = "<group>"; };
-
 		18A542AC21ABABE400C7CCB9 /* GoFriendItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoFriendItem.swift; sourceTree = "<group>"; };
 		18A542AE21ABB82800C7CCB9 /* UserJoinGroupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserJoinGroupCollectionViewCell.swift; sourceTree = "<group>"; };
-
+		18BADF4021B5927A00C963A1 /* JoinGroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinGroupTableViewCell.swift; sourceTree = "<group>"; };
+		18F227CF21AFF0BD00A66903 /* GroupDeatilViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDeatilViewController.swift; sourceTree = "<group>"; };
 		44A4C79421A57D4B0042E7A1 /* Running.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Running.swift; sourceTree = "<group>"; };
 		44A4C79621A57DBB0042E7A1 /* TempUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempUserData.swift; sourceTree = "<group>"; };
 		44A634CA219C18BA0091B1AB /* RunningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningViewController.swift; sourceTree = "<group>"; };
@@ -271,6 +277,11 @@
 				18A542AE21ABB82800C7CCB9 /* UserJoinGroupCollectionViewCell.swift */,
 				186A0F1F21AC2F31003F69C1 /* CreatNewGroupViewController.swift */,
 				180A18E721ACFFCA00632238 /* MapViewController.swift */,
+				18F227CF21AFF0BD00A66903 /* GroupDeatilViewController.swift */,
+				18085E0821B11D4800FF30A1 /* MapHelperViewControlle.swift */,
+				188AE89D21B4F4DB00C9A7C1 /* JoinPeopleCollectionViewController.swift */,
+				188AE89F21B4F63100C9A7C1 /* JoinPeopleCollectionViewCell.swift */,
+				18BADF4021B5927A00C963A1 /* JoinGroupTableViewCell.swift */,
 			);
 			path = GoFriends;
 			sourceTree = "<group>";
@@ -416,11 +427,13 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-IosBonusRunningBeforeYou/Pods-IosBonusRunningBeforeYou-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -434,6 +447,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18F227D021AFF0BD00A66903 /* GroupDeatilViewController.swift in Sources */,
 				1863635A219C5D87001F9B52 /* Communicator.swift in Sources */,
 				184690A621A3E56400CE7B41 /* GameDetailViewController.swift in Sources */,
 				18A542AF21ABB82800C7CCB9 /* UserJoinGroupCollectionViewCell.swift in Sources */,
@@ -441,15 +455,14 @@
 				1812BEFA21A3B10800B22993 /* MainViewController.swift in Sources */,
 				1828130221A278DC00D7075C /* GameTableViewCell.swift in Sources */,
 				1863635D219C6205001F9B52 /* GameItem.swift in Sources */,
+				188AE89E21B4F4DB00C9A7C1 /* JoinPeopleCollectionViewController.swift in Sources */,
 				1812BEF621A3B0F700B22993 /* GameViewController.swift in Sources */,
-
 				44A4C79721A57DBB0042E7A1 /* TempUserData.swift in Sources */,
 				44A4C79521A57D4B0042E7A1 /* Running.swift in Sources */,
-
-
-
 				18A542AD21ABABE400C7CCB9 /* GoFriendItem.swift in Sources */,
-
+				18BADF4121B5927A00C963A1 /* JoinGroupTableViewCell.swift in Sources */,
+				188AE8A021B4F63100C9A7C1 /* JoinPeopleCollectionViewCell.swift in Sources */,
+				18085E0921B11D4800FF30A1 /* MapHelperViewControlle.swift in Sources */,
 				189C8259219598BB0012A017 /* ViewController.swift in Sources */,
 				180A18E821ACFFCA00632238 /* MapViewController.swift in Sources */,
 				44A634CB219C18BA0091B1AB /* RunningViewController.swift in Sources */,
