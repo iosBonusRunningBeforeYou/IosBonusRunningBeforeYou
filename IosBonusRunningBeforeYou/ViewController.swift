@@ -16,11 +16,9 @@ class ViewController: UIViewController {
       
     }
     
-    // Unwind Segue
+//     Unwind Segue
     @IBAction func unwindTOList(_ segue: UIStoryboardSegue){
-        
-//        if segue.identifier == "groupRunningStart" {
-//        }
+
     }
     
 //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

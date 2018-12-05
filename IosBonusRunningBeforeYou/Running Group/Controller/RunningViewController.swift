@@ -86,7 +86,7 @@ class RunningViewController: UIViewController {
     var sixthGroupMail = String()
     var sixthUserName = String()
     
-    var groupId: Int?
+    var groupInfo = GoFriendItem()
     
     // Boolean to judge polyline color
     var firstNameColor = false
@@ -198,7 +198,7 @@ class RunningViewController: UIViewController {
 
         let now = Date()
         running.startTime = Int(now.timeIntervalSince1970 * 1000)
-        
+        PrintHelper.println(tag: "RunningViewController", line: 154, "Running:groupId = \(groupInfo)")
     }
     
     func moveAndZoomMap(){

@@ -11,7 +11,7 @@ import SVProgressHUD
 class GameViewController: UIViewController {
     @IBOutlet weak var gameTVC: UITableView!
     
-    let image = ["medal_red2","medal_green","medal_blue"]
+    var image = ["medal_red2","medal_green","medal_blue"]
     let communicator = Communicator.shared
     var gameItem = [GameItem]()
     override func viewDidLoad() {
@@ -73,8 +73,10 @@ class GameViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         NotificationCenter.default.post(name: Notification.Name(rawValue: "currentPageChanged"), object: 0)
         gameItem.removeAll()
+
         SVProgressHUD.show()
         showAllGame()
+        
     }
     override func viewWillDisappear(_ animated: Bool) {
         gameItem.removeAll()
@@ -102,7 +104,7 @@ extension GameViewController: UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        
+        print("gameitem count \(gameItem.count)")
         return gameItem.count
     }
     
@@ -113,7 +115,7 @@ extension GameViewController: UITableViewDataSource {
         //        cell.coverImageView.sd_setImage(with: URL(string: movie.imageURL))
         //        cell.titleLabel.text = movie.title
         let item = gameItem[indexPath.row]
-        
+        print("\(image.count)  ================   \(indexPath.row)")
         cell.userImageView.image = UIImage(named: image[indexPath.row])
         cell.titleLabel.text = item.gameName
         cell.finalTimeLabel.text = "\(item.lastDay)\(item.lastHour)\(item.lastMinute)"

@@ -54,7 +54,7 @@
         <!--Running-->
         <scene sceneID="zQZ-cS-6BP">
             <objects>
-                <viewController id="pVo-uG-4EE" customClass="RunningViewController" customModule="IosBonusRunningBeforeYou" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GroupRunning" useStoryboardIdentifierAsRestorationIdentifier="YES" id="pVo-uG-4EE" customClass="RunningViewController" customModule="IosBonusRunningBeforeYou" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="M3u-K9-o8r">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -388,7 +388,7 @@
         <!--Navigation Controller-->
         <scene sceneID="mZG-tu-yGj">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="I7u-QE-awt" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="RunningNA" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="I7u-QE-awt" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="0k3-BF-8WA">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
