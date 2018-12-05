@@ -15,15 +15,8 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
     }
     
-    // Unwind Segue
+//     Unwind Segue
     @IBAction func unwindTOList(_ segue: UIStoryboardSegue){
 
-        guard let groupDetailVC = segue.source as? GroupDeatilViewController  else{
-            return
-        }
-        guard let  groupId = groupDetailVC.groupDetail.groupId else {
-            return
-        }
-        print("unwindTOList groupId = \(groupId)")
     }
 }

@@ -115,7 +115,7 @@ class GroupDeatilViewController: UIViewController,CLLocationManagerDelegate, MKM
     
     @IBAction func goAction(_ sender: UIButton) {
         let alert = UIAlertController(title: "開始揪團跑" , message: "請在開始時間五分鐘內按下確認開始跑步", preferredStyle: .alert)
-        
+
         let ok = UIAlertAction(title: "確定", style: .default){(action) in
             self.performSegue(withIdentifier: "groupRunningStart", sender: self)
         }
@@ -131,7 +131,7 @@ class GroupDeatilViewController: UIViewController,CLLocationManagerDelegate, MKM
                 PrintHelper.println(tag: tag, line: 120, "dateStrint is nil")
                 return
         }
-        
+
         let comparisonResult = comparisonDate(currentDate: curDate, date: date)
         if comparisonResult == ">"{
             alert.addAction(ok)
@@ -233,10 +233,23 @@ class GroupDeatilViewController: UIViewController,CLLocationManagerDelegate, MKM
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let joinPeopleCVC = segue.destination as? JoinPeopleCollectionViewController else{
+
+        if  segue.identifier == "groupRunningStart"{
+            guard let destination = segue.destination as? UINavigationController else{
+                return
+            }
+            guard let runningVC = destination.topViewController as? RunningViewController else {
             return
+            }
+            runningVC.groupInfo = groupDetail
+        
+        PrintHelper.println(tag: tag, line: 246, "groupDetail.groupId = \(groupDetail)")
+        }else {
+            guard let joinPeopleCVC = segue.destination as? JoinPeopleCollectionViewController else{
+                return
+            }
+            joinPeopleCVC.userInfo = groupInfos
         }
-        joinPeopleCVC.userInfo = groupInfos
     }
 }
 
