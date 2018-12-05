@@ -28,7 +28,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <state key="normal" title="Start"/>
                                 <connections>
-                                    <segue destination="I7u-QE-awt" kind="show" id="r39-ks-vd5"/>
+                                    <segue destination="I7u-QE-awt" kind="show" identifier="" id="r39-ks-vd5"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -302,18 +302,29 @@
                                 <action selector="CancelPressed:" destination="pVo-uG-4EE" id="ysw-Xg-zSa"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="history" id="CyC-bb-kON">
+                            <connections>
+                                <segue destination="Due-2J-Nmx" kind="show" id="S1S-jz-26P"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="blackColorLabel" destination="Kjx-pD-jN6" id="Zfo-v5-3MH"/>
                         <outlet property="blackLabel" destination="4I1-C8-F5c" id="X3N-hZ-Wf1"/>
+                        <outlet property="blueColorLabel" destination="e5l-YQ-bm8" id="Ex6-hY-oU7"/>
                         <outlet property="blueLabel" destination="nxk-mL-xrL" id="CKf-qs-rwC"/>
+                        <outlet property="grayColorLabel" destination="9kS-37-fLs" id="Ukg-yo-qoG"/>
+                        <outlet property="grayLabel" destination="gJw-KY-LYn" id="Hza-GU-Hs5"/>
+                        <outlet property="greenColorLabel" destination="OLb-zd-tLc" id="Mnw-Vj-mXL"/>
                         <outlet property="greenLabel" destination="ypW-oP-0aG" id="byr-6G-vkV"/>
                         <outlet property="kiloMetreLabel" destination="liA-61-csF" id="3EQ-mA-5Ws"/>
                         <outlet property="mainMapView" destination="Qp7-zI-hJx" id="vwD-Ti-AuM"/>
+                        <outlet property="orangeColorLabel" destination="Nau-nn-9FQ" id="uF5-Jb-5lX"/>
                         <outlet property="orangeLabel" destination="WYM-RZ-6lS" id="WoZ-pu-RqN"/>
                         <outlet property="pauseButtonView" destination="sfB-yG-zBJ" id="qlC-Bf-dWP"/>
-                        <outlet property="pinkLabel" destination="gJw-KY-LYn" id="Hza-GU-Hs5"/>
                         <outlet property="playButtonView" destination="j75-pI-Z9t" id="rVw-c9-gaE"/>
                         <outlet property="timerLabel" destination="Ofv-Jy-rq8" id="Xa1-YZ-uAi"/>
+                        <outlet property="yellowColorLabel" destination="3ik-p6-2Yc" id="RwX-oe-4ao"/>
                         <outlet property="yellowLabel" destination="DhT-zx-IVc" id="ea5-ly-Mwk"/>
                         <segue destination="OMp-B1-EgR" kind="unwind" identifier="unwind" unwindAction="unwindTOList:" id="aa0-NX-hCH"/>
                     </connections>
@@ -323,25 +334,60 @@
             </objects>
             <point key="canvasLocation" x="1143.2" y="332.38380809595208"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="Onu-cN-dpl">
+        <!--Table View Controller-->
+        <scene sceneID="C4P-Ye-1AM">
             <objects>
-                <viewController id="TJp-mZ-Snv" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="QLz-PJ-P5g">
+                <tableViewController id="Due-2J-Nmx" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Dhy-1b-FLN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="4Fs-DE-kNl"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="rO8-Wl-JZJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="94" id="5nZ-fC-jND">
+                                <rect key="frame" x="0.0" y="28" width="375" height="94"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5nZ-fC-jND" id="WYR-iw-0EJ">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="93.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="P9q-R7-RJr">
+                                            <rect key="frame" x="0.0" y="24" width="44" height="44"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="VUb-vZ-vrz">
+                                                <size key="itemSize" width="50" height="50"/>
+                                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                            </collectionViewFlowLayout>
+                                            <cells>
+                                                <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="FLv-FS-il5">
+                                                    <rect key="frame" x="-3" y="0.0" width="50" height="50"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                    </view>
+                                                </collectionViewCell>
+                                            </cells>
+                                        </collectionView>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Due-2J-Nmx" id="oyz-nH-vAH"/>
+                            <outlet property="delegate" destination="Due-2J-Nmx" id="FFk-mg-Qs6"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4aH-8f-NtA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1143" y="1031"/>
+            <point key="canvasLocation" x="1941.5999999999999" y="325.18740629685158"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="mZG-tu-yGj">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="LP8-l9-7x1" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="I7u-QE-awt" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="0k3-BF-8WA">
@@ -351,9 +397,9 @@
                     <nil name="viewControllers"/>
                     <connections>
                         <segue destination="pVo-uG-4EE" kind="relationship" relationship="rootViewController" id="uiG-sN-9HY"/>
-                        <segue destination="TJp-mZ-Snv" kind="show" id="FKe-Bo-Oeb"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LP8-l9-7x1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="230" y="332"/>
         </scene>

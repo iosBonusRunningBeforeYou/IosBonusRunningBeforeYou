@@ -19,11 +19,18 @@ class RunningViewController: UIViewController {
     @IBOutlet weak var kiloMetreLabel: UILabel!
     
     @IBOutlet weak var blackLabel: UILabel!
-    @IBOutlet weak var pinkLabel: UILabel!
+    @IBOutlet weak var grayLabel: UILabel!
     @IBOutlet weak var blueLabel: UILabel!
     @IBOutlet weak var orangeLabel: UILabel!
     @IBOutlet weak var yellowLabel: UILabel!
     @IBOutlet weak var greenLabel: UILabel!
+    
+    @IBOutlet weak var blackColorLabel: UILabel!
+    @IBOutlet weak var grayColorLabel: UILabel!
+    @IBOutlet weak var blueColorLabel: UILabel!
+    @IBOutlet weak var orangeColorLabel: UILabel!
+    @IBOutlet weak var yellowColorLabel: UILabel!
+    @IBOutlet weak var greenColorLabel: UILabel!
     
     var locationmanager = CLLocationManager()
     var lastPoint : CLLocationCoordinate2D? = nil
@@ -89,6 +96,7 @@ class RunningViewController: UIViewController {
     var fifthNameColor = false
     var sixthNameColor = false
     
+    var labelArray = Array<UILabel>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,10 +107,36 @@ class RunningViewController: UIViewController {
             return
         }
         
+        // MARK: 判斷是否為揪團跑控制UI顯示.
+        labelArray.append(blackLabel)
+        labelArray.append(grayLabel)
+        labelArray.append(blueLabel)
+        labelArray.append(orangeLabel)
+        labelArray.append(yellowLabel)
+        labelArray.append(greenLabel)
+        
+        labelArray.append(blackColorLabel)
+        labelArray.append(grayColorLabel)
+        labelArray.append(blueColorLabel)
+        labelArray.append(orangeColorLabel)
+        labelArray.append(yellowColorLabel)
+        labelArray.append(greenColorLabel)
+        
+        if groupId == 0{
+            for label in labelArray{
+                label.isHidden = true
+            }
+        }
+        
         // Execute moveAndZoomMap() after 3.0 seconds.  //DispatchQueue 是Grant Central DisPath 的應用. //.main 執行在mainQueue
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5 ){
             self.moveAndZoomMap()
         }
+        
+        if groupId == 0 {
+            blackLabel.isHidden = true
+        }
+    
         
         // Ask permission.
         locationmanager.requestAlwaysAuthorization()
@@ -138,7 +172,7 @@ class RunningViewController: UIViewController {
 //            self.greenLabel.text = self.mailFilter(result[5])
             
             self.blackLabel.text = self.mailFilter(result[0])
-            self.pinkLabel.text = self.mailFilter(result[1])
+            self.grayLabel.text = self.mailFilter(result[1])
             self.blueLabel.text = self.mailFilter(result[2])
             self.orangeLabel.text = self.mailFilter(result[3])
             self.yellowLabel.text = self.mailFilter(result[4])
@@ -324,18 +358,22 @@ class RunningViewController: UIViewController {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(overlay: overlay)
         
-        if firstNameColor {
-            renderer.strokeColor = UIColor.black
-        } else if secondNameColor{
-            renderer.strokeColor = UIColor.lightGray
-        } else if thirdNameColor{
-            renderer.strokeColor = UIColor.blue
-        } else if fourthNameColor{
-            renderer.strokeColor = UIColor.orange
-        } else if fifthNameColor{
-            renderer.strokeColor = UIColor.yellow
-        } else if sixthNameColor{
-            renderer.strokeColor = UIColor.green
+        if groupId != 0 {
+            
+            if firstNameColor {
+                renderer.strokeColor = UIColor.black
+            } else if secondNameColor{
+                renderer.strokeColor = UIColor.lightGray
+            } else if thirdNameColor{
+                renderer.strokeColor = UIColor.blue
+            } else if fourthNameColor{
+                renderer.strokeColor = UIColor.orange
+            } else if fifthNameColor{
+                renderer.strokeColor = UIColor.yellow
+            } else if sixthNameColor{
+                renderer.strokeColor = UIColor.green
+            }
+            
         } else {
             renderer.strokeColor = UIColor.red
         }
@@ -382,11 +420,7 @@ class RunningViewController: UIViewController {
         self.running.name = "Mary"
         self.running.id = 1
         self.tempUserData.email_account = self.running.mail
-        groupRunningId = 1
-    }
-    
-    @IBAction func unwindToRunning(_ segue: UIStoryboardSegue){
-        
+        groupRunningId = 9
     }
     
 }

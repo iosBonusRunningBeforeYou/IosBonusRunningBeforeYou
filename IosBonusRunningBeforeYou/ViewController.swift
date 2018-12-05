@@ -9,22 +9,23 @@
 import UIKit
 
 class ViewController: UIViewController {
-    var groupId:Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+      
     }
     
     // Unwind Segue
     @IBAction func unwindTOList(_ segue: UIStoryboardSegue){
-
-        guard let groupDetailVC = segue.source as? GroupDeatilViewController  else{
-            return
-        }
-        guard let  groupId = groupDetailVC.groupDetail.groupId else {
-            return
-        }
-        print("unwindTOList groupId = \(groupId)")
-
+        
+//        if segue.identifier == "groupRunningStart" {
+//        }
     }
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "groupRunningStart"{
+//
+//        }
+//    }
 }

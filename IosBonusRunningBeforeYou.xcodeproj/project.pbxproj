@@ -37,10 +37,8 @@
 		189C82772195B4A20012A017 /* Member.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 189C82762195B4A20012A017 /* Member.storyboard */; };
 		18A542AD21ABABE400C7CCB9 /* GoFriendItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A542AC21ABABE400C7CCB9 /* GoFriendItem.swift */; };
 		18A542AF21ABB82800C7CCB9 /* UserJoinGroupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A542AE21ABB82800C7CCB9 /* UserJoinGroupCollectionViewCell.swift */; };
-
 		18BADF4121B5927A00C963A1 /* JoinGroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BADF4021B5927A00C963A1 /* JoinGroupTableViewCell.swift */; };
 		18F227D021AFF0BD00A66903 /* GroupDeatilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F227CF21AFF0BD00A66903 /* GroupDeatilViewController.swift */; };
-
 		44A4C79521A57D4B0042E7A1 /* Running.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A4C79421A57D4B0042E7A1 /* Running.swift */; };
 		44A4C79721A57DBB0042E7A1 /* TempUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A4C79621A57DBB0042E7A1 /* TempUserData.swift */; };
 		44A634CB219C18BA0091B1AB /* RunningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A634CA219C18BA0091B1AB /* RunningViewController.swift */; };
@@ -78,10 +76,8 @@
 		189C82762195B4A20012A017 /* Member.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Member.storyboard; sourceTree = "<group>"; };
 		18A542AC21ABABE400C7CCB9 /* GoFriendItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoFriendItem.swift; sourceTree = "<group>"; };
 		18A542AE21ABB82800C7CCB9 /* UserJoinGroupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserJoinGroupCollectionViewCell.swift; sourceTree = "<group>"; };
-
 		18BADF4021B5927A00C963A1 /* JoinGroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinGroupTableViewCell.swift; sourceTree = "<group>"; };
 		18F227CF21AFF0BD00A66903 /* GroupDeatilViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDeatilViewController.swift; sourceTree = "<group>"; };
-
 		44A4C79421A57D4B0042E7A1 /* Running.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Running.swift; sourceTree = "<group>"; };
 		44A4C79621A57DBB0042E7A1 /* TempUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempUserData.swift; sourceTree = "<group>"; };
 		44A634CA219C18BA0091B1AB /* RunningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningViewController.swift; sourceTree = "<group>"; };
@@ -464,11 +460,9 @@
 				44A4C79721A57DBB0042E7A1 /* TempUserData.swift in Sources */,
 				44A4C79521A57D4B0042E7A1 /* Running.swift in Sources */,
 				18A542AD21ABABE400C7CCB9 /* GoFriendItem.swift in Sources */,
-
 				18BADF4121B5927A00C963A1 /* JoinGroupTableViewCell.swift in Sources */,
 				188AE8A021B4F63100C9A7C1 /* JoinPeopleCollectionViewCell.swift in Sources */,
 				18085E0921B11D4800FF30A1 /* MapHelperViewControlle.swift in Sources */,
-
 				189C8259219598BB0012A017 /* ViewController.swift in Sources */,
 				180A18E821ACFFCA00632238 /* MapViewController.swift in Sources */,
 				44A634CB219C18BA0091B1AB /* RunningViewController.swift in Sources */,
