@@ -35,7 +35,6 @@ struct Running: Codable {
     
 }
 
-
 struct FirstGroupMember: Codable {
     var id: Int = 0
     var latitude: Double = 0

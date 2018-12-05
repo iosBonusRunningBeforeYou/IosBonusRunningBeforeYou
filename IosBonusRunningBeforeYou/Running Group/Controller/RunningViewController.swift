@@ -57,21 +57,27 @@ class RunningViewController: UIViewController {
     var groupRunningId = Int()
     var firstGroupMember = FirstGroupMember()
     var firstGroupMail = String()
+    var firstUserName = String()
     
     var secondGroupMember = SecondGroupMember()
     var secondGroupMail = String()
+    var secondUserName = String()
     
     var thirdGroupMember = ThirdGroupMember()
     var thirdGroupMail = String()
+    var thirdUserName = String()
     
     var fourthGroupMember = FourthGroupMember()
     var fourthGroupMail = String()
+    var fourthUserName = String()
     
     var fifthGroupMember = FifthGroupMember()
     var fifthGroupMail = String()
+    var fifthUserName = String()
     
     var sixthGroupMember = SixthGroupMember()
     var sixthGroupMail = String()
+    var sixthUserName = String()
     
     // Boolean to judge polyline color
     var firstNameColor = false
@@ -122,6 +128,13 @@ class RunningViewController: UIViewController {
             print("Get user  OK")
             
             // MARK: let groupMember show on the UI View
+//            self.blackLabel.text = self.mailFilter(result[0])
+//            self.pinkLabel.text = self.mailFilter(result[1])
+//            self.blueLabel.text = self.mailFilter(result[2])
+//            self.orangeLabel.text = self.mailFilter(result[3])
+//            self.yellowLabel.text = self.mailFilter(result[4])
+//            self.greenLabel.text = self.mailFilter(result[5])
+            
             self.blackLabel.text = self.mailFilter(result[0])
             self.pinkLabel.text = self.mailFilter(result[1])
             self.blueLabel.text = self.mailFilter(result[2])
@@ -199,6 +212,10 @@ class RunningViewController: UIViewController {
         showAlert()
     }
     
+    @IBAction func timeInfoPressed(_ sender: UIButton) {
+     
+        
+    }
     
     @objc func action(){
         
@@ -471,6 +488,7 @@ extension RunningViewController : CLLocationManagerDelegate{
                 self.firstGroupMember.latitude = data.latitude
                 self.firstGroupMember.longitude = data.longitude
             }
+            
         }
         
         // secondMember
@@ -790,7 +808,6 @@ extension Communicator{
         
         let parameters:[String:Any] = [ACTION_KEY : "runningDataInsert","runningData": runningData, "pointData": pointData]
         doPost(urlString: RunningDataServlet_URL, parameters: parameters, completion:completion)
-        
     }
     
     func insertRunning(running: String ,completion:@escaping DoneHandler){
