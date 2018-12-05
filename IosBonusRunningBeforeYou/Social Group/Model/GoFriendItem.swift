@@ -18,10 +18,12 @@ struct GoFriendItem:Codable {
     var endPointLongitude: Double?
     var groupRunningTime: String?
 //    var newGroupTime:String?
-    var groupRunningLastTime: String?
+//    var groupRunningLastTime: String?
     var lastDay: String?
     var lastHour: String?
     var lastMinute: String?
     var groupJoinPeople: String?
     var groupRunningIntroduce: String?
+//    var emailAccounts:[String]?
+    var name: String?
 }

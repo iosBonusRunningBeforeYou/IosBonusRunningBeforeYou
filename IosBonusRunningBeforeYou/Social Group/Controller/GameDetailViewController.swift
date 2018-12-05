@@ -4,10 +4,11 @@
 //
 //  Created by Apple on 2018/11/20.
 //  Copyright © 2018 Apple. All rights reserved.
-//
+//@ Justin
 
 import UIKit
 import Alamofire
+import SVProgressHUD
 
 class GameDetailViewController: UIViewController {
     
@@ -22,15 +23,13 @@ class GameDetailViewController: UIViewController {
     
     
     var userEmail = "123@gamil.com"
-  
+    
     var gameItem:GameItem?
     var rankOfGameItem = [RankOfGame]()
     let communicator = Communicator.shared
     override func viewDidLoad() {
         super.viewDidLoad()
         handleView()
-      
-     
     }
     
     func handleView() {
@@ -42,11 +41,12 @@ class GameDetailViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-
+        
         guard let gameId = gameItem?.gameId, let ruleId = gameItem?.ruleId else {
             print("gameId")
             return
         }
+        SVProgressHUD.show()
         getRankOfGame(gameId: gameId, ruleId: ruleId)
         getJoinStatus(email: userEmail, gameId: gameId)
     }
@@ -79,12 +79,13 @@ class GameDetailViewController: UIViewController {
             }
             
             for rankOfGame in resultObject {
-                                print("\(#line)\(rankOfGame)")
+                print("\(#line)\(rankOfGame)")
                 self.rankOfGameItem.append(rankOfGame)
             }
             PrintHelper.println(tag: "d", line: 85, "rankOfGameItem = \(self.rankOfGameItem)")
             
             self.rankOfGameTVC.reloadData()
+            SVProgressHUD.dismiss()
         }
     }
     
@@ -105,51 +106,45 @@ class GameDetailViewController: UIViewController {
     
     
     func getJoinStatus(email:String, gameId:Int) {
-         var joinStatus = false
+        var joinStatus = false
         communicator.getJoinStatus(email: email, gameId: gameId) { (result, error) in
             guard let result = result ,let bool = result as? Bool else{
                 print("get joinStatus nil")
                 return
             }
-
+            
             joinStatus = bool
             if joinStatus {
                 self.joinBtn.isHidden = true
                 self.userInfoView.isHidden = false
-//                guard let item = self.gameItem?.emailAccount else{
-//                    return
-//                }
                 self.getImage(self.userImageView, self.userEmail)
                 self.getUserInfo ()
             }
             print("joinStatusg;4 ======\(joinStatus)")
         }
-         print("joinStatus ======\(joinStatus)")
+        print("joinStatus ======\(joinStatus)")
         
     }
     
     func getUserInfo(){
         var int = 0
-
+        
         print("rankOfGame = \(rankOfGameItem.count)")
         for rankItem in rankOfGameItem {
             int += 1
             if rankItem.emailAccount == userEmail {
                 print(" rankItem.emailAccount = \(rankItem.emailAccount) \(int) === \(rankOfGameItem[int-1].emailAccount)")
-             
+                
                 userNameLabel.text = rankItem.rankName
                 userRuleLabel.text = rankItem.rankKm
                 userRankNumLabel.text = String(int)
                 break
             }
-            
-            
         }
-      
     }
-
+    
     @IBAction func joinBtnAction(_ sender: UIButton) {
-      
+        
         guard let gameId = gameItem?.gameId else {
             print("gameId")
             return
@@ -166,7 +161,7 @@ class GameDetailViewController: UIViewController {
                 self.userInfoView.isHidden = false
                 // 找用userId 在陣列中找出user資料 show in userinfoView
             }else {
-                print("User account wrong")
+                print("insertGameJoinState fail")
             }
         }
     }
@@ -187,7 +182,7 @@ extension GameDetailViewController: UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let gameId = gameItem?.gameId
-
+        
         getJoinStatus(email: userEmail, gameId: gameId!)
         
         print("rankOfGameItem count = \(rankOfGameItem.count)")
@@ -196,7 +191,7 @@ extension GameDetailViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RankCell", for: indexPath) as! RankTableViewCell
-
+        
         let item = rankOfGameItem[indexPath.row]
         getImage(cell.rankImageView, item.emailAccount)
         cell.rankNumLabel.text = String(item.rankNum)
@@ -233,7 +228,7 @@ extension Communicator{
         let parameters:[String:Any] = [ACTION_KEY : "getRankOfGame",
                                        "gameId" : gameId,
                                        "ruleId" : ruleId]
-             doPost(urlString: GameDetailServlet_URL, parameters: parameters, completion: completion)
+        doPost(urlString: GameDetailServlet_URL, parameters: parameters, completion: completion)
         
     }
     
@@ -241,9 +236,9 @@ extension Communicator{
         let parameters:[String:Any] = [ACTION_KEY:"getJoinStatus",
                                        EMAIL_ACCOUNT_KEY:email,
                                        "gameId":gameId]
-
-   doPost(urlString: GameDetailServlet_URL, parameters: parameters, completion: completion)
-    
+        
+        doPost(urlString: GameDetailServlet_URL, parameters: parameters, completion: completion)
+        
     }
 }
 

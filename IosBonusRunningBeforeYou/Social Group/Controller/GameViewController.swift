@@ -4,19 +4,19 @@
 //
 //  Created by Apple on 2018/11/19.
 //  Copyright © 2018 Apple. All rights reserved.
-//
+//@ Justin
 
 import UIKit
-
+import SVProgressHUD
 class GameViewController: UIViewController {
     @IBOutlet weak var gameTVC: UITableView!
-
     
+    let image = ["medal_red2","medal_green","medal_blue"]
     let communicator = Communicator.shared
     var gameItem = [GameItem]()
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         gameTVC.dataSource = self
         gameTVC.delegate = self
@@ -52,6 +52,7 @@ class GameViewController: UIViewController {
             }
             self.gameTVC.reloadData()
             //            print("gameItem = \(self.gameItem)")
+            SVProgressHUD.dismiss()
         }
     }
     func getImage (_ image:UIImageView,_ email:String){
@@ -71,6 +72,8 @@ class GameViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         NotificationCenter.default.post(name: Notification.Name(rawValue: "currentPageChanged"), object: 0)
+        gameItem.removeAll()
+        SVProgressHUD.show()
         showAllGame()
     }
     override func viewWillDisappear(_ animated: Bool) {
@@ -98,7 +101,7 @@ extension GameViewController: UITableViewDataSource {
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       
+        
         
         return gameItem.count
     }
@@ -111,11 +114,11 @@ extension GameViewController: UITableViewDataSource {
         //        cell.titleLabel.text = movie.title
         let item = gameItem[indexPath.row]
         
-        
+        cell.userImageView.image = UIImage(named: image[indexPath.row])
         cell.titleLabel.text = item.gameName
         cell.finalTimeLabel.text = "\(item.lastDay)\(item.lastHour)\(item.lastMinute)"
         cell.joinPeopleLabel.text = item.gameJoinPeople
-       
+        
         return cell
     }
 }
@@ -129,5 +132,5 @@ extension GameViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
- 
+    
 }

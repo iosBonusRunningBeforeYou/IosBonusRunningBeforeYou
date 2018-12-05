@@ -14,11 +14,7 @@ class GameTableViewCell: UITableViewCell {
     @IBOutlet weak var joinPeopleLabel: UILabel!
     @IBOutlet weak var finalTimeLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
-    
-    
-    
-    
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

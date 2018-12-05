@@ -23,7 +23,8 @@ typealias DownloadDoneHandler = (_ result:Data?, _ error: Error?) -> Void
 class Communicator {
     // Constants
     
-    static let BASEURL = "http://192.168.50.77:8080/Running_MySQL_Web"//ip自己要再改
+    static let BASEURL = "http://192.168.50.77:8080/Running_MySQL_Web"//ip自己要再改 教室5G
+//    static let BASEURL = "http://172.20.10.9:8080/Running_MySQL_Web"//ip自己要再改 手機
 
     //各個功能的URL
     let GameServlet_URL = BASEURL + "/GameServlet"

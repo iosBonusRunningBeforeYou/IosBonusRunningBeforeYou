@@ -71,6 +71,7 @@ class MainViewController: UIViewController {
     //通知方法
     @objc
     func currentPageChanged(notification: Notification) {
+//        showAlert(title: "currentPageChanged", message: "")
         currentPage = notification.object as! Int
     }
     @IBAction func changeCurrentPage(_ sender: UIButton) {
