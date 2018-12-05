@@ -32,10 +32,8 @@
 		189C82732195AD460012A017 /* Social.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 189C82722195AD460012A017 /* Social.storyboard */; };
 		189C82752195AE3E0012A017 /* Shop.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 189C82742195AE3E0012A017 /* Shop.storyboard */; };
 		189C82772195B4A20012A017 /* Member.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 189C82762195B4A20012A017 /* Member.storyboard */; };
-
 		18A542AD21ABABE400C7CCB9 /* GoFriendItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A542AC21ABABE400C7CCB9 /* GoFriendItem.swift */; };
 		18A542AF21ABB82800C7CCB9 /* UserJoinGroupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A542AE21ABB82800C7CCB9 /* UserJoinGroupCollectionViewCell.swift */; };
-
 		44A4C79521A57D4B0042E7A1 /* Running.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A4C79421A57D4B0042E7A1 /* Running.swift */; };
 		44A4C79721A57DBB0042E7A1 /* TempUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A4C79621A57DBB0042E7A1 /* TempUserData.swift */; };
 		44A634CB219C18BA0091B1AB /* RunningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A634CA219C18BA0091B1AB /* RunningViewController.swift */; };
@@ -68,10 +66,8 @@
 		189C82722195AD460012A017 /* Social.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Social.storyboard; sourceTree = "<group>"; };
 		189C82742195AE3E0012A017 /* Shop.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Shop.storyboard; sourceTree = "<group>"; };
 		189C82762195B4A20012A017 /* Member.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Member.storyboard; sourceTree = "<group>"; };
-
 		18A542AC21ABABE400C7CCB9 /* GoFriendItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoFriendItem.swift; sourceTree = "<group>"; };
 		18A542AE21ABB82800C7CCB9 /* UserJoinGroupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserJoinGroupCollectionViewCell.swift; sourceTree = "<group>"; };
-
 		44A4C79421A57D4B0042E7A1 /* Running.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Running.swift; sourceTree = "<group>"; };
 		44A4C79621A57DBB0042E7A1 /* TempUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempUserData.swift; sourceTree = "<group>"; };
 		44A634CA219C18BA0091B1AB /* RunningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningViewController.swift; sourceTree = "<group>"; };
@@ -442,14 +438,9 @@
 				1828130221A278DC00D7075C /* GameTableViewCell.swift in Sources */,
 				1863635D219C6205001F9B52 /* GameItem.swift in Sources */,
 				1812BEF621A3B0F700B22993 /* GameViewController.swift in Sources */,
-
 				44A4C79721A57DBB0042E7A1 /* TempUserData.swift in Sources */,
 				44A4C79521A57D4B0042E7A1 /* Running.swift in Sources */,
-
-
-
 				18A542AD21ABABE400C7CCB9 /* GoFriendItem.swift in Sources */,
-
 				189C8259219598BB0012A017 /* ViewController.swift in Sources */,
 				180A18E821ACFFCA00632238 /* MapViewController.swift in Sources */,
 				44A634CB219C18BA0091B1AB /* RunningViewController.swift in Sources */,
@@ -606,14 +597,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MSH4HRBWX5;
+				DEVELOPMENT_TEAM = YQCF3NBEME;
 				INFOPLIST_FILE = IosBonusRunningBeforeYou/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.JustinLu.IosBonusRunningBeforeYou;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Jahon.IosBonusRunningBeforeYou;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ENABLE_BATCH_MODE = NO;
 				SWIFT_VERSION = 4.2;
@@ -627,14 +618,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MSH4HRBWX5;
+				DEVELOPMENT_TEAM = YQCF3NBEME;
 				INFOPLIST_FILE = IosBonusRunningBeforeYou/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.JustinLu.IosBonusRunningBeforeYou;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Jahon.IosBonusRunningBeforeYou;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ENABLE_BATCH_MODE = NO;
 				SWIFT_VERSION = 4.2;
