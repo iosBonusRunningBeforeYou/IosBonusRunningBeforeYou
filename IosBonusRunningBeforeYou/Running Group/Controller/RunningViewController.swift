@@ -143,8 +143,10 @@ class RunningViewController: UIViewController {
         locationmanager.startUpdatingLocation() //startUpdatingLocation() 給位置.  startUpdatingHeading() 給羅盤(面向的方向)
         
         // Prepare GroupRunning data
+        
         groupRunningId = 9
-        if groupRunningId == 0{
+        
+        if groupRunningId == 0 {
             for label in labelArray{
                 label.isHidden = true
             }
@@ -163,26 +165,73 @@ class RunningViewController: UIViewController {
                 print("Get user  OK")
                 
                 // MARK: let groupMember show on the UI View
-                for account in result{
-                    for label in self.labelArray{
-                        
-                        label.text = self.mailFilter(account)
-                        
-                        print("label.text: \(label.text)")
-//                        self.blackLabel.text = self.mailFilter(result[0])
-//                        self.grayLabel.text = self.mailFilter(result[1])
-//                        self.blueLabel.text = self.mailFilter(result[2])
-//                        self.orangeLabel.text = self.mailFilter(result[3])
-//                        self.yellowLabel.text = self.mailFilter(result[4])
-//                        self.greenLabel.text = self.mailFilter(result[5])
-                        
-                        self.firstGroupMail = result[0]
-                        self.secondGroupMail = result[1]
-                        self.thirdGroupMail = result[2]
-                        self.fourthGroupMail = result[3]
-                        self.fifthGroupMail = result[4]
-                        self.sixthGroupMail = result[5]
+                
+                if result.count == 1 {
+                    
+                    self.blackLabel.text = self.mailFilter(result[0])
+                    self.firstGroupMail = result[0]
+                    for label in self.labelArray where (label != self.blackLabel && label != self.blackColorLabel) {
+                        label.isHidden = true
                     }
+                    
+                    
+                } else if result.count == 2 {
+                    
+                    self.blackLabel.text = self.mailFilter(result[0])
+                    self.grayLabel.text = self.mailFilter(result[1])
+                    
+                    self.firstGroupMail = result[0]
+                    self.secondGroupMail = result[1]
+                    
+                } else if result.count == 3 {
+                    
+                    self.blackLabel.text = self.mailFilter(result[0])
+                    self.grayLabel.text = self.mailFilter(result[1])
+                    self.blueLabel.text = self.mailFilter(result[2])
+                    
+                    self.firstGroupMail = result[0]
+                    self.secondGroupMail = result[1]
+                    self.thirdGroupMail = result[2]
+                    
+                } else if result.count == 4 {
+                    
+                    self.blackLabel.text = self.mailFilter(result[0])
+                    self.grayLabel.text = self.mailFilter(result[1])
+                    self.blueLabel.text = self.mailFilter(result[2])
+                    self.orangeLabel.text = self.mailFilter(result[3])
+                    
+                    self.firstGroupMail = result[0]
+                    self.secondGroupMail = result[1]
+                    self.thirdGroupMail = result[2]
+                    self.fourthGroupMail = result[3]
+                    
+                } else if result.count == 5 {
+                    
+                    self.blackLabel.text = self.mailFilter(result[0])
+                    self.grayLabel.text = self.mailFilter(result[1])
+                    self.blueLabel.text = self.mailFilter(result[2])
+                    self.orangeLabel.text = self.mailFilter(result[3])
+                    self.yellowLabel.text = self.mailFilter(result[4])
+                    self.firstGroupMail = result[0]
+                    self.secondGroupMail = result[1]
+                    self.thirdGroupMail = result[2]
+                    self.fourthGroupMail = result[3]
+                    self.fifthGroupMail = result[4]
+
+                } else if result.count == 6 {
+                    
+                    self.blackLabel.text = self.mailFilter(result[0])
+                    self.grayLabel.text = self.mailFilter(result[1])
+                    self.blueLabel.text = self.mailFilter(result[2])
+                    self.orangeLabel.text = self.mailFilter(result[3])
+                    self.yellowLabel.text = self.mailFilter(result[4])
+                    self.greenLabel.text = self.mailFilter(result[5])
+                    self.firstGroupMail = result[0]
+                    self.secondGroupMail = result[1]
+                    self.thirdGroupMail = result[2]
+                    self.fourthGroupMail = result[3]
+                    self.fifthGroupMail = result[4]
+                    self.sixthGroupMail = result[5]
                 }
             }
         }
