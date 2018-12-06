@@ -124,9 +124,6 @@
                                                             <integer key="value" value="10"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
-                                                    <connections>
-                                                        <action selector="detailBtn:" destination="M0S-4w-COP" eventType="touchUpInside" id="emi-Lu-BUV"/>
-                                                    </connections>
                                                 </button>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_image.png" translatesAutoresizingMaskIntoConstraints="NO" id="YNZ-56-Yi6">
                                                     <rect key="frame" x="15" y="89" width="200" height="100"/>
@@ -236,17 +233,17 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="name" text="CouponID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q96-Kk-H7O">
-                                <rect key="frame" x="18" y="333" width="150" height="35"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="name" text="CouponID" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q96-Kk-H7O">
+                                <rect key="frame" x="18" y="333" width="250" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="LjE-Hn-JdY"/>
-                                    <constraint firstAttribute="width" constant="150" id="ly3-Ar-Yn3"/>
+                                    <constraint firstAttribute="width" constant="250" id="ly3-Ar-Yn3"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="有效日期:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="leD-L1-lqz">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="有效日期:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="leD-L1-lqz">
                                 <rect key="frame" x="18" y="376" width="150" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="DtN-6w-qW9"/>
@@ -256,7 +253,7 @@
                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TH9-fV-HSc">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TH9-fV-HSc">
                                 <rect key="frame" x="12" y="404" width="150" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="bVY-Rd-WNt"/>
@@ -400,6 +397,7 @@
                     <navigationItem key="navigationItem" id="v3V-8H-2go"/>
                     <connections>
                         <outlet property="couponIdLabel" destination="q96-Kk-H7O" id="CSN-97-uLm"/>
+                        <outlet property="couponImage" destination="oQs-pe-0eB" id="Ihs-FG-GeO"/>
                         <outlet property="expiredateLabel" destination="TH9-fV-HSc" id="7W5-ys-ENs"/>
                         <outlet property="totalPriceLabel" destination="DSw-AK-lIm" id="YPR-bf-AiN"/>
                         <outlet property="totalQuantityLabel" destination="Mk7-Ql-ny1" id="UMe-5e-S5B"/>
@@ -413,6 +411,6 @@
     </scenes>
     <resources>
         <image name="default_image.png" width="128" height="128"/>
-        <image name="dollar" width="16" height="16"/>
+        <image name="dollar" width="32" height="32"/>
     </resources>
 </document>
