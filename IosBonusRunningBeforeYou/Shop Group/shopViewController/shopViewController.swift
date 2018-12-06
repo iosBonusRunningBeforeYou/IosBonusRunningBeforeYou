@@ -19,10 +19,6 @@ class ShopViewController: UIViewController, UITableViewDelegate, UITableViewData
     let communicator = Communicator.shared
     
     var couponItem = [CouponItem]()
-    var couponImage = UIImage()
-    var couponIdArray = Array<Int>()
-    var sum = 0
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,31 +28,25 @@ class ShopViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         
         getCouponList()
-        
-        for i in couponIdArray.count ... 4 {
-            sum = i + 1
-            getCouponImage()
-        }
-       
-//        getCouponImage()
 
     }
     
-    @IBAction func detailBtn(_ sender: AnyObject) {
+//    @IBAction func detailBtn(_ sender: AnyObject) {
 //        let buttonPosition:CGPoint = sender.convert(CGPoint.zero, to:self.tableView)
 //        let indexPath = self.tableView.indexPathForRow(at: buttonPosition)
 //        print(indexPath)
 
-    }
+//    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let controller = segue.destination as? ExchangeViewController
+       
         
         if let row = tableView.indexPathForSelectedRow?.row {
             controller?.couponid = couponItem[row].couponid
             controller?.expiredate = couponItem[row].expiredate
             controller?.totalprice = String(couponItem[row].price)
-            
+            controller?.id = row
         }
             
     }
@@ -79,14 +69,12 @@ class ShopViewController: UIViewController, UITableViewDelegate, UITableViewData
         let cell:ShopTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as! ShopTableViewCell
         
         let coupon = self.couponItem[indexPath.row]
-//        let image = self.couponIdArray[indexPath.row]
         
         cell.CouponidLable.text = "\(coupon.couponid)"
         cell.QuantityLable.text = "剩餘數量：\(coupon.quantity)"
         cell.ExpiredateLable.text = "\(coupon.expiredate)"
         cell.PriceLable.text = "\(coupon.price)"
-        
-//        cell.CouponImage.image? = UIImage(data: couponImage) ?? UIImage(named: "dollar")!
+        getCouponImage(cell.CouponImage, coupon.id)
         
         return cell
     }
@@ -115,20 +103,15 @@ class ShopViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
             
             for coupon in resultObject {
-                self.couponIdArray.append(coupon.id)
                 self.couponItem.append(coupon)
             }
             self.tableView.reloadData()
             
-            for item in self.couponIdArray  {
-                print("self.couponItem:\(item)")
-            }
         }
     }
     
-    func getCouponImage() {
-        
-        communicator.getCouponImage(url: communicator.ShopServlet_URL, id: self.sum) { (data, error) in
+    func getCouponImage(_ image:UIImageView,_ id:Int) {
+        communicator.getCouponImage(url: communicator.ShopServlet_URL, id: id) { (data, error) in
             if let error = error {
                 print("Get image error:\(error)")
                 return
@@ -139,10 +122,7 @@ class ShopViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
             print("Get Image OK.")
             
-            self.couponImage = UIImage(data: data) ?? UIImage(named: "dollar")!
-            
-            print("json = \(data)")
-            self.tableView.reloadData()
+            image.image = UIImage(data: data)
         }
     }
     
