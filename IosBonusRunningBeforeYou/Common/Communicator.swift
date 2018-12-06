@@ -16,6 +16,7 @@ let GET_IMAGE_KEY = "getImage"
 let EMAIL_KEY = "email"
 let IMAGE_SIZE_KEY = "imageSize"
 let FIND_BY_EMAIL_KEY = "findByEmail"
+let COUPON_ID = "id"
 
 typealias DoneHandler = (_ result:Any?, _ error: Error?) -> Void
 typealias DownloadDoneHandler = (_ result:Data?, _ error: Error?) -> Void
@@ -24,7 +25,7 @@ class Communicator {
     // Constants
     
 
-    static let BASEURL = "http://192.168.50.245:8080/Running_MySQL_Web"//ip自己要再改 教室5G
+    static let BASEURL = "http://192.168.50.49:8080/Running_MySQL_Web"//ip自己要再改 教室5G
 //    static let BASEURL = "http://172.20.10.9:8080/Running_MySQL_Web"//ip自己要再改 手機
 
 
@@ -99,5 +100,13 @@ class Communicator {
             return
         }
         completion(data, nil)
+    }
+    
+    func getCouponImage(url:String ,id:Int , imageSize:Int = 1024, completion:@escaping DownloadDoneHandler ){
+        let paramters:[String:Any] = [ACTION_KEY : GET_IMAGE_KEY,
+                                      COUPON_ID : id,
+                                      IMAGE_SIZE_KEY : imageSize]
+        
+        doPostForImage(urlString: url, parameters: paramters, completion: completion)
     }
 }
