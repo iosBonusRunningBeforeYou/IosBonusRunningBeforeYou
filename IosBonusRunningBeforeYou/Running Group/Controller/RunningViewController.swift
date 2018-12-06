@@ -86,6 +86,7 @@ class RunningViewController: UIViewController {
     var sixthGroupMail = String()
     var sixthUserName = String()
     
+    // MARK: get info from Game.
     var groupInfo = GoFriendItem()
     
     // Boolean to judge polyline color
@@ -97,9 +98,13 @@ class RunningViewController: UIViewController {
     var sixthNameColor = false
     
     var labelArray = Array<UILabel>()
+    var accountArray = Array<String>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        groupRunningId = groupInfo.groupId ?? 0
+        
         // Do any additional setup after loading the view, typically from a nib.
         mainMapView.delegate = self   //Important! 將MKMapViewDelegate的協定,綁在身上.
         guard CLLocationManager.locationServicesEnabled() else {
@@ -122,21 +127,10 @@ class RunningViewController: UIViewController {
         labelArray.append(yellowColorLabel)
         labelArray.append(greenColorLabel)
         
-        if groupId == 0{
-            for label in labelArray{
-                label.isHidden = true
-            }
-        }
-        
         // Execute moveAndZoomMap() after 3.0 seconds.  //DispatchQueue 是Grant Central DisPath 的應用. //.main 執行在mainQueue
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5 ){
             self.moveAndZoomMap()
         }
-        
-        if groupId == 0 {
-            blackLabel.isHidden = true
-        }
-    
         
         // Ask permission.
         locationmanager.requestAlwaysAuthorization()
@@ -149,43 +143,49 @@ class RunningViewController: UIViewController {
         locationmanager.startUpdatingLocation() //startUpdatingLocation() 給位置.  startUpdatingHeading() 給羅盤(面向的方向)
         
         // Prepare GroupRunning data
-        getFakeData()
-        communicator.getGroupEmail(id: groupRunningId) { (result, error) in
-            print("getGroupEmail = \(String(describing: result))")
-            
-            if let error = error {
-                print("Get user error:\(error)")
-                return
+        groupRunningId = 9
+        if groupRunningId == 0{
+            for label in labelArray{
+                label.isHidden = true
             }
-            guard let result = (result as? [String]) else {
-                print("result is nil")
-                return
+        } else {
+            communicator.getGroupEmail(id: groupRunningId) { (result, error) in
+                print("getGroupEmail = \(String(describing: result))")
+                
+                if let error = error {
+                    print("Get user error:\(error)")
+                    return
+                }
+                guard let result = (result as? [String]) else {
+                    print("result is nil")
+                    return
+                }
+                print("Get user  OK")
+                
+                // MARK: let groupMember show on the UI View
+                for account in result{
+                    for label in self.labelArray{
+                        
+                        label.text = self.mailFilter(account)
+                        
+                        print("label.text: \(label.text)")
+//                        self.blackLabel.text = self.mailFilter(result[0])
+//                        self.grayLabel.text = self.mailFilter(result[1])
+//                        self.blueLabel.text = self.mailFilter(result[2])
+//                        self.orangeLabel.text = self.mailFilter(result[3])
+//                        self.yellowLabel.text = self.mailFilter(result[4])
+//                        self.greenLabel.text = self.mailFilter(result[5])
+                        
+                        self.firstGroupMail = result[0]
+                        self.secondGroupMail = result[1]
+                        self.thirdGroupMail = result[2]
+                        self.fourthGroupMail = result[3]
+                        self.fifthGroupMail = result[4]
+                        self.sixthGroupMail = result[5]
+                    }
+                }
             }
-            print("Get user  OK")
-            
-            // MARK: let groupMember show on the UI View
-//            self.blackLabel.text = self.mailFilter(result[0])
-//            self.pinkLabel.text = self.mailFilter(result[1])
-//            self.blueLabel.text = self.mailFilter(result[2])
-//            self.orangeLabel.text = self.mailFilter(result[3])
-//            self.yellowLabel.text = self.mailFilter(result[4])
-//            self.greenLabel.text = self.mailFilter(result[5])
-            
-            self.blackLabel.text = self.mailFilter(result[0])
-            self.grayLabel.text = self.mailFilter(result[1])
-            self.blueLabel.text = self.mailFilter(result[2])
-            self.orangeLabel.text = self.mailFilter(result[3])
-            self.yellowLabel.text = self.mailFilter(result[4])
-            self.greenLabel.text = self.mailFilter(result[5])
-            
-            self.firstGroupMail = result[0]
-            self.secondGroupMail = result[1]
-            self.thirdGroupMail = result[2]
-            self.fourthGroupMail = result[3]
-            self.fifthGroupMail = result[4]
-            self.sixthGroupMail = result[5]
         }
-        
         playButtonView.isHidden = true
         pauseButtonView.isHidden = false
         
@@ -195,10 +195,10 @@ class RunningViewController: UIViewController {
         
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(RunningViewController.action), userInfo: nil, repeats: true)
         
-
         let now = Date()
         running.startTime = Int(now.timeIntervalSince1970 * 1000)
         PrintHelper.println(tag: "RunningViewController", line: 154, "Running:groupId = \(groupInfo)")
+        
     }
     
     func moveAndZoomMap(){
@@ -257,7 +257,6 @@ class RunningViewController: UIViewController {
         
         time += 1
         timerLabel.text = transToHourMinSec(time: Float(time))
-        
     }
     
     func showAlert(){
@@ -358,7 +357,7 @@ class RunningViewController: UIViewController {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(overlay: overlay)
         
-        if groupId != 0 {
+        if groupRunningId != 0 {
             
             if firstNameColor {
                 renderer.strokeColor = UIColor.black
@@ -420,7 +419,7 @@ class RunningViewController: UIViewController {
         self.running.name = "Mary"
         self.running.id = 1
         self.tempUserData.email_account = self.running.mail
-        groupRunningId = 9
+//        groupRunningId = 9
     }
     
 }
@@ -696,7 +695,8 @@ extension RunningViewController : CLLocationManagerDelegate{
                 self.sixthGroupMember.longitude = data.longitude
             }
         }
-        
+        print("groupRunningId:\(groupRunningId)")
+        if groupRunningId != 0 {
         let oldFirstCoordinate = CLLocationCoordinate2DMake(self.firstGroupMember.latitude, self.firstGroupMember.longitude)
         self.drawFirstMember2D(coordinate: oldFirstCoordinate)
         
@@ -714,6 +714,7 @@ extension RunningViewController : CLLocationManagerDelegate{
         
         let oldsixthCoordinate = CLLocationCoordinate2DMake(self.sixthGroupMember.latitude, self.sixthGroupMember.longitude)
         self.drawSixthMember2D(coordinate: oldsixthCoordinate)
+        }
     }
     
     func draw2D(coordinate: CLLocationCoordinate2D) {
