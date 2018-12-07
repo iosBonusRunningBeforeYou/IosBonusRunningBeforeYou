@@ -35,7 +35,7 @@ struct Running: Codable {
     
 }
 
-struct FirstGroupMember: Codable {
+struct GroupMember: Codable {
     var id: Int = 0
     var latitude: Double = 0
     var longitude: Double = 0
@@ -48,62 +48,3 @@ struct FirstGroupMember: Codable {
 
 }
 
-struct SecondGroupMember: Codable {
-    var id: Int = 0
-    var latitude: Double = 0
-    var longitude: Double = 0
-    var distance: Double = 0
-    var time: Int = 0
-    var totalTime: Double = 0
-    var startTime: Int = 0
-    var endTime: Int = 0
-    var points: Double = 0
-}
-
-struct ThirdGroupMember: Codable {
-    var id: Int = 0
-    var latitude: Double = 0
-    var longitude: Double = 0
-    var distance: Double = 0
-    var time: Int = 0
-    var totalTime: Double = 0
-    var startTime: Int = 0
-    var endTime: Int = 0
-    var points: Double = 0
-}
-
-struct FourthGroupMember: Codable {
-    var id: Int = 0
-    var latitude: Double = 0
-    var longitude: Double = 0
-    var distance: Double = 0
-    var time: Int = 0
-    var totalTime: Double = 0
-    var startTime: Int = 0
-    var endTime: Int = 0
-    var points: Double = 0
-}
-
-struct FifthGroupMember: Codable {
-    var id: Int = 0
-    var latitude: Double = 0
-    var longitude: Double = 0
-    var distance: Double = 0
-    var time: Int = 0
-    var totalTime: Double = 0
-    var startTime: Int = 0
-    var endTime: Int = 0
-    var points: Double = 0
-}
-
-struct SixthGroupMember: Codable {
-    var id: Int = 0
-    var latitude: Double = 0
-    var longitude: Double = 0
-    var distance: Double = 0
-    var time: Int = 0
-    var totalTime: Double = 0
-    var startTime: Int = 0
-    var endTime: Int = 0
-    var points: Double = 0
-}

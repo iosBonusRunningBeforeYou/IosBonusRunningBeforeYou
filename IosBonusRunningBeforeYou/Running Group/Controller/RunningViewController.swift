@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import Alamofire
+import UserNotifications
 
 class RunningViewController: UIViewController {
     
@@ -43,7 +44,9 @@ class RunningViewController: UIViewController {
     
     var time = 0
     var timer = Timer()
-
+    var groupRunngingStartArea = Bool()
+    var groupRunngingEndArea = Bool()
+    
     var oldPoint = Double()
     var old_target_daily = Double()
     var old_target_weekly = Double()
@@ -62,29 +65,25 @@ class RunningViewController: UIViewController {
     
     // Group Running Data
     var groupRunningId = Int()
-    var firstGroupMember = FirstGroupMember()
+    var firstGroupMember = GroupMember()
     var firstGroupMail = String()
-    var firstUserName = String()
     
-    var secondGroupMember = SecondGroupMember()
+    var secondGroupMember = GroupMember()
     var secondGroupMail = String()
-    var secondUserName = String()
     
-    var thirdGroupMember = ThirdGroupMember()
+    var thirdGroupMember = GroupMember()
     var thirdGroupMail = String()
-    var thirdUserName = String()
     
-    var fourthGroupMember = FourthGroupMember()
+    var fourthGroupMember = GroupMember()
     var fourthGroupMail = String()
-    var fourthUserName = String()
     
-    var fifthGroupMember = FifthGroupMember()
+    var fifthGroupMember = GroupMember()
     var fifthGroupMail = String()
-    var fifthUserName = String()
     
-    var sixthGroupMember = SixthGroupMember()
+    var sixthGroupMember = GroupMember()
     var sixthGroupMail = String()
-    var sixthUserName = String()
+    
+    var exceptGroupPointMember = String()
     
     // MARK: get info from Game.
     var groupInfo = GoFriendItem()
@@ -97,13 +96,28 @@ class RunningViewController: UIViewController {
     var fifthNameColor = false
     var sixthNameColor = false
     
+    // Start & End Location
+    var groupStartLocation = Double()
+    var groupEndLocation = Double()
+    
     var labelArray = Array<UILabel>()
     var accountArray = Array<String>()
+    
+    // userDefault
+    
+    let userDefault = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // userDefault
+//        running.mail = userDefault.string(forKey: "email")
+        
         groupRunningId = groupInfo.groupId ?? 0
+        
+        print("groupInfo.groupId: \(groupRunningId)")
+        
+        getFakeData()
         
         // Do any additional setup after loading the view, typically from a nib.
         mainMapView.delegate = self   //Important! 將MKMapViewDelegate的協定,綁在身上.
@@ -144,13 +158,16 @@ class RunningViewController: UIViewController {
         
         // Prepare GroupRunning data
         
-        groupRunningId = 9
+//        groupRunningId = 9
         
         if groupRunningId == 0 {
             for label in labelArray{
                 label.isHidden = true
             }
         } else {
+            
+            navigationItem.title = "GroupRunning"
+            
             communicator.getGroupEmail(id: groupRunningId) { (result, error) in
                 print("getGroupEmail = \(String(describing: result))")
                 
@@ -261,6 +278,34 @@ class RunningViewController: UIViewController {
         let span = MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)   //Span 地圖縮放 ()
         let region = MKCoordinateRegion(center: location.coordinate, span: span)  //把span的參數 設定給Region
         mainMapView.setRegion(region, animated: true)
+        
+        // MARK: 判斷揪團跑起點終點位置
+        print("groupRunningId:groupRunningId:\(groupRunningId)")
+        if groupRunningId != 0 {
+            guard let startPointLatitude =  groupInfo.startPointLatitude, let startPointLongitude =  groupInfo.startPointLongitude else {
+                print("groupInfo.startPoint = nil")
+                return
+            }
+            
+            guard let endPointLatitude =  groupInfo.endPointLongitude, let endPointLongitude =  groupInfo.endPointLongitude else {
+                print("groupInfo.endPoint = nil")
+                return
+            }
+            
+            print("oldCoordinate:\(oldCoordinate)")
+            
+            if abs(location.coordinate.latitude - startPointLatitude) < 0.0002, abs(location.coordinate.longitude - startPointLongitude) < 0.0002{
+                groupRunngingStartArea = true
+            }
+            
+            if location.coordinate.latitude - endPointLatitude == 0, location.coordinate.longitude - endPointLongitude == 0{
+                groupRunngingEndArea = true
+            }
+            
+            if groupRunngingStartArea {showStartErrorAlert()}
+            if groupRunngingEndArea {showEndErrorAlert()}
+            
+        }
     }
     
     @IBAction func playButton(_ sender: UIButton) {
@@ -402,6 +447,125 @@ class RunningViewController: UIViewController {
     present(alert, animated: true, completion: nil) // present由下往上跳全螢幕.
     }
     
+    func showStartErrorAlert() {
+        let alertText = "距離揪團跑起點太遠, 此次揪團跑不予以計點"
+        let alert = UIAlertController(title: alertText, message: "", preferredStyle: .alert)
+        
+        let ok = UIAlertAction(title: "確定", style: .default) { (action) in
+        }
+        
+        alert.addAction(ok)
+        present(alert, animated: true, completion: nil) // present由下往上跳全螢幕.
+    }
+    
+    func showEndErrorAlert() {
+        let alertText = "\(exceptGroupPointMember)距離揪團跑終點太遠, 此次揪團跑不予以計點"
+        let alert = UIAlertController(title: alertText, message: "", preferredStyle: .alert)
+        
+        let ok = UIAlertAction(title: "確定", style: .default) { (action) in
+        }
+        
+        alert.addAction(ok)
+        present(alert, animated: true, completion: nil) // present由下往上跳全螢幕.
+    }
+    
+    func showGroupAlert(){
+        // 無條件進位
+        self.running.points = running.points.rounded( .towardZero)
+        let alertText = "您這次獲得了\(Int(running.points))點,\n是否結束此次運動?"
+        let alert = UIAlertController(title: alertText , message: "", preferredStyle: .alert)
+        
+        let ok = UIAlertAction(title: "確定", style: .default){(action) in
+            
+            // unwind to frontPage
+            
+            self.performSegue(withIdentifier: "unwind", sender: self)
+            
+            // upload data to dataBase
+            
+            print("\(self.running.startTime),\(self.running.endTime)")
+            
+            let runningData = try! JSONEncoder().encode(self.running)
+            let runningString = String(data: runningData, encoding: .utf8)
+            self.communicator.insertRunningDataAndPointData(runningData: runningString!, pointData: runningString!){ (result, error) in
+                print("insertRunningDataAndPointData = \(String(describing: result))")
+            }
+            
+            // MARK:把點數加到會員資料表 sumToTotalPoint(email,points);
+            
+            self.communicator.findTotalPoint(email: self.running.mail) {(result, error) in
+                print("findTotalPoint = \(String(describing: result))")
+                
+                if let error = error {
+                    print("Get point error:\(error)")
+                    return
+                }
+                
+                guard let result = result else {
+                    print("point is nil")
+                    return
+                }
+                
+                self.oldPoint = result as! Double
+                print("\(self.oldPoint)")
+                self.running.points += self.oldPoint
+                print("\(self.running.points)")
+                
+                self.communicator.updateTotalPoint(email: self.running.mail, totalPoint: Int(self.running.points)) { (result, error) in
+                    print("updateTotalPoint = \(String(describing: result))")
+                }
+            }
+            
+            // MARK:把公里數加到每日、每週、每月的會員資料表. sumToTotalmetra(email);
+            
+            self.communicator.findByEmail (email: self.running.mail) {(result, error) in
+                print("findByEmail = \(String(describing: result))")
+                
+                if let error = error {
+                    print("Get user error:\(error)")
+                    return
+                }
+                guard let result = result else {
+                    print("result is nil")
+                    return
+                }
+                print("Get user  OK")
+                
+                guard let jsonDate = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)else {
+                    print("Fail to generate jsonData.")
+                    return
+                }
+                let decoder = JSONDecoder()
+                guard let resultObject = try? decoder.decode(TempUserData.self, from: jsonDate) else
+                {
+                    print("Fail to decode jsonData.")
+                    return
+                }
+                
+                self.tempUserData.target_daily = resultObject.target_daily + self.traveledDistance
+                self.tempUserData.target_weekly = resultObject.target_weekly + self.traveledDistance
+                self.tempUserData.target_monthly = resultObject.target_monthly + self.traveledDistance
+                
+                let runningData = try! JSONEncoder().encode(self.tempUserData)
+                let runningString = String(data: runningData, encoding: .utf8)
+                self.communicator.updateTarget(email: self.running.mail, user: runningString!){ (result, error) in
+                    print("updateTarget = \(String(describing: result))")
+                }
+            }
+        }
+        
+        let cancel = UIAlertAction(title: "取消", style: .destructive){(action) in
+            //...
+        }
+        
+        alert.addAction(ok)
+        
+        alert.addAction(cancel)
+        
+        present(alert, animated: true, completion: nil) // present由下往上跳全螢幕.
+    }
+    
+    
     // MARK: - Mapkit delegate
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(overlay: overlay)
@@ -420,6 +584,8 @@ class RunningViewController: UIViewController {
                 renderer.strokeColor = UIColor.yellow
             } else if sixthNameColor{
                 renderer.strokeColor = UIColor.green
+            } else {
+                renderer.strokeColor = UIColor.red
             }
             
         } else {
@@ -469,6 +635,27 @@ class RunningViewController: UIViewController {
         self.running.id = 1
         self.tempUserData.email_account = self.running.mail
 //        groupRunningId = 9
+    }
+    
+    func runningNotice(){
+        let content = UNMutableNotificationContent()
+        content.title = "🤩"
+        content.badge = 1
+        content.sound = UNNotificationSound.default
+        
+        let request = UNNotificationRequest(identifier: "timeNotice", content: content, trigger: nil)
+        
+        UNUserNotificationCenter.current().add(request) {error in
+            if let error = error {
+                print("UNUserNotificationCenter error:\(error)")
+                return
+            }
+            print("成功建立通知...")
+        }
+    }
+    
+    @IBAction func emojiPressed(_ sender: UIButton) {
+        runningNotice()
     }
     
 }
@@ -529,9 +716,7 @@ extension RunningViewController : CLLocationManagerDelegate{
         // upload to server
         getFakeData()
 
-        let runningData = try! JSONEncoder().encode(self.running)
-        let runningString = String(data: runningData, encoding: .utf8)
-        communicator.insertRunning(running: runningString!) {(result, error) in
+        communicator.insertRunning(running: self.running) {(result, error) in
         print("runningInsert = \(String(describing: result))")
         }
         
@@ -561,7 +746,7 @@ extension RunningViewController : CLLocationManagerDelegate{
                 return
             }
             let decoder = JSONDecoder()
-            guard let resultObject = try? decoder.decode([FirstGroupMember].self, from: jsonDate) else
+            guard let resultObject = try? decoder.decode([GroupMember].self, from: jsonDate) else
             {
                 print("Fail to decode jsonData.")
                 return
@@ -596,7 +781,7 @@ extension RunningViewController : CLLocationManagerDelegate{
                 return
             }
             let decoder = JSONDecoder()
-            guard let resultObject = try? decoder.decode([SecondGroupMember].self, from: jsonDate) else
+            guard let resultObject = try? decoder.decode([GroupMember].self, from: jsonDate) else
             {
                 print("Fail to decode jsonData.")
                 return
@@ -630,7 +815,7 @@ extension RunningViewController : CLLocationManagerDelegate{
                 return
             }
             let decoder = JSONDecoder()
-            guard let resultObject = try? decoder.decode([ThirdGroupMember].self, from: jsonDate) else
+            guard let resultObject = try? decoder.decode([GroupMember].self, from: jsonDate) else
             {
                 print("Fail to decode jsonData.")
                 return
@@ -664,7 +849,7 @@ extension RunningViewController : CLLocationManagerDelegate{
                 return
             }
             let decoder = JSONDecoder()
-            guard let resultObject = try? decoder.decode([FourthGroupMember].self, from: jsonDate) else
+            guard let resultObject = try? decoder.decode([GroupMember].self, from: jsonDate) else
             {
                 print("Fail to decode jsonData.")
                 return
@@ -698,7 +883,7 @@ extension RunningViewController : CLLocationManagerDelegate{
                 return
             }
             let decoder = JSONDecoder()
-            guard let resultObject = try? decoder.decode([FifthGroupMember].self, from: jsonDate) else
+            guard let resultObject = try? decoder.decode([GroupMember].self, from: jsonDate) else
             {
                 print("Fail to decode jsonData.")
                 return
@@ -732,7 +917,7 @@ extension RunningViewController : CLLocationManagerDelegate{
                 return
             }
             let decoder = JSONDecoder()
-            guard let resultObject = try? decoder.decode([SixthGroupMember].self, from: jsonDate) else
+            guard let resultObject = try? decoder.decode([GroupMember].self, from: jsonDate) else
             {
                 print("Fail to decode jsonData.")
                 return
@@ -764,6 +949,7 @@ extension RunningViewController : CLLocationManagerDelegate{
         let oldsixthCoordinate = CLLocationCoordinate2DMake(self.sixthGroupMember.latitude, self.sixthGroupMember.longitude)
         self.drawSixthMember2D(coordinate: oldsixthCoordinate)
         }
+        
     }
     
     func draw2D(coordinate: CLLocationCoordinate2D) {
@@ -896,11 +1082,13 @@ extension Communicator{
         doPost(urlString: RunningDataServlet_URL, parameters: parameters, completion:completion)
     }
     
-    func insertRunning(running: String ,completion:@escaping DoneHandler){
+    func insertRunning(running: Running ,completion:@escaping DoneHandler){
         
         // time, latitude, longitude, id;
+        let runningData = try! JSONEncoder().encode(running)
+        let runningString = String(data: runningData, encoding: .utf8)
         
-        let parameters:[String:Any] = [ACTION_KEY : "runningInsert","running":running]
+        let parameters:[String:Any] = [ACTION_KEY : "runningInsert","running":runningString as Any]
         doPost(urlString: RunningServlet_URL, parameters: parameters, completion:completion)
         
     }

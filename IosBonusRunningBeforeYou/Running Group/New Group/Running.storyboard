@@ -43,7 +43,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Bfx-eP-qkU"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="跑步" id="Zji-XL-dA1"/>
+                    <tabBarItem key="tabBarItem" title="跑步" selectedImage="跑步" id="Zji-XL-dA1"/>
                     <navigationItem key="navigationItem" id="q78-Az-amY"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
@@ -114,17 +114,17 @@
                                                     </label>
                                                 </subviews>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Zpt-wQ-Qua">
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="Zpt-wQ-Qua">
                                                 <rect key="frame" x="0.0" y="18" width="148" height="15"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gJw-KY-LYn">
-                                                        <rect key="frame" x="0.0" y="0.0" width="70" height="15"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="71" height="15"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9kS-37-fLs">
-                                                        <rect key="frame" x="78" y="0.0" width="70" height="15"/>
+                                                        <rect key="frame" x="77" y="0.0" width="71" height="15"/>
                                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="15" id="n0t-Hz-lhq"/>
@@ -281,6 +281,13 @@
                                     <outlet property="delegate" destination="pVo-uG-4EE" id="Vqq-iB-FaN"/>
                                 </connections>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ewy-8D-dBz">
+                                <rect key="frame" x="329" y="318" width="30" height="30"/>
+                                <state key="normal" title="🤩"/>
+                                <connections>
+                                    <action selector="emojiPressed:" destination="pVo-uG-4EE" eventType="touchUpInside" id="Ryy-CH-cbO"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -293,6 +300,8 @@
                             <constraint firstItem="GLP-zn-oeh" firstAttribute="leading" secondItem="Qp7-zI-hJx" secondAttribute="leading" id="R96-Zj-apX"/>
                             <constraint firstItem="Qp7-zI-hJx" firstAttribute="top" secondItem="7On-jk-p07" secondAttribute="top" id="bbA-bE-8SY"/>
                             <constraint firstItem="GLP-zn-oeh" firstAttribute="leading" secondItem="7On-jk-p07" secondAttribute="leading" id="gWr-17-NF1"/>
+                            <constraint firstItem="7On-jk-p07" firstAttribute="trailing" secondItem="ewy-8D-dBz" secondAttribute="trailing" constant="16" id="p7a-ht-ssT"/>
+                            <constraint firstItem="GLP-zn-oeh" firstAttribute="top" secondItem="ewy-8D-dBz" secondAttribute="bottom" constant="55" id="zAK-6F-uv3"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7On-jk-p07"/>
                     </view>
@@ -407,5 +416,6 @@
     <resources>
         <image name="baseline_pause_circle_outline_white_48dp" width="96" height="96"/>
         <image name="baseline_play_circle_outline_white_48dp" width="96" height="96"/>
+        <image name="跑步" width="22.5" height="22.5"/>
     </resources>
 </document>
