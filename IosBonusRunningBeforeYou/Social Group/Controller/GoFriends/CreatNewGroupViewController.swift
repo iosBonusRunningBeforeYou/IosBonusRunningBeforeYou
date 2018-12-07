@@ -29,7 +29,7 @@ class CreatNewGroupViewController: UIViewController,UITextFieldDelegate {
     var newGroup = GoFriendItem()
     let communicator = Communicator.shared
     var results:[Int] = []
-    let email = "123@gamil.com"
+    let email = "Lisa@gmail.com"
     
     var hidden = true{
         didSet{

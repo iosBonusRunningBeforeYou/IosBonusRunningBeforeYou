@@ -15,7 +15,7 @@ class GoFriendsViewController: UIViewController {
     @IBOutlet weak var goFriendsTVC: UITableView!
     @IBOutlet weak var goFriendCV: UICollectionView!
     let communicator = Communicator.shared
-    let userEmail = "123@gamil.com"
+    let userEmail = "Lisa@gmail.com"
     var userJoinGroupId: [Int] = []
     var groupItems = [GoFriendItem]()
     var userJoinGroup = [GoFriendItem]()

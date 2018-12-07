@@ -27,7 +27,7 @@ class GroupDeatilViewController: UIViewController,CLLocationManagerDelegate, MKM
     var joinNum = 0
     let tag = "GroupDeatilViewController"
     var identifier = "groupRunningStart"
-    var email = "123@gamil.com"
+    var email = "Lisa@gmail.com"
     
     override func viewDidLoad() {
         super.viewDidLoad()
