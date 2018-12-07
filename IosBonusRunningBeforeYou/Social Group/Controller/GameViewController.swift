@@ -33,7 +33,7 @@ class GameViewController: UIViewController {
                 print("result is nil")
                 return
             }
-            print("Get all  OK")
+            print("Get all OK")
             
             guard let jsonDate = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)else {
                 print("Fail to generate jsonData.")

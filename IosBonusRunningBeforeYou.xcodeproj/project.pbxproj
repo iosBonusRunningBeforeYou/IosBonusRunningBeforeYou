@@ -51,6 +51,8 @@
 		44A4C79521A57D4B0042E7A1 /* Running.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A4C79421A57D4B0042E7A1 /* Running.swift */; };
 		44A4C79721A57DBB0042E7A1 /* TempUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A4C79621A57DBB0042E7A1 /* TempUserData.swift */; };
 		44A634CB219C18BA0091B1AB /* RunningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A634CA219C18BA0091B1AB /* RunningViewController.swift */; };
+		FD10FB0321BA66C500CF6F7D /* PointRecordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD10FB0221BA66C500CF6F7D /* PointRecordTableViewCell.swift */; };
+		FD10FB0621BA69D100CF6F7D /* PointRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD10FB0521BA69D100CF6F7D /* PointRecord.swift */; };
 		FDA3CBD521B8FD3300C8128B /* PointRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA3CBD121B8FD3300C8128B /* PointRecordViewController.swift */; };
 		FDA3CBD621B8FD3300C8128B /* MemberDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA3CBD221B8FD3300C8128B /* MemberDataViewController.swift */; };
 		FDA3CBD721B8FD3300C8128B /* MemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA3CBD321B8FD3300C8128B /* MemberViewController.swift */; };
@@ -106,6 +108,8 @@
 		9CFC6C5DF9E8A2F2C638AC34 /* Pods-IosBonusRunningBeforeYou.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IosBonusRunningBeforeYou.release.xcconfig"; path = "Pods/Target Support Files/Pods-IosBonusRunningBeforeYou/Pods-IosBonusRunningBeforeYou.release.xcconfig"; sourceTree = "<group>"; };
 		B27C918BC83B098C1F3FB523 /* Pods-IosBonusRunningBeforeYou.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IosBonusRunningBeforeYou.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IosBonusRunningBeforeYou/Pods-IosBonusRunningBeforeYou.debug.xcconfig"; sourceTree = "<group>"; };
 		C953E18E3FD390A2E51FFC81 /* Pods_IosBonusRunningBeforeYou.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IosBonusRunningBeforeYou.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FD10FB0221BA66C500CF6F7D /* PointRecordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointRecordTableViewCell.swift; sourceTree = "<group>"; };
+		FD10FB0521BA69D100CF6F7D /* PointRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointRecord.swift; sourceTree = "<group>"; };
 		FDA3CBD121B8FD3300C8128B /* PointRecordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointRecordViewController.swift; sourceTree = "<group>"; };
 		FDA3CBD221B8FD3300C8128B /* MemberDataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberDataViewController.swift; sourceTree = "<group>"; };
 		FDA3CBD321B8FD3300C8128B /* MemberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberViewController.swift; sourceTree = "<group>"; };
@@ -278,6 +282,7 @@
 		18602699219AD6E00060B27F /* Member Group */ = {
 			isa = PBXGroup;
 			children = (
+				FD10FB0421BA69A600CF6F7D /* Model */,
 				1860269A219AD6F70060B27F /* View */,
 				FDA3CBD021B8FD3300C8128B /* Controller */,
 			);
@@ -404,10 +409,19 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		FD10FB0421BA69A600CF6F7D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FD10FB0521BA69D100CF6F7D /* PointRecord.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		FDA3CBD021B8FD3300C8128B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
 				FDA3CBD121B8FD3300C8128B /* PointRecordViewController.swift */,
+				FD10FB0221BA66C500CF6F7D /* PointRecordTableViewCell.swift */,
 				FDA3CBD221B8FD3300C8128B /* MemberDataViewController.swift */,
 				FDA3CBD321B8FD3300C8128B /* MemberViewController.swift */,
 				FDA3CBD421B8FD3300C8128B /* MyCouponViewController.swift */,
@@ -545,6 +559,7 @@
 				3279D35C21B8C88A00992BA6 /* shopViewController.swift in Sources */,
 				18F227D021AFF0BD00A66903 /* GroupDeatilViewController.swift in Sources */,
 				1863635A219C5D87001F9B52 /* Communicator.swift in Sources */,
+				FD10FB0621BA69D100CF6F7D /* PointRecord.swift in Sources */,
 				184690A621A3E56400CE7B41 /* GameDetailViewController.swift in Sources */,
 				18A542AF21ABB82800C7CCB9 /* UserJoinGroupCollectionViewCell.swift in Sources */,
 				186A0F2021AC2F31003F69C1 /* CreatNewGroupViewController.swift in Sources */,
@@ -573,6 +588,7 @@
 				44A634CB219C18BA0091B1AB /* RunningViewController.swift in Sources */,
 				1852439121BA93040003B251 /* RegisterViewController.swift in Sources */,
 				181A157621A961D6001A50E5 /* PrintHelper.swift in Sources */,
+				FD10FB0321BA66C500CF6F7D /* PointRecordTableViewCell.swift in Sources */,
 				184690AA21A3FCE900CE7B41 /* RankOfGame.swift in Sources */,
 				3279D35B21B8C88A00992BA6 /* ExchangeViewController.swift in Sources */,
 				1812BEF821A3B0FE00B22993 /* GoFriendsViewController.swift in Sources */,

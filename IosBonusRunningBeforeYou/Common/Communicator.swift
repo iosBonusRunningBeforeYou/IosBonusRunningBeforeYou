@@ -25,7 +25,7 @@ class Communicator {
     // Constants
     
 
-    static let BASEURL = "http://192.168.50.77:8080/Running_MySQL_Web"//ip自己要再改 教室5G
+    static let BASEURL = "http://192.168.50.170:8080/Running_MySQL_Web"//ip自己要再改 教室5G
 
 //    static let BASEURL = "http://172.20.10.9:8080/Running_MySQL_Web"//ip自己要再改 手機
 
@@ -59,7 +59,7 @@ class Communicator {
         
     }
     
-    func findByEmail(url:String,eamil:String,completion:@escaping DoneHandler ){
+    func findByEmail(url:String, eamil:String, completion:@escaping DoneHandler){
         let parameters:[String:Any] = [ACTION_KEY : FIND_BY_EMAIL_KEY,
                                        EMAIL_KEY : eamil]
         doPost(urlString: url, parameters: parameters, completion: completion)

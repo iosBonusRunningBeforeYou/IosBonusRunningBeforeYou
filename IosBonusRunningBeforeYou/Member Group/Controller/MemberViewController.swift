@@ -20,6 +20,8 @@ class MemberViewController: UIViewController {
     
     var sliderImageView: UIImageView!
     
+    let userDefaults = UserDefaults.standard
+    
     var lastPage = 0
     var currentPage: Int = 0 {
         didSet {
@@ -43,8 +45,6 @@ class MemberViewController: UIViewController {
         super.viewDidLoad()
         
         pageViewController = self.children.first as! UIPageViewController
-        let pageViewHeight = pageViewController.view.frame.height
-        let pageViewWidth = pageViewController.view.frame.width
         
         //根據Storyboard ID 創建viewcontroller
         pointRecordViewController = storyboard?.instantiateViewController(withIdentifier: "PointRecordVC") as! PointRecordViewController
@@ -56,7 +56,7 @@ class MemberViewController: UIViewController {
         pageViewController.setViewControllers([pointRecordViewController], direction: UIPageViewController.NavigationDirection.forward, animated: true, completion: nil)
         
         //添加顯示條到畫面
-        sliderImageView = UIImageView(frame: CGRect(x: 0, y: -1, width: self.view.frame.width / 3.0, height: 3.0))
+        sliderImageView = UIImageView(frame: CGRect(x: 0, y: -1, width: self.view.frame.width / 3.0, height: 2.0))
         sliderImageView.image = UIImage(named: "slider")
         sliderView.addSubview(sliderImageView)
         
@@ -78,6 +78,11 @@ class MemberViewController: UIViewController {
     }
     @IBAction func changeCurrentPage(_ sender: UIButton) {
         currentPage = sender.tag - 100
+    }
+    
+    
+    @IBAction func logout(_ sender: UIBarButtonItem) {
+        
     }
     
 }
