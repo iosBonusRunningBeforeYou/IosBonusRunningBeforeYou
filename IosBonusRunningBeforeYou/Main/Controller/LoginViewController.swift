@@ -18,10 +18,15 @@ class LoginViewController: UIViewController {
     let communicator = Communicator.shared
     var userData = UserData()
     let userDefaults = UserDefaults.standard
+    var email = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        email = userDefaults.string(forKey: "email")!
+        if (email != nil) {
+            self.performSegue(withIdentifier: "loginSuccessful", sender: nil)   // 接 running
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

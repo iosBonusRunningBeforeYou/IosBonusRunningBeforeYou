@@ -12,6 +12,9 @@ class MemberViewController: UIViewController {
     
     var pageViewController: UIPageViewController!
     @IBOutlet weak var sliderView: UIView!
+    @IBOutlet weak var pointCenterBtn: UIButton!
+    @IBOutlet weak var myCouponBtn: UIButton!
+    @IBOutlet weak var editUserDataBtn: UIButton!
     
     var pointRecordViewController: PointRecordViewController!
     var myCouponViewController: MyCouponViewController!
@@ -43,6 +46,10 @@ class MemberViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        pointCenterBtn.buttomBorder(width: 1, borderColor: UIColor.darkGray)
+        myCouponBtn.buttomBorder(width: 1, borderColor: UIColor.darkGray)
+        editUserDataBtn.buttomBorder(width: 1, borderColor: UIColor.darkGray)
         
         pageViewController = self.children.first as! UIPageViewController
         
@@ -82,6 +89,10 @@ class MemberViewController: UIViewController {
     
     
     @IBAction func logout(_ sender: UIBarButtonItem) {
+        userDefaults.removeObject(forKey: "email")
+    }
+    
+    @IBAction func unwindToMember(segue: UIStoryboardSegue) {
         
     }
     

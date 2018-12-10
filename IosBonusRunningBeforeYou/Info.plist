@@ -26,6 +26,8 @@
 	<string>請授權App可以讀取GPS座標</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>請授權App可以讀取GPS座標</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>請授權App可以存取相本</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>

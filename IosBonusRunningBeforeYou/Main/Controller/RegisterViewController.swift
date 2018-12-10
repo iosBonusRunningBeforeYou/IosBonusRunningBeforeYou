@@ -79,7 +79,7 @@ class RegisterViewController: UIViewController {
         }
         
         if (passwordTextField.text != confirmTextField.text) {
-            self.errorMessage.text = "2次密碼輸入不一致!!"
+            self.errorMessage.text = "新密碼2次輸入不一致!!"
             self.errorMessage.textColor = UIColor.red
             return
         }

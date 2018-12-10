@@ -53,6 +53,11 @@
 		44A634CB219C18BA0091B1AB /* RunningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A634CA219C18BA0091B1AB /* RunningViewController.swift */; };
 		FD10FB0321BA66C500CF6F7D /* PointRecordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD10FB0221BA66C500CF6F7D /* PointRecordTableViewCell.swift */; };
 		FD10FB0621BA69D100CF6F7D /* PointRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD10FB0521BA69D100CF6F7D /* PointRecord.swift */; };
+		FD10FB0821BCF6F600CF6F7D /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD10FB0721BCF6F600CF6F7D /* ChangePasswordViewController.swift */; };
+		FD10FB0A21BCF8E200CF6F7D /* MyCoupon.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD10FB0921BCF8E200CF6F7D /* MyCoupon.swift */; };
+		FD10FB0C21BCF96800CF6F7D /* MyCouponTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD10FB0B21BCF96800CF6F7D /* MyCouponTableViewCell.swift */; };
+		FD10FB0E21BD229400CF6F7D /* EditUserDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD10FB0D21BD229400CF6F7D /* EditUserDataViewController.swift */; };
+		FD10FB1421BD278C00CF6F7D /* MemberDataTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD10FB1321BD278C00CF6F7D /* MemberDataTableViewController.swift */; };
 		FDA3CBD521B8FD3300C8128B /* PointRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA3CBD121B8FD3300C8128B /* PointRecordViewController.swift */; };
 		FDA3CBD621B8FD3300C8128B /* MemberDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA3CBD221B8FD3300C8128B /* MemberDataViewController.swift */; };
 		FDA3CBD721B8FD3300C8128B /* MemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA3CBD321B8FD3300C8128B /* MemberViewController.swift */; };
@@ -110,6 +115,11 @@
 		C953E18E3FD390A2E51FFC81 /* Pods_IosBonusRunningBeforeYou.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IosBonusRunningBeforeYou.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD10FB0221BA66C500CF6F7D /* PointRecordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointRecordTableViewCell.swift; sourceTree = "<group>"; };
 		FD10FB0521BA69D100CF6F7D /* PointRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointRecord.swift; sourceTree = "<group>"; };
+		FD10FB0721BCF6F600CF6F7D /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
+		FD10FB0921BCF8E200CF6F7D /* MyCoupon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCoupon.swift; sourceTree = "<group>"; };
+		FD10FB0B21BCF96800CF6F7D /* MyCouponTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCouponTableViewCell.swift; sourceTree = "<group>"; };
+		FD10FB0D21BD229400CF6F7D /* EditUserDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserDataViewController.swift; sourceTree = "<group>"; };
+		FD10FB1321BD278C00CF6F7D /* MemberDataTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberDataTableViewController.swift; sourceTree = "<group>"; };
 		FDA3CBD121B8FD3300C8128B /* PointRecordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointRecordViewController.swift; sourceTree = "<group>"; };
 		FDA3CBD221B8FD3300C8128B /* MemberDataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberDataViewController.swift; sourceTree = "<group>"; };
 		FDA3CBD321B8FD3300C8128B /* MemberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberViewController.swift; sourceTree = "<group>"; };
@@ -413,18 +423,47 @@
 			isa = PBXGroup;
 			children = (
 				FD10FB0521BA69D100CF6F7D /* PointRecord.swift */,
+				FD10FB0921BCF8E200CF6F7D /* MyCoupon.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		FD10FB0F21BD23B300CF6F7D /* PointRecord */ = {
+			isa = PBXGroup;
+			children = (
+				FDA3CBD121B8FD3300C8128B /* PointRecordViewController.swift */,
+				FD10FB0221BA66C500CF6F7D /* PointRecordTableViewCell.swift */,
+			);
+			path = PointRecord;
+			sourceTree = "<group>";
+		};
+		FD10FB1021BD23EB00CF6F7D /* MyCoupon */ = {
+			isa = PBXGroup;
+			children = (
+				FDA3CBD421B8FD3300C8128B /* MyCouponViewController.swift */,
+				FD10FB0B21BCF96800CF6F7D /* MyCouponTableViewCell.swift */,
+			);
+			path = MyCoupon;
+			sourceTree = "<group>";
+		};
+		FD10FB1121BD240700CF6F7D /* MemberData */ = {
+			isa = PBXGroup;
+			children = (
+				FDA3CBD221B8FD3300C8128B /* MemberDataViewController.swift */,
+				FD10FB1321BD278C00CF6F7D /* MemberDataTableViewController.swift */,
+				FD10FB0721BCF6F600CF6F7D /* ChangePasswordViewController.swift */,
+				FD10FB0D21BD229400CF6F7D /* EditUserDataViewController.swift */,
+			);
+			path = MemberData;
 			sourceTree = "<group>";
 		};
 		FDA3CBD021B8FD3300C8128B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				FDA3CBD121B8FD3300C8128B /* PointRecordViewController.swift */,
-				FD10FB0221BA66C500CF6F7D /* PointRecordTableViewCell.swift */,
-				FDA3CBD221B8FD3300C8128B /* MemberDataViewController.swift */,
+				FD10FB0F21BD23B300CF6F7D /* PointRecord */,
+				FD10FB1021BD23EB00CF6F7D /* MyCoupon */,
+				FD10FB1121BD240700CF6F7D /* MemberData */,
 				FDA3CBD321B8FD3300C8128B /* MemberViewController.swift */,
-				FDA3CBD421B8FD3300C8128B /* MyCouponViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -565,6 +604,7 @@
 				186A0F2021AC2F31003F69C1 /* CreatNewGroupViewController.swift in Sources */,
 				1812BEFA21A3B10800B22993 /* MainViewController.swift in Sources */,
 				1852439321BA93200003B251 /* UserData.swift in Sources */,
+				FD10FB0A21BCF8E200CF6F7D /* MyCoupon.swift in Sources */,
 				1828130221A278DC00D7075C /* GameTableViewCell.swift in Sources */,
 				FDA3CBD621B8FD3300C8128B /* MemberDataViewController.swift in Sources */,
 				FDA3CBD521B8FD3300C8128B /* PointRecordViewController.swift in Sources */,
@@ -581,18 +621,22 @@
 				188AE8A021B4F63100C9A7C1 /* JoinPeopleCollectionViewCell.swift in Sources */,
 				3279D35A21B8C88A00992BA6 /* ShopTableViewCell.swift in Sources */,
 				18085E0921B11D4800FF30A1 /* MapHelperViewControlle.swift in Sources */,
+				FD10FB0E21BD229400CF6F7D /* EditUserDataViewController.swift in Sources */,
 				1852438F21BA92FD0003B251 /* RadioButton.swift in Sources */,
+				FD10FB0821BCF6F600CF6F7D /* ChangePasswordViewController.swift in Sources */,
 				189C8259219598BB0012A017 /* ViewController.swift in Sources */,
 				180A18E821ACFFCA00632238 /* MapViewController.swift in Sources */,
 				FDA3CBD821B8FD3300C8128B /* MyCouponViewController.swift in Sources */,
 				44A634CB219C18BA0091B1AB /* RunningViewController.swift in Sources */,
 				1852439121BA93040003B251 /* RegisterViewController.swift in Sources */,
 				181A157621A961D6001A50E5 /* PrintHelper.swift in Sources */,
+				FD10FB1421BD278C00CF6F7D /* MemberDataTableViewController.swift in Sources */,
 				FD10FB0321BA66C500CF6F7D /* PointRecordTableViewCell.swift in Sources */,
 				184690AA21A3FCE900CE7B41 /* RankOfGame.swift in Sources */,
 				3279D35B21B8C88A00992BA6 /* ExchangeViewController.swift in Sources */,
 				1812BEF821A3B0FE00B22993 /* GoFriendsViewController.swift in Sources */,
 				1852438D21BA92AF0003B251 /* LoginViewController.swift in Sources */,
+				FD10FB0C21BCF96800CF6F7D /* MyCouponTableViewCell.swift in Sources */,
 				184690A821A3E58F00CE7B41 /* RankTableViewCell.swift in Sources */,
 				189C8257219598BB0012A017 /* AppDelegate.swift in Sources */,
 				184690AD21A4FC2100CE7B41 /* UIViewController+Alert.swift in Sources */,
