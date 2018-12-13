@@ -27,5 +27,20 @@ class ShopTableViewCell: UITableViewCell {
         
         // Configure the view for the selected state
     }
+    
+    override var frame: CGRect {
+        get {
+            return super.frame
+        }
+        set (newFrame) {
+            var frame =  newFrame
+            frame.origin.x += 5
+            frame.origin.y += 5 // sesection 間的間距
+            frame.size.height -= 1 * 5 // cell 間的高度
+            frame.size.width -= 1 * frame.origin.x // cell 左邊距
+            frame.size.width -= 1 * 5 // cell 右邊距
+            super.frame = frame
+        }
+    }
 
 }

@@ -15,8 +15,10 @@ class MyCouponViewController: UIViewController {
     let userDefaults = UserDefaults.standard
     let communicator = Communicator.shared
     var myCoupons = [MyCoupon]()
+    var couponList = [CouponItem]()
     var email = String()
     var couponName = String()
+    var indexPath = IndexPath()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +74,34 @@ class MyCouponViewController: UIViewController {
         }
         
     }
+    
+    @IBAction func cellBtnPressed(_ sender: UIButton) {
+        let buttonPosition:CGPoint = sender.convert(CGPoint.zero, to:self.myCouponTableView)
+        indexPath = self.myCouponTableView.indexPathForRow(at: buttonPosition)!
+        print("indexPath：\(indexPath)")
+    }
+    
+    // MARK: - Segues
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToUse" {
+            
+//            let indexPath = myCouponTableView.indexPathForSelectedRow
+            let object = myCoupons[indexPath.row]
+            
+            let controller = segue.destination as? UseMyCouponViewController
+            
+            for coupon in couponList {
+                if coupon.id == object.coupon_id {
+                    controller?.couponID = coupon.id
+                    controller?.couponAmount = object.amount
+                    controller?.couponName = coupon.couponid
+                    controller?.deadLine = "使用期限 : \(coupon.expiredate)"
+                }
+            }
+    
+        }
+    }
 
 }
 
@@ -93,6 +123,35 @@ extension MyCouponViewController: UITableViewDataSource {
         let item = myCoupons[indexPath.row]
         
         cell.myCouponRemainingAmount.text = String(item.amount)
+        
+        communicator.getAll(url: communicator.ShopServlet_URL) { (result, error) in
+            if let error = error {
+                print("Get all error:\(error)")
+                return
+            }
+            guard let result = result else {
+                print("result is nil")
+                return
+            }
+            print("Get all  OK")
+            
+            guard let jsonDate = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)else {
+                print("Fail to generate jsonData.")
+                return
+            }
+            
+            let decoder = JSONDecoder()
+            guard let resultObject = try? decoder.decode([CouponItem].self, from: jsonDate) else {
+                print("Fail to decode jsonData.")
+                return
+            }
+            
+            for coupon in resultObject {
+                self.couponList.append(coupon)
+            }
+            
+        }
+        
         communicator.getCouponName(id: item.coupon_id) { (result, error) in
             
             if let error = error {

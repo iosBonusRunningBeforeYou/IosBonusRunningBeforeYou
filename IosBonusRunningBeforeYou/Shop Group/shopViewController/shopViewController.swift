@@ -46,6 +46,7 @@ class ShopViewController: UIViewController, UITableViewDelegate, UITableViewData
             controller?.couponid = couponItem[row].couponid
             controller?.expiredate = couponItem[row].expiredate
             controller?.totalprice = String(couponItem[row].price)
+            controller?.couponquantity = couponItem[row].quantity
             controller?.id = row
         }
             
@@ -61,9 +62,9 @@ class ShopViewController: UIViewController, UITableViewDelegate, UITableViewData
         return 200 // 設定cell高度
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 3 // 間距高度
-    }
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return 3 // 間距高度
+//    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:ShopTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as! ShopTableViewCell
@@ -126,4 +127,15 @@ class ShopViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
+}
+
+extension Communicator {
+    
+    func getCouponImage(url:String ,id:Int , imageSize:Int = 1024, completion:@escaping DownloadDoneHandler ){
+        let paramters:[String:Any] = [ACTION_KEY : GET_IMAGE_KEY,
+                                      "id" : id,
+                                      IMAGE_SIZE_KEY : imageSize]
+        
+        doPostForImage(urlString: url, parameters: paramters, completion: completion)
+    }
 }

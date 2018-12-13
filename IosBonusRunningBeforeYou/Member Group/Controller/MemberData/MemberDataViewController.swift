@@ -12,6 +12,9 @@ class MemberDataViewController: UIViewController, UINavigationControllerDelegate
     @IBOutlet weak var memberDataView: UIView!
     @IBOutlet weak var userPhoto: UIImageView!
     
+    let communicator = Communicator.shared
+    let userDefaults = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -21,13 +24,65 @@ class MemberDataViewController: UIViewController, UINavigationControllerDelegate
         userPhoto.layer.borderColor = UIColor.black.cgColor
         
         memberDataView.buttomBorder(width: 1, borderColor: UIColor.lightGray)
+        getImage(userPhoto, userDefaults.string(forKey: "email")!)
 
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+    }
+    
+    func getImage(_ image: UIImageView,_ email: String) {
+        
+        communicator.getImage(url: communicator.UserServlet_URL, email: email, imageSize: 270) { (data, error) in
+            if let error = error {
+                print("Get image error:\(error)")
+                return
+            }
+            guard let data = data else {
+                print("Data is nil")
+                return
+            }
+            print("userPhoto: \(data)")
+            self.userPhoto.image = UIImage(data: data)
+            print("userPhoto set success.")
+            
+        }
+        
+    }
+    
+    func convertImageToBase64(image: UIImage) -> String {
+        
+        let imageData = image.jpegData(compressionQuality: 100)!
+        return imageData.base64EncodedString(options: Data.Base64EncodingOptions.lineLength64Characters)
+        
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
         userPhoto.image = image
         dismiss(animated: true, completion: nil)
+        
+        guard let selectedImage = userPhoto.image else {
+            print("Image not found!")
+            return
+        }
+        
+        let imageBase64 =  convertImageToBase64(image: selectedImage)
+        communicator.updatePhoto(email: userDefaults.string(forKey: "email")!, imageBase64: imageBase64) { (result, error) in
+            print("updateResult = \(String(describing: result))")
+            
+            if let error = error {
+                print("Update userPhoto error:\(error)")
+                return
+            }
+            
+            if (result as! Int == 0) {
+                return
+            }
+            
+        }
+        
     }
     
     @IBAction func changePhotoBtnPressed(_ sender: UIButton) {
@@ -83,4 +138,16 @@ extension UIView {
         let rect = CGRect(x: 0, y: self.frame.size.height-width, width: self.frame.size.width, height: width)
         drawBorder(rect: rect, color: borderColor)
     }
+}
+
+extension Communicator {
+    
+    func updatePhoto(email: String, imageBase64: String, completion: @escaping DoneHandler) {
+        
+        let parameters:[String:Any] = [ACTION_KEY : "updatePhoto", "email": email, "imageBase64": imageBase64]
+        doPost(urlString: UserServlet_URL, parameters: parameters, completion:completion)
+    }
+    
+    
+    
 }
