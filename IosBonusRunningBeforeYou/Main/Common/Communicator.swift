@@ -98,12 +98,5 @@ class Communicator {
         }
         completion(data, nil)
     }
-    
-    func getCouponImage(url:String ,id:Int , imageSize:Int = 1024, completion:@escaping DownloadDoneHandler ) {
-        let paramters:[String:Any] = [ACTION_KEY : GET_IMAGE_KEY,
-                                      COUPON_ID : id,
-                                      IMAGE_SIZE_KEY : imageSize]
-        
-        doPostForImage(urlString: url, parameters: paramters, completion: completion)
-    }
+
 }

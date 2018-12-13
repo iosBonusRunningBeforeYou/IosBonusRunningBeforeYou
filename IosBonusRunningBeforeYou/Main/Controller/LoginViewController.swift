@@ -23,10 +23,10 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        email = userDefaults.string(forKey: "email")!
-        if (email != nil) {
-            self.performSegue(withIdentifier: "loginSuccessful", sender: nil)   // 接 running
-        }
+//        email = userDefaults.string(forKey: "email")!
+//        if (email != nil) {
+//            self.performSegue(withIdentifier: "loginSuccessful", sender: nil)   // 接 running
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
