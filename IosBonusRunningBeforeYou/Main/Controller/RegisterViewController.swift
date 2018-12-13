@@ -70,6 +70,13 @@ class RegisterViewController: UIViewController {
         }
     }
     
+    func convertImageToBase64() -> String {
+        
+//        let imageData = image.jpegData(compressionQuality: 100)!
+        let imageData = UIImage(named: "default photo")!.jpegData(compressionQuality: 100)!
+        return imageData.base64EncodedString(options: Data.Base64EncodingOptions.lineLength64Characters)
+        
+    }
     
     @IBAction func registerBtnPressed(_ sender: UIButton) {
         if (emailTextField.text == "" || passwordTextField.text == "" || confirmTextField.text == "" || nameTextField.text == "" || ageTextField.text == "" || heightTextField.text == "" || weightTextField.text == "") {
@@ -110,20 +117,28 @@ class RegisterViewController: UIViewController {
             else {
                 self.userDefaults.set(self.userData.email_account, forKey: "email")
                 self.userDefaults.synchronize()
+                
+                    
+                let imageBase64 =  self.convertImageToBase64()
+                self.communicator.updatePhoto(email: self.userDefaults.string(forKey: "email")!, imageBase64: imageBase64) { (result, error) in
+                    print("updateResult = \(String(describing: result))")
+                    
+                    if let error = error {
+                        print("Update userPhoto error:\(error)")
+                        return
+                    }
+                    
+                    if (result as! Int == 0) {
+                        return
+                    }
+                
+                }
+                
                 self.performSegue(withIdentifier: "registerSuccessful", sender: nil)   // 接 running
             }
         }
         
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 

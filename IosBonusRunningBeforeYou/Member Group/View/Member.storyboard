@@ -177,6 +177,10 @@
                                                     <state key="normal" title="使用">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="cellBtnPressed:" destination="zfk-yn-ieU" eventType="touchUpInside" id="xau-BQ-4Ms"/>
+                                                        <segue destination="0AN-HA-LkK" kind="show" identifier="goToUse" id="4Lt-pL-zDQ"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cUO-fB-Zsm">
                                                     <rect key="frame" x="341.5" y="116" width="10.5" height="21"/>
@@ -318,6 +322,88 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XrI-7A-llY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1589.5999999999999" y="1002.5487256371815"/>
+        </scene>
+        <!--Use My Coupon View Controller-->
+        <scene sceneID="LWn-N0-lzq">
+            <objects>
+                <viewController id="0AN-HA-LkK" customClass="UseMyCouponViewController" customModule="IosBonusRunningBeforeYou" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rZt-vw-5uB">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="QRCode" translatesAutoresizingMaskIntoConstraints="NO" id="Vsm-eM-dYD">
+                                <rect key="frame" x="0.0" y="120" width="375" height="375"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="375" id="dBm-qh-xC9"/>
+                                    <constraint firstAttribute="height" constant="375" id="fdj-dK-7jg"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lf1-Lk-Cur">
+                                <rect key="frame" x="0.0" y="74" width="375" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="svL-F5-JCe"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lnY-KH-eGO">
+                                <rect key="frame" x="0.0" y="527" width="375" height="45"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="hGB-T0-rwQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="完成">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="titleShadowColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="finishBtnPressed:" destination="0AN-HA-LkK" eventType="touchUpInside" id="XOS-QE-rGT"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QmS-D0-Qfz">
+                                <rect key="frame" x="0.0" y="36" width="375" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="TiD-iv-HD8"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Vsm-eM-dYD" firstAttribute="top" secondItem="Lf1-Lk-Cur" secondAttribute="bottom" constant="16" id="3l6-zd-v7h"/>
+                            <constraint firstItem="QmS-D0-Qfz" firstAttribute="centerX" secondItem="rZt-vw-5uB" secondAttribute="centerX" id="5uh-KC-ED9"/>
+                            <constraint firstItem="lnY-KH-eGO" firstAttribute="leading" secondItem="L6x-hf-NbK" secondAttribute="leading" id="B3U-Iv-qQI"/>
+                            <constraint firstItem="L6x-hf-NbK" firstAttribute="trailing" secondItem="QmS-D0-Qfz" secondAttribute="trailing" id="D3B-ge-xB1"/>
+                            <constraint firstItem="lnY-KH-eGO" firstAttribute="centerX" secondItem="rZt-vw-5uB" secondAttribute="centerX" id="Dcw-nY-MB4"/>
+                            <constraint firstItem="Vsm-eM-dYD" firstAttribute="leading" secondItem="L6x-hf-NbK" secondAttribute="leading" id="N4f-rV-byW"/>
+                            <constraint firstItem="Vsm-eM-dYD" firstAttribute="trailing" secondItem="L6x-hf-NbK" secondAttribute="trailing" id="PoF-bb-pQL"/>
+                            <constraint firstItem="Lf1-Lk-Cur" firstAttribute="top" secondItem="QmS-D0-Qfz" secondAttribute="bottom" constant="8" id="V3n-vM-crI"/>
+                            <constraint firstItem="L6x-hf-NbK" firstAttribute="trailing" secondItem="Lf1-Lk-Cur" secondAttribute="trailing" id="Vwa-YU-dbY"/>
+                            <constraint firstItem="L6x-hf-NbK" firstAttribute="trailing" secondItem="lnY-KH-eGO" secondAttribute="trailing" id="W6g-gN-3a1"/>
+                            <constraint firstItem="Lf1-Lk-Cur" firstAttribute="leading" secondItem="L6x-hf-NbK" secondAttribute="leading" id="eeA-5e-uMI"/>
+                            <constraint firstItem="QmS-D0-Qfz" firstAttribute="top" secondItem="L6x-hf-NbK" secondAttribute="top" constant="16" id="oOR-6B-3Kq"/>
+                            <constraint firstItem="QmS-D0-Qfz" firstAttribute="leading" secondItem="L6x-hf-NbK" secondAttribute="leading" id="wYd-dq-nfn"/>
+                            <constraint firstItem="Lf1-Lk-Cur" firstAttribute="centerX" secondItem="rZt-vw-5uB" secondAttribute="centerX" id="wZI-FG-ayF"/>
+                            <constraint firstItem="lnY-KH-eGO" firstAttribute="top" secondItem="Vsm-eM-dYD" secondAttribute="bottom" constant="32" id="xlG-9e-der"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="L6x-hf-NbK"/>
+                    </view>
+                    <connections>
+                        <outlet property="couponNameLabel" destination="QmS-D0-Qfz" id="S7E-Jw-GHE"/>
+                        <outlet property="deadlineLabel" destination="Lf1-Lk-Cur" id="1aP-Ld-uI7"/>
+                        <outlet property="finishBtn" destination="lnY-KH-eGO" id="HCY-dd-9vx"/>
+                        <outlet property="qrcodeImageView" destination="Vsm-eM-dYD" id="HD4-UM-0tP"/>
+                        <segue destination="YNt-Tq-Lm3" kind="unwind" identifier="useCouponSuccessful" unwindAction="unwindToMemberWithSegue:" id="LEI-Yl-yWc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zcK-eb-XRx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="YNt-Tq-Lm3" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="866.39999999999998" y="1727.5862068965519"/>
         </scene>
         <!--編輯個人資料-->
         <scene sceneID="zJH-tj-F5N">
@@ -888,7 +974,6 @@
                     <navigationItem key="navigationItem" title="會員中心" id="OBr-ih-0s8">
                         <barButtonItem key="rightBarButtonItem" title="登出" id="iYJ-a1-MjY">
                             <connections>
-                                <action selector="logout:" destination="Wl7-5k-FiN" id="jhc-Yr-fwh"/>
                                 <segue destination="Vuq-Qp-jh1" kind="unwind" identifier="changePasswordSuccessful" unwindAction="unwindToLoginWithSegue:" id="q9M-dz-hGF"/>
                             </connections>
                         </barButtonItem>
@@ -915,6 +1000,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="QRCode" width="316" height="316"/>
         <image name="default photo" width="96" height="96"/>
         <image name="default_image" width="128" height="128"/>
         <image name="dollar" width="32" height="32"/>

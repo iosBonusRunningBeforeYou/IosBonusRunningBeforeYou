@@ -86,11 +86,8 @@ class MemberViewController: UIViewController {
     @IBAction func changeCurrentPage(_ sender: UIButton) {
         currentPage = sender.tag - 100
     }
+   
     
-    
-    @IBAction func logout(_ sender: UIBarButtonItem) {
-        userDefaults.removeObject(forKey: "email")
-    }
     
     @IBAction func unwindToMember(segue: UIStoryboardSegue) {
         

@@ -23,14 +23,23 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        email = userDefaults.string(forKey: "email")!
-//        if (email != nil) {
-//            self.performSegue(withIdentifier: "loginSuccessful", sender: nil)   // 接 running
-//        }
+        guard let email = userDefaults.string(forKey: "email") else {
+            return
+        }
+        if (email != "") {
+            self.performSegue(withIdentifier: "loginSuccessful", sender: nil)   // 接 running
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        guard let email = userDefaults.string(forKey: "email") else {
+            return
+        }
+        
+        print("login: \(email)")
         errorMessage.text = ""
+        userNameTextField.text = nil
+        passwordTextField.text = nil
     }
 
     @IBAction func loginButtonPressed(_ sender: UIButton) {
@@ -66,6 +75,10 @@ class LoginViewController: UIViewController {
     
     @IBAction func unwindToLogin(segue: UIStoryboardSegue) {
         
+        self.userDefaults.set("", forKey: "email")
+        userDefaults.synchronize()
+        let email = userDefaults.string(forKey: "email")!
+        print("logout: \(email)")
     }
 }
 

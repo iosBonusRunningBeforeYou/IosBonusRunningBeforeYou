@@ -95,7 +95,7 @@
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tR7-QP-pbh">
                                 <rect key="frame" x="16" y="318.5" width="343" height="30"/>
@@ -488,6 +488,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="gkH-kO-IOh"/>
         <segue reference="CKb-Rg-FmD"/>
         <segue reference="2Ky-ET-pPX"/>
     </inferredMetricsTieBreakers>
