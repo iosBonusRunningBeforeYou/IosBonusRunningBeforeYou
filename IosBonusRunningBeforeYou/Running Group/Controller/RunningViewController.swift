@@ -10,8 +10,12 @@ import UIKit
 import MapKit
 import Alamofire
 import UserNotifications
+import CoreLocation
 
-class RunningViewController: UIViewController {
+class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
+    
+    @IBOutlet weak var groupRunningStateField: UILabel!
+    @IBOutlet weak var moveLocationField: UIButton!
     
     @IBOutlet weak var playButtonView: UIButton!
     @IBOutlet weak var pauseButtonView: UIButton!
@@ -34,9 +38,9 @@ class RunningViewController: UIViewController {
     @IBOutlet weak var greenColorLabel: UILabel!
     
     var locationmanager = CLLocationManager()
+    let notificationCenter = UNUserNotificationCenter.current()
     var lastPoint : CLLocationCoordinate2D? = nil
     var newPoint : CLLocationCoordinate2D? = nil
-    
     
     var startLocation: CLLocation!
     var lastLocation : CLLocation!
@@ -44,8 +48,8 @@ class RunningViewController: UIViewController {
     
     var time = 0
     var timer = Timer()
-    var groupRunngingStartArea = Bool()
-    var groupRunngingEndArea = Bool()
+    var isGroupRunngingStartInArea = false
+    var isGroupRunngingEndInArea = false
     
     var oldPoint = Double()
     var old_target_daily = Double()
@@ -83,7 +87,9 @@ class RunningViewController: UIViewController {
     var sixthGroupMember = GroupMember()
     var sixthGroupMail = String()
     
-    var exceptGroupPointMember = String()
+    var pointRecords = PointRecord()
+    
+    var groupRunningBonus = Int()
     
     // MARK: get info from Game.
     var groupInfo = GoFriendItem()
@@ -109,15 +115,22 @@ class RunningViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
         // userDefault
-//        running.mail = userDefault.string(forKey: "email")
+        running.mail = userDefault.string(forKey: "email")!
         
+        print("running.mail: \(running.mail)")
+        
+        // prepare data for running
         groupRunningId = groupInfo.groupId ?? 0
-        
+        groupRunningBonus = 500
+        getFakeData()
         print("groupInfo.groupId: \(groupRunningId)")
         
-        getFakeData()
+        // Check user in Start area
+        isInGroupRunningArea()
+        
+        isGroupRunngingEndInArea = false
         
         // Do any additional setup after loading the view, typically from a nib.
         mainMapView.delegate = self   //Important! 將MKMapViewDelegate的協定,綁在身上.
@@ -126,6 +139,7 @@ class RunningViewController: UIViewController {
             return
         }
         
+    
         // MARK: 判斷是否為揪團跑控制UI顯示.
         labelArray.append(blackLabel)
         labelArray.append(grayLabel)
@@ -142,7 +156,7 @@ class RunningViewController: UIViewController {
         labelArray.append(greenColorLabel)
         
         // Execute moveAndZoomMap() after 3.0 seconds.  //DispatchQueue 是Grant Central DisPath 的應用. //.main 執行在mainQueue
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5 ){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ){
             self.moveAndZoomMap()
         }
         
@@ -151,16 +165,24 @@ class RunningViewController: UIViewController {
         locationmanager.requestWhenInUseAuthorization()
         
         // Prepare locationManager.
+        
         locationmanager.delegate = self  //Important! 將CLLocationManagerDelegate的協定,綁在身上.
         locationmanager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters //設定精確度 = (GPS. Wifi 定位,cell定位 擇佳者)
         locationmanager.activityType = .fitness  //位移類型設定 .fitness 用行走的, 也可以選擇其他交通工具.
         locationmanager.startUpdatingLocation() //startUpdatingLocation() 給位置.  startUpdatingHeading() 給羅盤(面向的方向)
         
+        notificationCenter.delegate = self
+        notificationCenter.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, error) in
+            if granted {
+                print("NotificationCenter Authorization Granted!")
+            }
+        }
+        
         // Prepare GroupRunning data
         
 //        groupRunningId = 9
-        
         if groupRunningId == 0 {
+            moveLocationField.isHidden = true
             for label in labelArray{
                 label.isHidden = true
             }
@@ -254,7 +276,7 @@ class RunningViewController: UIViewController {
         }
         playButtonView.isHidden = true
         pauseButtonView.isHidden = false
-        
+
         timerLabel.layer.cornerRadius = 7.0
         playButtonView.layer.cornerRadius = 5.0
         pauseButtonView.layer.cornerRadius = 5.0
@@ -274,10 +296,14 @@ class RunningViewController: UIViewController {
             return
         }
         
+        isInGroupRunningArea()
+        
         // Move and zoom the map.
         let span = MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)   //Span 地圖縮放 ()
         let region = MKCoordinateRegion(center: location.coordinate, span: span)  //把span的參數 設定給Region
         mainMapView.setRegion(region, animated: true)
+        
+        
         
         // MARK: 判斷揪團跑起點終點位置
         print("groupRunningId:groupRunningId:\(groupRunningId)")
@@ -294,18 +320,32 @@ class RunningViewController: UIViewController {
             
             print("oldCoordinate:\(oldCoordinate)")
             
-            if abs(location.coordinate.latitude - startPointLatitude) < 0.0002, abs(location.coordinate.longitude - startPointLongitude) < 0.0002{
-                groupRunngingStartArea = true
+            if abs(location.coordinate.latitude - startPointLatitude) < 0.001,
+                abs(location.coordinate.longitude - startPointLongitude) < 0.001{
+                isGroupRunngingStartInArea = true
+            }
+
+            if location.coordinate.latitude - endPointLatitude < 0.001, location.coordinate.longitude - endPointLongitude < 0.001{
+                if isGroupRunngingStartInArea {
+                    isGroupRunngingEndInArea = true
+                }
             }
             
-            if location.coordinate.latitude - endPointLatitude == 0, location.coordinate.longitude - endPointLongitude == 0{
-                groupRunngingEndArea = true
+            if isGroupRunngingStartInArea == false {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5 ){
+                    self.showStartErrorAlert()
+                }
             }
             
-            if groupRunngingStartArea {showStartErrorAlert()}
-            if groupRunngingEndArea {showEndErrorAlert()}
+            // already move to updataLocation.
+//            if isGroupRunngingEndInArea == true {showEndInArea()}
             
         }
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        completionHandler([.alert, .sound])
     }
     
     @IBAction func playButton(_ sender: UIButton) {
@@ -322,7 +362,12 @@ class RunningViewController: UIViewController {
         playButtonView.isHidden = false
         timer.fireDate = Date.distantFuture
         locationmanager.stopUpdatingLocation()
-        showAlert()
+        
+        if groupRunningId == 0 {
+            showAlert()
+        } else {
+            showGroupAlert()
+        }
         
         let now:Date = Date()
         
@@ -335,17 +380,13 @@ class RunningViewController: UIViewController {
         mainMapView.addAnnotation(ann)
         // move map
         mainMapView.setCenter(ann.coordinate, animated: true)
-    }
-    
-    @IBAction func CancelPressed(_ sender: UIBarButtonItem) {
-        
-        showAlert()
-    }
-    
-    @IBAction func timeInfoPressed(_ sender: UIButton) {
-     
         
     }
+    
+    @IBAction func cancelPressed(_ sender: UIBarButtonItem) {
+        self.performSegue(withIdentifier: "unwind", sender: self)
+    }
+    
     
     @objc func action(){
         
@@ -448,21 +489,23 @@ class RunningViewController: UIViewController {
     }
     
     func showStartErrorAlert() {
-        let alertText = "距離揪團跑起點太遠, 此次揪團跑不予以計點"
+        let alertText = "距離揪團跑起點太遠, 請接近起點後再次進行揪團跑."
         let alert = UIAlertController(title: alertText, message: "", preferredStyle: .alert)
         
         let ok = UIAlertAction(title: "確定", style: .default) { (action) in
+            
         }
         
         alert.addAction(ok)
         present(alert, animated: true, completion: nil) // present由下往上跳全螢幕.
     }
     
-    func showEndErrorAlert() {
-        let alertText = "\(exceptGroupPointMember)距離揪團跑終點太遠, 此次揪團跑不予以計點"
-        let alert = UIAlertController(title: alertText, message: "", preferredStyle: .alert)
+    func showEndInArea() {
+        let alertText = "恭喜您~終點已到達."
+        let alert = UIAlertController(title: alertText, message: "請按下方停止紐結束運動,獲取點數", preferredStyle: .alert)
         
         let ok = UIAlertAction(title: "確定", style: .default) { (action) in
+           
         }
         
         alert.addAction(ok)
@@ -472,27 +515,34 @@ class RunningViewController: UIViewController {
     func showGroupAlert(){
         // 無條件進位
         self.running.points = running.points.rounded( .towardZero)
-        let alertText = "您這次獲得了\(Int(running.points))點,\n是否結束此次運動?"
-        let alert = UIAlertController(title: alertText , message: "", preferredStyle: .alert)
+        
+        let alertText = "此次跑步+揪團跑點數,共獲得了\(Int(running.points) + groupRunningBonus)點,\n是否結束此次運動?"
+        let alert = UIAlertController(title: alertText , message: "", preferredStyle: .actionSheet)
         
         let ok = UIAlertAction(title: "確定", style: .default){(action) in
             
             // unwind to frontPage
-            
+            self.getFakeData()
             self.performSegue(withIdentifier: "unwind", sender: self)
             
             // upload data to dataBase
-            
             print("\(self.running.startTime),\(self.running.endTime)")
-            
             let runningData = try! JSONEncoder().encode(self.running)
             let runningString = String(data: runningData, encoding: .utf8)
             self.communicator.insertRunningDataAndPointData(runningData: runningString!, pointData: runningString!){ (result, error) in
                 print("insertRunningDataAndPointData = \(String(describing: result))")
             }
             
-            // MARK:把點數加到會員資料表 sumToTotalPoint(email,points);
+            // MARK: 把揪團跑點數加到點數資料表.
             
+            self.pointRecords.record_points = Int(self.running.points) + self.groupRunningBonus
+            
+            print("self.pointRecords.record_points :\(self.pointRecords.record_points)")
+            self.communicator.insertPointData(pointRecords: self.pointRecords) { (result, error) in
+                print("insertPointData = \(String(describing: result))")
+            }
+            
+            // MARK: 把跑步點數與揪團跑點數, 加到會員資料表.
             self.communicator.findTotalPoint(email: self.running.mail) {(result, error) in
                 print("findTotalPoint = \(String(describing: result))")
                 
@@ -508,12 +558,21 @@ class RunningViewController: UIViewController {
                 
                 self.oldPoint = result as! Double
                 print("\(self.oldPoint)")
+                
                 self.running.points += self.oldPoint
+                self.pointRecords.record_points += Int(self.oldPoint)
+                
+                let totalPoint = Int(self.running.points) + self.pointRecords.record_points
                 print("\(self.running.points)")
                 
                 self.communicator.updateTotalPoint(email: self.running.mail, totalPoint: Int(self.running.points)) { (result, error) in
-                    print("updateTotalPoint = \(String(describing: result))")
+                    print("updateGroupRunuingTotalPoint = \(String(describing: result))")
                 }
+                
+                self.communicator.updateTotalPoint(email: self.running.mail, totalPoint: totalPoint) { (result, error) in
+                    print("updateTotalPoint of GroupRunning = \(String(describing: result))")
+                }
+                
             }
             
             // MARK:把公里數加到每日、每週、每月的會員資料表. sumToTotalmetra(email);
@@ -561,6 +620,48 @@ class RunningViewController: UIViewController {
         alert.addAction(ok)
         
         alert.addAction(cancel)
+        
+        present(alert, animated: true, completion: nil) // present由下往上跳全螢幕.
+    }
+    
+    func isInGroupRunningArea(){
+        if groupRunningId == 0 {
+            groupRunningStateField.isHidden = true
+        } else if isGroupRunngingStartInArea == false{
+            groupRunningStateField.text = "Not in groupRunning Area"
+            showNotInAreaAlert()
+        } else {
+            groupRunningStateField.text = "In groupRunning Area"
+            showInAreaAlert()
+        }
+    }
+    
+    // Notification user that he was not in correct position.
+    func showNotInAreaAlert(){
+    
+        let alertText = "您並不在揪團跑起點範圍內."
+        let alert = UIAlertController(title: alertText , message: "\n移動您目前的位置.\n\n 並按左下角◉,\n確認是否在範圍內.", preferredStyle: .alert)
+        
+        let ok = UIAlertAction(title: "確定", style: .default){(action) in
+            
+        }
+        
+        alert.addAction(ok)
+        
+        present(alert, animated: true, completion: nil) // present由下往上跳全螢幕.
+    }
+    
+    // Notification user that he was in correct position.
+    func showInAreaAlert(){
+        
+        let alertText = "您已在揪團跑起點範圍內."
+        let alert = UIAlertController(title: alertText , message: "可以開始跟朋友開始跑步了!", preferredStyle: .alert)
+        
+        let ok = UIAlertAction(title: "確定", style: .default){(action) in
+            
+        }
+        
+        alert.addAction(ok)
         
         present(alert, animated: true, completion: nil) // present由下往上跳全螢幕.
     }
@@ -629,11 +730,18 @@ class RunningViewController: UIViewController {
     }
     
     func getFakeData() {
-        self.running.mail = "2346@gmail.com"
-        self.running.password = "1234"
-        self.running.name = "Mary"
+        
+        if groupRunningId == 0 {
+            self.running.name = "Running"
+        } else {
+            self.running.name = "GroupRunning"
+        }
+        
         self.running.id = 1
         self.tempUserData.email_account = self.running.mail
+        self.pointRecords.email = self.running.mail
+        self.pointRecords.record_name = "GroupRunning"
+        self.pointRecords.record_date = String(self.running.endTime)
 //        groupRunningId = 9
     }
     
@@ -654,8 +762,9 @@ class RunningViewController: UIViewController {
         }
     }
     
-    @IBAction func emojiPressed(_ sender: UIButton) {
-        runningNotice()
+    @IBAction func locationButtonPressed(_ sender: UIButton) {
+        
+        moveAndZoomMap()
     }
     
 }
@@ -688,6 +797,10 @@ extension RunningViewController : CLLocationManagerDelegate{
             assertionFailure("Invaild coordinate or location.")  //assertionFailure, DEBUG用, 用來看不該出現的問題. 不影響使用者.
             return
         }
+        
+        if isGroupRunngingEndInArea == true {showEndInArea()}
+        
+        groupRunningStateField.text = "You’re on your way."
         
         // MARK: get distance Data
         if startLocation == nil {
@@ -929,6 +1042,7 @@ extension RunningViewController : CLLocationManagerDelegate{
                 self.sixthGroupMember.longitude = data.longitude
             }
         }
+        
         print("groupRunningId:\(groupRunningId)")
         if groupRunningId != 0 {
         let oldFirstCoordinate = CLLocationCoordinate2DMake(self.firstGroupMember.latitude, self.firstGroupMember.longitude)
@@ -1091,6 +1205,16 @@ extension Communicator{
         let parameters:[String:Any] = [ACTION_KEY : "runningInsert","running":runningString as Any]
         doPost(urlString: RunningServlet_URL, parameters: parameters, completion:completion)
         
+    }
+    
+    func insertPointData(pointRecords: PointRecord ,completion:@escaping DoneHandler){
+        
+        // record_name, record_points, record_date, email_account;
+        let pointData = try! JSONEncoder().encode(pointRecords)
+        let pointString = String(data: pointData, encoding: .utf8)
+        
+        let parameters:[String:Any] = [ACTION_KEY : "insert","pointData":pointString as Any]
+        doPost(urlString: PointsRecordServlet_URL, parameters: parameters, completion:completion)
     }
     
     func findTotalPoint(email: String ,completion:@escaping DoneHandler) {

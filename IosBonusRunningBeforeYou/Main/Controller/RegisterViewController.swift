@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 
+
 class RegisterViewController: UIViewController {
     
     @IBOutlet weak var maleBtn: RadioButton!
@@ -33,6 +34,7 @@ class RegisterViewController: UIViewController {
         userData.gender = 1
         femaleBtn.isSelected = false
         
+        
     }
     
     @IBAction func maleBtnPressed(_ sender: RadioButton) {
@@ -46,6 +48,7 @@ class RegisterViewController: UIViewController {
         maleBtn.isSelected = false
         userData.gender = 2
     }
+    
     
     @IBAction func emailTextAction(_ sender: UITextField) {
 

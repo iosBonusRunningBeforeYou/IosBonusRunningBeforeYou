@@ -47,9 +47,10 @@ class MemberViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        pointCenterBtn.buttomBorder(width: 1, borderColor: UIColor.darkGray)
-        myCouponBtn.buttomBorder(width: 1, borderColor: UIColor.darkGray)
-        editUserDataBtn.buttomBorder(width: 1, borderColor: UIColor.darkGray)
+//        pointCenterBtn.buttomBorder(width: 1, borderColor: UIColor.darkGray)
+//        myCouponBtn.buttomBorder(width: 1, borderColor: UIColor.darkGray)
+//        editUserDataBtn.buttomBorder(width: 1, borderColor: UIColor.darkGray)
+        
         
         pageViewController = self.children.first as! UIPageViewController
         

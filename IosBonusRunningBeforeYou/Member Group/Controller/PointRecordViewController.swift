@@ -15,7 +15,7 @@ class PointRecordViewController: UIViewController {
     
     let userDefaults = UserDefaults.standard
     let communicator = Communicator.shared
-    var pointRecords = [PointRecord]()
+//    var pointRecords = [PointRecord]()
     var email = String()
     
     override func viewDidLoad() {
