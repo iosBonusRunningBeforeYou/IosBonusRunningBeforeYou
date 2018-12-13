@@ -3,24 +3,28 @@ PODS:
   - SQLite.swift (0.11.5):
     - SQLite.swift/standard (= 0.11.5)
   - SQLite.swift/standard (0.11.5)
+  - Starscream (3.0.6)
   - SVProgressHUD (2.2.5)
 
 DEPENDENCIES:
   - Alamofire
   - SQLite.swift
+  - Starscream (~> 3.0.2)
   - SVProgressHUD
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - SQLite.swift
+    - Starscream
     - SVProgressHUD
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
   SQLite.swift: 6e5356850bb1791459f8c16d6ee9195b28714a2e
+  Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: 19754d0cd5c2f5cd65f66e0b7cace1fdc6a3f9a6
+PODFILE CHECKSUM: 0cad286a55cc0e5cf0c5300d7636ab9fcb614259
 
 COCOAPODS: 1.5.2

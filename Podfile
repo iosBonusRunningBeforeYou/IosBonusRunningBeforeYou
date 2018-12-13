@@ -11,5 +11,5 @@ target 'IosBonusRunningBeforeYou' do
 pod 'Alamofire'
 pod 'SQLite.swift'
 pod 'SVProgressHUD'
-
+pod 'Starscream', '~> 3.0.2'
 end

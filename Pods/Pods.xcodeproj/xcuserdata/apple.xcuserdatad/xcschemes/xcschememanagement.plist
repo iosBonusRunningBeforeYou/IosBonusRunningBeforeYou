@@ -22,6 +22,11 @@
 		<key>SVProgressHUD.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
+		<key>Starscream.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
 			<integer>4</integer>
 		</dict>
 	</dict>

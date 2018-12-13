@@ -22,8 +22,8 @@ class GameDetailViewController: UIViewController {
     @IBOutlet weak var userRuleLabel: UILabel!
     
     
-    var userEmail = "123@gamil.com"
-    
+    var email = "123@gamil.com"
+    let userDefault = UserDefaults.standard
     var gameItem:GameItem?
     var rankOfGameItem = [RankOfGame]()
     let communicator = Communicator.shared
@@ -38,6 +38,9 @@ class GameDetailViewController: UIViewController {
         userInfoView.isHidden = true
         rankOfGameTVC.delegate = self
         rankOfGameTVC.dataSource = self
+         userImageView.clipsToBounds = true
+        userImageView.layer.cornerRadius = 25
+       email = userDefault.string(forKey: "email")!
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,7 +51,7 @@ class GameDetailViewController: UIViewController {
         }
         SVProgressHUD.show()
         getRankOfGame(gameId: gameId, ruleId: ruleId)
-        getJoinStatus(email: userEmail, gameId: gameId)
+        getJoinStatus(email: email, gameId: gameId)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -100,8 +103,10 @@ class GameDetailViewController: UIViewController {
                 return
             }
             
-            image.image = UIImage(data: data)   
+            print("UIImage data = \(data)")
+            image.image = UIImage(data: data)
         }
+        
     }
     
     
@@ -117,7 +122,8 @@ class GameDetailViewController: UIViewController {
             if joinStatus {
                 self.joinBtn.isHidden = true
                 self.userInfoView.isHidden = false
-                self.getImage(self.userImageView, self.userEmail)
+                self.getImage(self.userImageView, self.email)
+             
                 self.getUserInfo ()
             }
             print("joinStatusg;4 ======\(joinStatus)")
@@ -132,7 +138,7 @@ class GameDetailViewController: UIViewController {
         print("rankOfGame = \(rankOfGameItem.count)")
         for rankItem in rankOfGameItem {
             int += 1
-            if rankItem.emailAccount == userEmail {
+            if rankItem.emailAccount == email {
                 print(" rankItem.emailAccount = \(rankItem.emailAccount) \(int) === \(rankOfGameItem[int-1].emailAccount)")
                 
                 userNameLabel.text = rankItem.rankName
@@ -149,7 +155,7 @@ class GameDetailViewController: UIViewController {
             print("gameId")
             return
         }
-        communicator.insertGameJoinState(email: userEmail, gameId: gameId) { (result, error) in
+        communicator.insertGameJoinState(email: email, gameId: gameId) { (result, error) in
             print("insertGameJoinState = \(result)")
             guard let result = result ,let resultInt = result as? Int else{
                 print("get joinStatus nil")
@@ -160,6 +166,12 @@ class GameDetailViewController: UIViewController {
                 self.joinBtn.isHidden = true
                 self.userInfoView.isHidden = false
                 // 找用userId 在陣列中找出user資料 show in userinfoView
+                
+                guard let gameId = self.gameItem?.gameId, let ruleId = self.gameItem?.ruleId else {
+                    print("gameId")
+                    return
+                }
+                self.getRankOfGame(gameId: gameId, ruleId: ruleId)
             }else {
                 print("insertGameJoinState fail")
             }
@@ -183,7 +195,7 @@ extension GameDetailViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let gameId = gameItem?.gameId
         
-        getJoinStatus(email: userEmail, gameId: gameId!)
+        getJoinStatus(email: email, gameId: gameId!)
         
         print("rankOfGameItem count = \(rankOfGameItem.count)")
         return rankOfGameItem.count
@@ -193,6 +205,8 @@ extension GameDetailViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RankCell", for: indexPath) as! RankTableViewCell
         
         let item = rankOfGameItem[indexPath.row]
+        cell.rankImageView.layer.cornerRadius = 25
+        cell.rankImageView.clipsToBounds = true
         getImage(cell.rankImageView, item.emailAccount)
         cell.rankNumLabel.text = String(item.rankNum)
         cell.rankOfUserNameLabel.text = item.rankName

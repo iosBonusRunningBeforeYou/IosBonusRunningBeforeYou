@@ -28,7 +28,7 @@ class GroupDeatilViewController: UIViewController,CLLocationManagerDelegate, MKM
     let tag = "GroupDeatilViewController"
     var identifier = "groupRunningStart"
     var email = "Lisa@gmail.com"
-    
+    let userDefault = UserDefaults.standard
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -46,7 +46,7 @@ class GroupDeatilViewController: UIViewController,CLLocationManagerDelegate, MKM
         locationManager.activityType = .fitness
         locationManager.startUpdatingLocation()
         detailMapView.delegate = self
-        
+        email = userDefault.string(forKey: "email")!
         if segue == "joinSegue"{
             timeNotice()
             handelViewForJoinSegue()
@@ -88,6 +88,10 @@ class GroupDeatilViewController: UIViewController,CLLocationManagerDelegate, MKM
             PrintHelper.println(tag: self.tag, line: 90, "joinNum = \(self.joinNum), groupInfo = \(self.groupInfos)")
             NotificationCenter.default.post(name: Notification.Name(rawValue: "getJoinInfo"), object: 0)
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        groupInfos.removeAll()
     }
     
     @IBAction func joinGroupAction(_ sender: UIButton) {

@@ -29,7 +29,8 @@ class CreatNewGroupViewController: UIViewController,UITextFieldDelegate {
     var newGroup = GoFriendItem()
     let communicator = Communicator.shared
     var results:[Int] = []
-    let email = "Lisa@gmail.com"
+    var email = "Lisa@gmail.com"
+    let userDefault = UserDefaults.standard
     
     var hidden = true{
         didSet{
@@ -38,9 +39,12 @@ class CreatNewGroupViewController: UIViewController,UITextFieldDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        //監聽鍵盤狀態
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIWindow.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIWindow.keyboardWillHideNotification, object: nil)
+//        //監聽鍵盤狀態
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIWindow.keyboardWillShowNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIWindow.keyboardWillHideNotification, object: nil)
+        email = userDefault.string(forKey: "email")!
+        
+         NotificationCenter.default.addObserver(self, selector: #selector(keyboardHight), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
  
     override func viewWillDisappear(_ animated: Bool) {
@@ -133,35 +137,14 @@ class CreatNewGroupViewController: UIViewController,UITextFieldDelegate {
 //        PrintHelper.println(tag: tag, line: 201, "prepare: mapVC.startLatitude \(mapVC.startLatitude), mapVC.startLongitude \(mapVC.startLongitude), mapVC.endLatitude \(mapVC.endLatitude), mapVC.endLongitude \(mapVC.endLongitude)")
     }
     
+    
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         groupNameTextField.resignFirstResponder()
         return true
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
-    }
-}
-
-extension UIViewController {
-    
-    @objc
-    func keyboardWillShow(_ notification: NSNotification) {
-        viewPositionModify(show: true)
-    }
-    
-    @objc
-    func keyboardWillHide(_ notification: NSNotification) {
-        viewPositionModify(show: false)
-    }
-    
-    func viewPositionModify(show:Bool) ->() {
-        let screenSize = (UIScreen.main.bounds.height/2-80)
-        
-        if show {
-            view.center.y -= screenSize
-        }else {
-            view.center.y += screenSize
-        }
     }
 }
 
