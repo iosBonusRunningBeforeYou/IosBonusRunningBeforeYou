@@ -256,6 +256,13 @@
                                             <constraint firstItem="OYf-kA-znJ" firstAttribute="leading" secondItem="UKR-gB-dOv" secondAttribute="leading" id="yZL-At-GPN"/>
                                         </constraints>
                                     </stackView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gut-E6-9T0">
+                                        <rect key="frame" x="8" y="8" width="70" height="70"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="70" id="T9J-DA-Xe4"/>
+                                            <constraint firstAttribute="height" constant="70" id="UNG-9a-389"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.27450980390000002" green="0.73725490199999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -264,8 +271,10 @@
                                     <constraint firstAttribute="trailing" secondItem="liA-61-csF" secondAttribute="trailing" id="NEv-pC-BhS"/>
                                     <constraint firstItem="j75-pI-Z9t" firstAttribute="centerX" secondItem="GLP-zn-oeh" secondAttribute="centerX" id="XHW-ux-UYB"/>
                                     <constraint firstItem="Ofv-Jy-rq8" firstAttribute="leading" secondItem="GLP-zn-oeh" secondAttribute="leading" id="ZcC-Xr-W6q"/>
+                                    <constraint firstItem="gut-E6-9T0" firstAttribute="top" secondItem="GLP-zn-oeh" secondAttribute="top" constant="8" id="Zk2-SS-bpk"/>
                                     <constraint firstItem="Ofv-Jy-rq8" firstAttribute="centerY" secondItem="GLP-zn-oeh" secondAttribute="centerY" multiplier="0.35" id="dMO-O6-dKr"/>
                                     <constraint firstItem="liA-61-csF" firstAttribute="centerY" secondItem="GLP-zn-oeh" secondAttribute="centerY" id="emd-1z-4RG"/>
+                                    <constraint firstItem="gut-E6-9T0" firstAttribute="leading" secondItem="GLP-zn-oeh" secondAttribute="leading" constant="8" id="i3P-IP-F4I"/>
                                     <constraint firstAttribute="bottom" secondItem="UKR-gB-dOv" secondAttribute="bottom" constant="30" id="kMA-SP-4NF"/>
                                     <constraint firstItem="8od-MO-xUt" firstAttribute="leading" secondItem="GLP-zn-oeh" secondAttribute="leading" constant="6" id="m89-6Z-zNu"/>
                                     <constraint firstAttribute="trailing" secondItem="Ofv-Jy-rq8" secondAttribute="trailing" id="ouz-oM-AEe"/>
@@ -322,7 +331,6 @@
                                 <action selector="cancelPressed:" destination="pVo-uG-4EE" id="ysw-Xg-zSa"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="history" id="CyC-bb-kON"/>
                     </navigationItem>
                     <connections>
                         <outlet property="blackColorLabel" destination="Kjx-pD-jN6" id="Zfo-v5-3MH"/>
@@ -334,6 +342,7 @@
                         <outlet property="greenColorLabel" destination="OLb-zd-tLc" id="Mnw-Vj-mXL"/>
                         <outlet property="greenLabel" destination="ypW-oP-0aG" id="byr-6G-vkV"/>
                         <outlet property="groupRunningStateField" destination="Kf9-qx-7aN" id="LF0-QS-N62"/>
+                        <outlet property="imageOfMember" destination="gut-E6-9T0" id="XB1-QA-fx3"/>
                         <outlet property="kiloMetreLabel" destination="liA-61-csF" id="3EQ-mA-5Ws"/>
                         <outlet property="mainMapView" destination="Qp7-zI-hJx" id="vwD-Ti-AuM"/>
                         <outlet property="moveLocationField" destination="ewy-8D-dBz" id="HuC-zg-xfw"/>

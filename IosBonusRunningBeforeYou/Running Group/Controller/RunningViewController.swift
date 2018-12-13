@@ -17,6 +17,8 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
     @IBOutlet weak var groupRunningStateField: UILabel!
     @IBOutlet weak var moveLocationField: UIButton!
     
+    @IBOutlet weak var imageOfMember: UIImageView!
+    
     @IBOutlet weak var playButtonView: UIButton!
     @IBOutlet weak var pauseButtonView: UIButton!
     @IBOutlet weak var timerLabel: UILabel!
@@ -93,6 +95,7 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
     
     // MARK: get info from Game.
     var groupInfo = GoFriendItem()
+    var memberArray = Array<String>()
     
     // Boolean to judge polyline color
     var firstNameColor = false
@@ -180,13 +183,31 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
         
         // Prepare GroupRunning data
         
-//        groupRunningId = 9
+        groupRunningId = 9
         if groupRunningId == 0 {
             moveLocationField.isHidden = true
+            imageOfMember.isHidden = true
             for label in labelArray{
                 label.isHidden = true
             }
         } else {
+            
+            communicator.getImage(url: communicator.GameDetailServlet_URL, email: running.mail) { (data, error) in
+                if let error = error {
+                    print("Get image error:\(error)")
+                    return
+                }
+                guard let data = data else {
+                    print("Data is nil")
+                    return
+                }
+                self.imageOfMember.image = UIImage(data: data)
+                
+                print("imageOfMemberjson = \(data)")
+//                SVProgressHUD.dismiss()
+            }
+            
+
             
             navigationItem.title = "GroupRunning"
             
@@ -205,73 +226,110 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
                 
                 // MARK: let groupMember show on the UI View
                 
-                if result.count == 1 {
+                for member in result{
+                    self.memberArray.append(member)
+                }
+                
+                if let index = self.memberArray.index(of: self.running.mail){
                     
-                    self.blackLabel.text = self.mailFilter(result[0])
-                    self.firstGroupMail = result[0]
+                    self.memberArray.remove(at: index)
+                    print("index:\(index),memberArray.count:\(self.memberArray.count)")
+                }
+            
+                if self.memberArray.count == 0{
+                    for label in self.labelArray{
+                        label.isHidden = true
+                    }
+                }
+            
+                if self.memberArray.count == 1 {
+                    
+                    self.blackLabel.text = self.mailFilter(self.memberArray[0])
+                    self.firstGroupMail = self.memberArray[0]
                     for label in self.labelArray where (label != self.blackLabel && label != self.blackColorLabel) {
                         label.isHidden = true
                     }
                     
+                } else if self.memberArray.count == 2 {
                     
-                } else if result.count == 2 {
+                    self.blackLabel.text = self.mailFilter(self.memberArray[0])
+                    self.grayLabel.text = self.mailFilter(self.memberArray[1])
                     
-                    self.blackLabel.text = self.mailFilter(result[0])
-                    self.grayLabel.text = self.mailFilter(result[1])
+                    self.firstGroupMail = self.memberArray[0]
+                    self.secondGroupMail = self.memberArray[1]
                     
-                    self.firstGroupMail = result[0]
-                    self.secondGroupMail = result[1]
+                    for label in self.labelArray where (label != self.blackLabel && label != self.blackColorLabel &&
+                    label != self.grayLabel && label != self.grayColorLabel) {
+                        label.isHidden = true
+                    }
                     
-                } else if result.count == 3 {
+                } else if self.memberArray.count == 3 {
                     
-                    self.blackLabel.text = self.mailFilter(result[0])
-                    self.grayLabel.text = self.mailFilter(result[1])
-                    self.blueLabel.text = self.mailFilter(result[2])
+                    self.blackLabel.text = self.mailFilter(self.memberArray[0])
+                    self.grayLabel.text = self.mailFilter(self.memberArray[1])
+                    self.blueLabel.text = self.mailFilter(self.memberArray[2])
                     
-                    self.firstGroupMail = result[0]
-                    self.secondGroupMail = result[1]
-                    self.thirdGroupMail = result[2]
+                    self.firstGroupMail = self.memberArray[0]
+                    self.secondGroupMail = self.memberArray[1]
+                    self.thirdGroupMail = self.memberArray[2]
                     
-                } else if result.count == 4 {
+                    for label in self.labelArray where (label != self.blackLabel && label != self.blackColorLabel &&
+                        label != self.grayLabel && label != self.grayColorLabel &&
+                        label != self.blueLabel && label != self.blueColorLabel ) {
+                            
+                            label.isHidden = true
+                    }
                     
-                    self.blackLabel.text = self.mailFilter(result[0])
-                    self.grayLabel.text = self.mailFilter(result[1])
-                    self.blueLabel.text = self.mailFilter(result[2])
-                    self.orangeLabel.text = self.mailFilter(result[3])
+                } else if self.memberArray.count == 4 {
                     
-                    self.firstGroupMail = result[0]
-                    self.secondGroupMail = result[1]
-                    self.thirdGroupMail = result[2]
-                    self.fourthGroupMail = result[3]
+                    self.blackLabel.text = self.mailFilter(self.memberArray[0])
+                    self.grayLabel.text = self.mailFilter(self.memberArray[1])
+                    self.blueLabel.text = self.mailFilter(self.memberArray[2])
+                    self.orangeLabel.text = self.mailFilter(self.memberArray[3])
                     
-                } else if result.count == 5 {
+                    self.firstGroupMail = self.memberArray[0]
+                    self.secondGroupMail = self.memberArray[1]
+                    self.thirdGroupMail = self.memberArray[2]
+                    self.fourthGroupMail = self.memberArray[3]
                     
-                    self.blackLabel.text = self.mailFilter(result[0])
-                    self.grayLabel.text = self.mailFilter(result[1])
-                    self.blueLabel.text = self.mailFilter(result[2])
-                    self.orangeLabel.text = self.mailFilter(result[3])
-                    self.yellowLabel.text = self.mailFilter(result[4])
-                    self.firstGroupMail = result[0]
-                    self.secondGroupMail = result[1]
-                    self.thirdGroupMail = result[2]
-                    self.fourthGroupMail = result[3]
-                    self.fifthGroupMail = result[4]
-
-                } else if result.count == 6 {
+                    self.yellowLabel.isHidden = true
+                    self.yellowColorLabel.isHidden = true
+                    self.greenLabel.isHidden = true
+                    self.greenColorLabel.isHidden = true
                     
-                    self.blackLabel.text = self.mailFilter(result[0])
-                    self.grayLabel.text = self.mailFilter(result[1])
-                    self.blueLabel.text = self.mailFilter(result[2])
-                    self.orangeLabel.text = self.mailFilter(result[3])
-                    self.yellowLabel.text = self.mailFilter(result[4])
-                    self.greenLabel.text = self.mailFilter(result[5])
-                    self.firstGroupMail = result[0]
-                    self.secondGroupMail = result[1]
-                    self.thirdGroupMail = result[2]
-                    self.fourthGroupMail = result[3]
-                    self.fifthGroupMail = result[4]
-                    self.sixthGroupMail = result[5]
+                    
+                } else if self.memberArray.count == 5 {
+                    
+                    self.blackLabel.text = self.mailFilter(self.memberArray[0])
+                    self.grayLabel.text = self.mailFilter(self.memberArray[1])
+                    self.blueLabel.text = self.mailFilter(self.memberArray[2])
+                    self.orangeLabel.text = self.mailFilter(self.memberArray[3])
+                    self.yellowLabel.text = self.mailFilter(self.memberArray[4])
+                    self.firstGroupMail = self.memberArray[0]
+                    self.secondGroupMail = self.memberArray[1]
+                    self.thirdGroupMail = self.memberArray[2]
+                    self.fourthGroupMail = self.memberArray[3]
+                    self.fifthGroupMail = self.memberArray[4]
+                    
+                    self.greenLabel.isHidden = true
+                    self.greenColorLabel.isHidden = true
+                    
+                } else if self.memberArray.count == 6 {
+                    
+                    self.blackLabel.text = self.mailFilter(self.memberArray[0])
+                    self.grayLabel.text = self.mailFilter(self.memberArray[1])
+                    self.blueLabel.text = self.mailFilter(self.memberArray[2])
+                    self.orangeLabel.text = self.mailFilter(self.memberArray[3])
+                    self.yellowLabel.text = self.mailFilter(self.memberArray[4])
+                    self.greenLabel.text = self.mailFilter(self.memberArray[5])
+                    self.firstGroupMail = self.memberArray[0]
+                    self.secondGroupMail = self.memberArray[1]
+                    self.thirdGroupMail = self.memberArray[2]
+                    self.fourthGroupMail = self.memberArray[3]
+                    self.fifthGroupMail = self.memberArray[4]
+                    self.sixthGroupMail = self.memberArray[5]
                 }
+
             }
         }
         playButtonView.isHidden = true
@@ -487,7 +545,7 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
         
     present(alert, animated: true, completion: nil) // present由下往上跳全螢幕.
     }
-    
+   
     func showStartErrorAlert() {
         let alertText = "距離揪團跑起點太遠, 請接近起點後再次進行揪團跑."
         let alert = UIAlertController(title: alertText, message: "", preferredStyle: .alert)
@@ -527,6 +585,7 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
             
             // upload data to dataBase
             print("\(self.running.startTime),\(self.running.endTime)")
+            self.running.points = self.running.points + Double(self.groupRunningBonus)
             let runningData = try! JSONEncoder().encode(self.running)
             let runningString = String(data: runningData, encoding: .utf8)
             self.communicator.insertRunningDataAndPointData(runningData: runningString!, pointData: runningString!){ (result, error) in
@@ -662,7 +721,6 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
         }
         
         alert.addAction(ok)
-        
         present(alert, animated: true, completion: nil) // present由下往上跳全螢幕.
     }
     
