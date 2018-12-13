@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3E868D11DBCC58A92EC67A86A625D9EF"
-               BlueprintName = "SQLite.swift"
+               BlueprintIdentifier = "8913EF48558CDFB2BE2F590E32C5CA03"
+               BlueprintName = "Starscream"
                ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "SQLite.swift.framework">
+               BuildableName = "Starscream.framework">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

@@ -22,13 +22,14 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         guard let email = userDefaults.string(forKey: "email") else {
             return
         }
         if (email != "") {
             self.performSegue(withIdentifier: "loginSuccessful", sender: nil)   // 接 running
         }
+
     }
     
     override func viewWillAppear(_ animated: Bool) {

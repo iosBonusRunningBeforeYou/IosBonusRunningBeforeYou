@@ -22,10 +22,14 @@ typealias DoneHandler = (_ result:Any?, _ error: Error?) -> Void
 typealias DownloadDoneHandler = (_ result:Data?, _ error: Error?) -> Void
 
 class Communicator {
-    // Constants
+   
     
-    static let BASEURL = "http://192.168.50.170:8080/Running_MySQL_Web"//ip自己要再改 教室5G
+    let SOCKET_URL = "ws://192.168.50.245:8080/Running_MySQL_WebOld/ChatServer/" //5g
+//    let SOCKET_URL = "ws://172.20.10.9:8080/Running_MySQL_WebOld/ChatServer/" //家
+
+    static let BASEURL = "http://192.168.50.245:8080/Running_MySQL_WebOld"//ip自己要再改 教室5G
 //    static let BASEURL = "http://172.20.10.9:8080/Running_MySQL_Web"//ip自己要再改 手機
+//static let BASEURL = "http://192.168.196.127:8080/Running_MySQL_Web"//ip自己要再改 III
 
     //各個功能的URL
     let GameServlet_URL = BASEURL + "/GameServlet"
@@ -36,6 +40,7 @@ class Communicator {
     let RunningDataServlet_URL = BASEURL + "/RunningDataServlet"
     let UserServlet_URL = BASEURL + "/UserServlet"
     let GoFriendsServlet_URL = BASEURL + "/GoFriendsServlet"
+    let ChatServlet_URL = BASEURL + "/ChatServlet"
     
     static let shared = Communicator()
     private init() {

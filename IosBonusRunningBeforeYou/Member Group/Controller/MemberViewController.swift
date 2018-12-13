@@ -51,6 +51,8 @@ class MemberViewController: UIViewController {
         myCouponBtn.buttomBorder(width: 1, borderColor: UIColor.darkGray)
         editUserDataBtn.buttomBorder(width: 1, borderColor: UIColor.darkGray)
         
+        
+        
         pageViewController = self.children.first as! UIPageViewController
         
         //根據Storyboard ID 創建viewcontroller

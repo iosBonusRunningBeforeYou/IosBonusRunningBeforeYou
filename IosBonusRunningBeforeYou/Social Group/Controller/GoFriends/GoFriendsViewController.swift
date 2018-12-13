@@ -15,21 +15,22 @@ class GoFriendsViewController: UIViewController {
     @IBOutlet weak var goFriendsTVC: UITableView!
     @IBOutlet weak var goFriendCV: UICollectionView!
     let communicator = Communicator.shared
-    let userEmail = "Lisa@gmail.com"
+    var email = "Lisa@gmail.com"
     var userJoinGroupId: [Int] = []
     var groupItems = [GoFriendItem]()
     var userJoinGroup = [GoFriendItem]()
     let tag = "goFriendViewController"
     var isfromCreatNewGroup = false
     var indexPathForCV:Int?
-    
+    let userDefault = UserDefaults.standard
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         goFriendsTVC.dataSource = self
         goFriendsTVC.delegate = self
         goFriendCV.dataSource = self
         goFriendCV.delegate = self
-        
+         email = userDefault.string(forKey: "email")!
         //接收頁面的廣播通知
         NotificationCenter.default.addObserver(self, selector: #selector(GoFriendsViewController.reloadDatas(notification:)), name: Notification.Name(rawValue: "creatGroupOk"), object: nil)
     }
@@ -94,7 +95,7 @@ class GoFriendsViewController: UIViewController {
     }
     
     func showJoinGroup(){
-        communicator.getUserJoinGroup(emailAccount: userEmail) { (result, error) in
+        communicator.getUserJoinGroup(emailAccount: email) { (result, error) in
             if let error = error {
                 print("Get getUserJoinGroup error:\(error)")
                 return

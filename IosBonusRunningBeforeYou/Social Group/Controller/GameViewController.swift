@@ -55,20 +55,6 @@ class GameViewController: UIViewController {
             SVProgressHUD.dismiss()
         }
     }
-    func getImage (_ image:UIImageView,_ email:String){
-        communicator.getImage(url: communicator.GameDetailServlet_URL, email: email) { (data, error) in
-            if let error = error {
-                print("Get image error:\(error)")
-                return
-            }
-            guard let data = data else {
-                print("Data is nil")
-                return
-            }
-            image.image = UIImage(data: data)
-            //            print("json = \(data)")
-        }
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         NotificationCenter.default.post(name: Notification.Name(rawValue: "currentPageChanged"), object: 0)

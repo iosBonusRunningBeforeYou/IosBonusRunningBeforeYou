@@ -36,15 +36,19 @@ class JoinPeopleCollectionViewController: UICollectionViewController {
         }
     }
     
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using [segue destinationViewController].
         // Pass the selected object to the new view controller.
+        guard let ChatVC = segue.destination as? ChatRoomViewController else{
+            return
+        }
+        ChatVC.userInfo = userInfo
     }
-    */
+    
 
     // MARK: UICollectionViewDataSource
 
