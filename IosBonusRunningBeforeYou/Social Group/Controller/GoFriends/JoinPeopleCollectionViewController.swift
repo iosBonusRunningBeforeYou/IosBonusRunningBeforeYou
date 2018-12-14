@@ -8,17 +8,23 @@
 
 import UIKit
 import SVProgressHUD
+import Starscream
 private let reuseIdentifier = "Cell"
 
 class JoinPeopleCollectionViewController: UICollectionViewController {
 
-
+    var socket: WebSocket!
     var userInfo = [GoFriendItem]()
     let communicator = Communicator.shared
     override func viewDidLoad() {
         super.viewDidLoad()
         SVProgressHUD.show()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        
+    }
+    
+    
 
     func getImage (_ image:UIImageView,_ email:String){
         communicator.getImage(url: communicator.GameDetailServlet_URL, email: email) { (data, error) in

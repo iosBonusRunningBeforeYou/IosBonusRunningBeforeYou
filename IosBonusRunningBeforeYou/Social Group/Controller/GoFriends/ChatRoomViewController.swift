@@ -9,7 +9,10 @@
 import UIKit
 import Starscream
 import UserNotifications
-class ChatRoomViewController: UIViewController,WebSocketDelegate,UITextFieldDelegate {
+import Photos
+import MobileCoreServices
+
+class ChatRoomViewController: UIViewController, WebSocketDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     
     
@@ -28,6 +31,10 @@ class ChatRoomViewController: UIViewController,WebSocketDelegate,UITextFieldDele
         super.viewDidLoad()
         // userDefault
         email = userDefault.string(forKey: "email")!
+        //Ask user's permission to access photo library.
+        PHPhotoLibrary.requestAuthorization { (status) in
+            print("PHPhotoLibrary.requestAuthorization: \(status.rawValue)")
+        }
         // Do any additional setup after loading the view.
         getAll()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardHight), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
@@ -42,8 +49,81 @@ class ChatRoomViewController: UIViewController,WebSocketDelegate,UITextFieldDele
         socketConnect(emailAccount: email, groupId:groupId )
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        socket.disconnect()
+//    override func viewWillDisappear(_ animated: Bool) {
+//        socket.disconnect()
+//    }
+    @IBAction func sendPhoto(_ sender: UIButton) {
+        let alert = UIAlertController(title: "Please choose source", message: nil, preferredStyle: .actionSheet)
+        let camera = UIAlertAction(title: "Camera", style: .default) { (action) in
+            //..
+            self.launchPicker(source: .camera)
+        }
+        let library = UIAlertAction(title: "Photo library", style: .default) { (action) in
+            //...
+            self.launchPicker(source: .photoLibrary)
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addAction(camera)
+        alert.addAction(library)
+        alert.addAction(cancel)
+        present(alert,animated: true)
+    }
+    func launchPicker(source:UIImagePickerController.SourceType)  {
+        //Check if the source is valid or not? 檢查user使用的來源是否合法
+        guard UIImagePickerController.isSourceTypeAvailable(source) else {
+            print("Invalid source type")
+            return
+        }
+        
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        //picker.mediaTypes = ["public.image", "public.movie"] //user 可以選擇照片或影片
+        //上面跟下面是一樣的不同寫法 下面要import MobileCoreServices
+        picker.mediaTypes = [kUTTypeImage, kUTTypeMovie] as [String]
+        picker.sourceType = source
+        picker.allowsEditing = true //可以讓user裁切照片只能正方形,影片也能
+        
+        present(picker, animated: true)
+    }
+    
+    //MARK: - UIImagePickerControllerDelegate Protocol Methods.
+    func imagePickerController(_ picker :UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        print("info:\(info)")
+        guard let type = info[.mediaType] as? String else {
+            assertionFailure("Invalid type")
+            return
+        }
+        if type == (kUTTypeImage as String) {
+            guard let originalImage = info[.originalImage] as? UIImage else {
+                assertionFailure("originalImage is nil")
+                return
+            }
+            let resizedImage = originalImage.resize(maxEdge: 1024)!
+            let jpgData = resizedImage.jpegData(compressionQuality: 0.8)
+            //            let pngDate = resizedImage.pngData()
+            print("jpgData:\(jpgData!.count)")
+            //            print("pngData:\(pngDate!.count)")
+            
+            let base64Date = jpgData?.base64EncodedData(options: NSData.Base64EncodingOptions(rawValue: 0))
+            let base64String = String(data: base64Date!, encoding: .utf8)!
+            
+            let chatMessage = ChatMessage.init(sender: email, receiver: (userInfo.first?.groupId)!, message: base64String, messageType: "image")
+            let chatMessageData = try! JSONEncoder().encode(chatMessage)
+            let chatMessageString = String(data: chatMessageData, encoding: .utf8)!
+            socket.write(string: chatMessageString)
+            let emailAccount = self.mailFilter(email)
+            let text = "\(emailAccount ?? ""): "
+            let image = UIImage(data: jpgData!)
+            
+            let chatItem = ChatItem(text:  text, image: image, senderType: .fromMe)
+            chatView.add(chatItem: chatItem)
+            
+            
+        }else if type == (kUTTypeMovie as String) {
+            
+        }
+        picker.dismiss(animated: true) //Important!!! 點選照片後 收起視窗
     }
     
     @IBAction func sentMessage(_ sender: UIButton) {
@@ -57,12 +137,12 @@ class ChatRoomViewController: UIViewController,WebSocketDelegate,UITextFieldDele
         chatData.groupId = userInfo.first?.groupId
         print("\(inputTextField.text), \(chatData)")
         
-        let chatMessage = ChatMessage.init(sender: email, receiver:(userInfo.first?.groupId)! , message: inputTextField.text)
+        let chatMessage = ChatMessage.init(sender: email, receiver:(userInfo.first?.groupId)! , message: inputTextField.text , messageType: "text")
         let chatMessageData = try! JSONEncoder().encode(chatMessage)
         let chatMessageString = String(data: chatMessageData, encoding: .utf8)!
         socket.write(string: chatMessageString)
-        
-        let text = "\(email ?? ""): \(inputTextField.text ?? "") \(stringTime ?? "")"
+         let emailAccount = self.mailFilter(email)
+        let text = "\(emailAccount ?? ""): \(inputTextField.text ?? "") \(stringTime ?? "")"
         
         let chatItem = ChatItem(text:  text, image: nil, senderType: .fromMe)
         chatView.add(chatItem: chatItem)
@@ -102,9 +182,10 @@ class ChatRoomViewController: UIViewController,WebSocketDelegate,UITextFieldDele
                 print("Fail to decode jsonData.")
                 return
             }
-//            if self.firstView == 0{
+
                 for chatItem in resultObject {
-                    let text = "\(chatItem.emailAccount ?? ""): \(chatItem.message ?? "") \(chatItem.lastUpdateDateTime ?? "")"
+                    let emailAccount = self.mailFilter(chatItem.emailAccount!)
+                    let text = "\(emailAccount ?? ""): \(chatItem.message ?? "") \(chatItem.lastUpdateDateTime ?? "")"
                     //判斷這則訊息是自己還是其他人
                     let type: ChatSenderType = (chatItem.emailAccount == self.email ? .fromMe : .fromOthers)
                     let chatItem = ChatItem(text: text , image: nil, senderType: type)
@@ -113,15 +194,20 @@ class ChatRoomViewController: UIViewController,WebSocketDelegate,UITextFieldDele
                 }
         }
     }
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    func mailFilter(_ input :String) -> String {
+        
+        var newStr = String()
+        if input.contains("@gamil.com"){
+            newStr = input.replacingOccurrences(of: "@gamil.com", with: "")
+            print("replacingOccurrences:\(newStr)")
+            return newStr
+        } else {
+            newStr = input.replacingOccurrences(of: "@gmail.com", with: "")
+            print("replacingOccurrences:\(newStr)")
+            return newStr
+        }
+        
+    }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         inputTextField.resignFirstResponder()
         return true
@@ -146,30 +232,65 @@ class ChatRoomViewController: UIViewController,WebSocketDelegate,UITextFieldDele
     
     func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
         print("websocket ReceiveMessage text = \(text)")
+       
         let decoder = JSONDecoder()
         let jsonData = text.data(using: String.Encoding.utf8, allowLossyConversion: true)!
         let message = try! decoder.decode(ChatMessage.self, from: jsonData)
         guard message.sender != email else {
             return
         }
+        if message.messageType == "text"{
         let now = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyy-MM-dd HH:mm:ss"
         let stringTime = dateFormatter.string(from: now)
-        let text = "\(message.sender ?? ""): \(message.message ?? "") \(stringTime ?? "")"
+        let emailAccount = self.mailFilter(message.sender)
+        let text = "\(emailAccount ?? ""): \(message.message ?? "") \(stringTime ?? "")"
         let chatItem = ChatItem(text:  text, image: nil, senderType: .fromOthers)
         chatView.add(chatItem: chatItem)
-//        notice(message: message.message ?? "")
+        notice(message: message.message ?? "")
+        }else{
+//
+//            let text = "\(message.sender ?? ""):"
+//            let base64String = message.message
+//            let base64Data = Data(base64Encoded: base64String!, options: NSData.Base64DecodingOptions(rawValue: 0))
+//            let image = UIImage(data: base64Data!)
+//            let chatItem = ChatItem(text:  text, image:image , senderType: .fromOthers)
+//            chatView.add(chatItem: chatItem)
+            
+        }
         
     }
     
     func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
         print("websocket ReceiveData data = \(data.count)")
+        let decoder = JSONDecoder()
+        guard let resultObject = try? decoder.decode(ChatMessage.self, from: data) else {
+            return
+        }
+        guard resultObject.sender != email else {
+            return
+        }
+        print("\(resultObject)")
+        let emailAccount = self.mailFilter(resultObject.sender)
+        let textDetail = "\(emailAccount): "
+        let type: ChatSenderType = .fromOthers
+        let base64String = resultObject.message
+        
+        guard let decodeData = Data(base64Encoded: base64String!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters) else {
+            assertionFailure("decode Fail")
+            return
+        }
+        let image = UIImage(data: decodeData)
+        var chatItem = ChatItem(text: textDetail, image: nil, senderType: type)
+        chatItem.image = image
+        chatView.add(chatItem: chatItem)
     }
     
     func notice(message:String){
+        let emailAccount = self.mailFilter(email)
         let content = UNMutableNotificationContent()
-        content.title = "\(email)"
+        content.title = "\(emailAccount)"
         content.subtitle = "\(message)"
         content.badge = 1
         content.sound = UNNotificationSound.default

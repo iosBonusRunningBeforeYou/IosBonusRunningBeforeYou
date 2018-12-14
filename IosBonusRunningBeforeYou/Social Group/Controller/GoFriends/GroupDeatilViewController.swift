@@ -59,6 +59,14 @@ class GroupDeatilViewController: UIViewController,CLLocationManagerDelegate, MKM
     }
     
     override func viewWillAppear(_ animated: Bool) {
+         getJoinInfo()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        groupInfos.removeAll()
+    }
+    
+    func getJoinInfo(){
         guard let groupId = groupDetail.groupId else{
             return
         }
@@ -90,11 +98,9 @@ class GroupDeatilViewController: UIViewController,CLLocationManagerDelegate, MKM
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        groupInfos.removeAll()
-    }
     
     @IBAction func joinGroupAction(_ sender: UIButton) {
+        groupInfos.removeAll()
         guard let groupId = groupDetail.groupId else{
             return
         }
@@ -111,6 +117,7 @@ class GroupDeatilViewController: UIViewController,CLLocationManagerDelegate, MKM
                 self.joinBtn.isHidden = true
                 self.joinPeopleBtn.isHidden = false
                 self.goRunningBtn.isEnabled = true
+                 self.getJoinInfo()
             }else {
                 print("insertGroupJoinState fail")
             }
@@ -160,9 +167,10 @@ class GroupDeatilViewController: UIViewController,CLLocationManagerDelegate, MKM
     
     @objc
     func closeJoinBtn(notification: Notification){
-        //         showAlert(title: "closeJoinBtn", message: "")
+        
         if joinNum == 6 {
             joinBtn.isEnabled = false
+            showAlert(title: "動作太慢囉～", message: "揪團跑最多六人！")
         }
     }
     
@@ -224,7 +232,7 @@ class GroupDeatilViewController: UIViewController,CLLocationManagerDelegate, MKM
         
         //指定時間通知 ！
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
-        let request = UNNotificationRequest(identifier: "timeNotice", content: content, trigger: trigger)
+        let request = UNNotificationRequest(identifier: "isTime", content: content, trigger: trigger)
         
         UNUserNotificationCenter.current().add(request, withCompletionHandler: {error in
             if let error = error {

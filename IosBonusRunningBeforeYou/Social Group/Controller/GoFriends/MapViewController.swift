@@ -86,13 +86,16 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         if startLatitude == nil && startLongitude == nil &&
             endLatitude == nil && endLongitude == nil {
             // 現在的時間往後3秒執行裡面程式
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0){
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0){
                 //取得user位置並放大顯示
                 self.moveAndZoomMap(self.locationManager, self.setLocationMapView,0.01,0.01)
             }
         }
     }
     
+    @IBAction func returnLaction(_ sender: UIButton) {
+        self.moveAndZoomMap(self.locationManager, self.setLocationMapView,0.01,0.01)
+    }
     @IBAction func goBtnAction(_ sender: UIButton) {
         guard let startLat = self.startLatitude, let startLon = self.startLongitude,
             let endLat = self.endLatitude, let endLon = self.endLongitude else{
@@ -187,10 +190,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             self.userLocation = "\(subAdministrativeArea), \(locality), \(name)"
             if self.int == 1{
                 self.startPointLabel.text = self.userLocation
-                self.startIntroduce += self.userLocation
+                self.startIntroduce = self.userLocation
+                print("startIntroduce = \(self.startIntroduce)")
             }else if self.int == 2{
                 self.endPointLabel.text = self.userLocation
-                self.endIntroduce += self.userLocation
+                self.endIntroduce = self.userLocation
             }
             
         }

@@ -67,7 +67,7 @@ class CreatNewGroupViewController: UIViewController,UITextFieldDelegate {
         newGroup.startPointLongitude = startLongitude
         newGroup.endPointLatitude = endLatitude
         newGroup.endPointLongitude = endLongitude
-        groupIntroduceTextView.text += "起點：\(soucr.startIntroduce), 終點：\(soucr.endIntroduce)。"
+        groupIntroduceTextView.text = "起點：\(soucr.startIntroduce), 終點：\(soucr.endIntroduce)。"
          PrintHelper.println(tag: tag, line: 65, "unwindToGraetNewGroup: newGroup.startPointLatitude \(newGroup.startPointLatitude), newGroup.startPointLongitude \(newGroup.startPointLongitude), newGroup.endPointLatitude \(newGroup.endPointLatitude), newGroup.endPointLongitude \(newGroup.endPointLongitude)")
     }
     
