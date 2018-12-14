@@ -183,7 +183,7 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
         
         // Prepare GroupRunning data
         
-        groupRunningId = 9
+//        groupRunningId = 9
         if groupRunningId == 0 {
             moveLocationField.isHidden = true
             imageOfMember.isHidden = true
@@ -574,6 +574,10 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
         // 無條件進位
         self.running.points = running.points.rounded( .towardZero)
         
+        if isGroupRunngingEndInArea == false{
+            groupRunningBonus = 0
+        }
+        
         let alertText = "此次跑步+揪團跑點數,共獲得了\(Int(running.points) + groupRunningBonus)點,\n是否結束此次運動?"
         let alert = UIAlertController(title: alertText , message: "", preferredStyle: .actionSheet)
         
@@ -692,6 +696,7 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
         } else {
             groupRunningStateField.text = "In groupRunning Area"
             showInAreaAlert()
+            locationmanager.stopUpdatingLocation()
         }
     }
     
