@@ -43,7 +43,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Bfx-eP-qkU"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="跑步" selectedImage="跑步" id="Zji-XL-dA1"/>
+                    <tabBarItem key="tabBarItem" title="跑步" image="跑步" id="Zji-XL-dA1"/>
                     <navigationItem key="navigationItem" id="q78-Az-amY"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>

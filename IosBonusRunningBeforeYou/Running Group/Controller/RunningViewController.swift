@@ -378,12 +378,12 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
             
             print("oldCoordinate:\(oldCoordinate)")
             
-            if abs(location.coordinate.latitude - startPointLatitude) < 0.001,
-                abs(location.coordinate.longitude - startPointLongitude) < 0.001{
+            if abs(location.coordinate.latitude - startPointLatitude) < 0.0005,
+                abs(location.coordinate.longitude - startPointLongitude) < 0.0005{
                 isGroupRunngingStartInArea = true
             }
 
-            if location.coordinate.latitude - endPointLatitude < 0.001, location.coordinate.longitude - endPointLongitude < 0.001{
+            if location.coordinate.latitude - endPointLatitude < 0.0005, location.coordinate.longitude - endPointLongitude < 0.0005{
                 if isGroupRunngingStartInArea {
                     isGroupRunngingEndInArea = true
                 }
