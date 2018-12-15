@@ -187,7 +187,7 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
         
         // Prepare GroupRunning data
         
-        groupRunningId = 9
+//        groupRunningId = 9
         if groupRunningId == 0 {
             moveLocationField.isHidden = true
             imageOfMember.isHidden = true
@@ -825,7 +825,7 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
         self.pointRecords.email = self.running.mail
         self.pointRecords.record_name = "GroupRunning"
         self.pointRecords.record_date = String(self.running.endTime)
-//        groupRunningId = 9
+
     }
     
     func runningNotice(){
