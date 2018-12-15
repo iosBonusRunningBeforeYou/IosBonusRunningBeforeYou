@@ -110,7 +110,7 @@
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kjx-pD-jN6">
                                                         <rect key="frame" x="78" y="0.0" width="70" height="15"/>
-                                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <color key="backgroundColor" red="0.55634254220000001" green="0.97934550050000002" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="15" id="YWv-NM-7Xc"/>
                                                         </constraints>
@@ -235,7 +235,7 @@
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OLb-zd-tLc">
                                                         <rect key="frame" x="78" y="0.0" width="70" height="15"/>
-                                                        <color key="backgroundColor" red="0.55634254220000001" green="0.97934550050000002" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="15" id="efr-1l-fvZ"/>
                                                         </constraints>
@@ -312,17 +312,35 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cfT-wz-bsO">
+                                <rect key="frame" x="305" y="329" width="62" height="30"/>
+                                <state key="normal" title="起點位置"/>
+                                <connections>
+                                    <action selector="startButtonPressed:" destination="pVo-uG-4EE" eventType="touchUpInside" id="Jye-iT-SBp"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YdZ-oh-wga">
+                                <rect key="frame" x="306" y="365" width="62" height="30"/>
+                                <state key="normal" title="終點位置"/>
+                                <connections>
+                                    <action selector="endButtonPressed:" destination="pVo-uG-4EE" eventType="touchUpInside" id="6Sj-vJ-R2t"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Qp7-zI-hJx" firstAttribute="leading" secondItem="7On-jk-p07" secondAttribute="leading" id="00o-jQ-rH2"/>
+                            <constraint firstItem="GLP-zn-oeh" firstAttribute="top" secondItem="YdZ-oh-wga" secondAttribute="bottom" constant="8" id="0UO-Xg-UPP"/>
                             <constraint firstItem="GLP-zn-oeh" firstAttribute="top" secondItem="Qp7-zI-hJx" secondAttribute="bottom" id="5Pc-NR-nuM"/>
                             <constraint firstItem="GLP-zn-oeh" firstAttribute="trailing" secondItem="7On-jk-p07" secondAttribute="trailing" id="5vK-eM-ZIw"/>
+                            <constraint firstItem="7On-jk-p07" firstAttribute="trailing" secondItem="cfT-wz-bsO" secondAttribute="trailing" constant="8" id="8Vq-Lf-zCw"/>
+                            <constraint firstItem="YdZ-oh-wga" firstAttribute="top" secondItem="cfT-wz-bsO" secondAttribute="bottom" constant="6" id="HCd-Zy-mxS"/>
                             <constraint firstItem="Qp7-zI-hJx" firstAttribute="centerY" secondItem="M3u-K9-o8r" secondAttribute="centerY" multiplier="0.7" id="LvU-3k-MPK"/>
                             <constraint firstItem="GLP-zn-oeh" firstAttribute="bottom" secondItem="7On-jk-p07" secondAttribute="bottom" id="OBu-oh-n5K"/>
                             <constraint firstItem="Qp7-zI-hJx" firstAttribute="trailing" secondItem="7On-jk-p07" secondAttribute="trailing" id="Oeb-iG-Mz4"/>
                             <constraint firstItem="GLP-zn-oeh" firstAttribute="top" secondItem="ewy-8D-dBz" secondAttribute="bottom" constant="20" id="Pzg-DY-Evs"/>
                             <constraint firstItem="GLP-zn-oeh" firstAttribute="leading" secondItem="Qp7-zI-hJx" secondAttribute="leading" id="R96-Zj-apX"/>
+                            <constraint firstItem="7On-jk-p07" firstAttribute="trailing" secondItem="YdZ-oh-wga" secondAttribute="trailing" constant="7" id="Zzr-dR-CSQ"/>
                             <constraint firstItem="Qp7-zI-hJx" firstAttribute="top" secondItem="7On-jk-p07" secondAttribute="top" id="bbA-bE-8SY"/>
                             <constraint firstItem="Kf9-qx-7aN" firstAttribute="top" secondItem="7On-jk-p07" secondAttribute="top" constant="15" id="d7U-AQ-npy"/>
                             <constraint firstItem="GLP-zn-oeh" firstAttribute="leading" secondItem="7On-jk-p07" secondAttribute="leading" id="gWr-17-NF1"/>
@@ -339,14 +357,15 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="blackColorLabel" destination="Kjx-pD-jN6" id="Zfo-v5-3MH"/>
-                        <outlet property="blackLabel" destination="4I1-C8-F5c" id="X3N-hZ-Wf1"/>
+                        <outlet property="blackColorLabel" destination="OLb-zd-tLc" id="Mnw-Vj-mXL"/>
+                        <outlet property="blackLabel" destination="ypW-oP-0aG" id="byr-6G-vkV"/>
                         <outlet property="blueColorLabel" destination="e5l-YQ-bm8" id="Ex6-hY-oU7"/>
                         <outlet property="blueLabel" destination="nxk-mL-xrL" id="CKf-qs-rwC"/>
+                        <outlet property="endButtonField" destination="YdZ-oh-wga" id="BJ1-zm-aqs"/>
                         <outlet property="grayColorLabel" destination="9kS-37-fLs" id="Ukg-yo-qoG"/>
                         <outlet property="grayLabel" destination="gJw-KY-LYn" id="Hza-GU-Hs5"/>
-                        <outlet property="greenColorLabel" destination="OLb-zd-tLc" id="Mnw-Vj-mXL"/>
-                        <outlet property="greenLabel" destination="ypW-oP-0aG" id="byr-6G-vkV"/>
+                        <outlet property="greenColorLabel" destination="Kjx-pD-jN6" id="Zfo-v5-3MH"/>
+                        <outlet property="greenLabel" destination="4I1-C8-F5c" id="X3N-hZ-Wf1"/>
                         <outlet property="groupRunningStateField" destination="Kf9-qx-7aN" id="LF0-QS-N62"/>
                         <outlet property="imageOfMember" destination="gut-E6-9T0" id="XB1-QA-fx3"/>
                         <outlet property="kiloMetreLabel" destination="liA-61-csF" id="3EQ-mA-5Ws"/>
@@ -356,6 +375,7 @@
                         <outlet property="orangeLabel" destination="WYM-RZ-6lS" id="WoZ-pu-RqN"/>
                         <outlet property="pauseButtonView" destination="sfB-yG-zBJ" id="qlC-Bf-dWP"/>
                         <outlet property="playButtonView" destination="j75-pI-Z9t" id="rVw-c9-gaE"/>
+                        <outlet property="startButtonField" destination="cfT-wz-bsO" id="dNJ-Sl-TbI"/>
                         <outlet property="timerLabel" destination="Ofv-Jy-rq8" id="Xa1-YZ-uAi"/>
                         <outlet property="yellowColorLabel" destination="3ik-p6-2Yc" id="RwX-oe-4ao"/>
                         <outlet property="yellowLabel" destination="DhT-zx-IVc" id="ea5-ly-Mwk"/>

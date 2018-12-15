@@ -25,19 +25,19 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
     @IBOutlet weak var mainMapView: MKMapView!
     @IBOutlet weak var kiloMetreLabel: UILabel!
     
-    @IBOutlet weak var blackLabel: UILabel!
+    @IBOutlet weak var greenLabel: UILabel!
     @IBOutlet weak var grayLabel: UILabel!
     @IBOutlet weak var blueLabel: UILabel!
     @IBOutlet weak var orangeLabel: UILabel!
     @IBOutlet weak var yellowLabel: UILabel!
-    @IBOutlet weak var greenLabel: UILabel!
+    @IBOutlet weak var blackLabel: UILabel!
     
-    @IBOutlet weak var blackColorLabel: UILabel!
+    @IBOutlet weak var greenColorLabel: UILabel!
     @IBOutlet weak var grayColorLabel: UILabel!
     @IBOutlet weak var blueColorLabel: UILabel!
     @IBOutlet weak var orangeColorLabel: UILabel!
     @IBOutlet weak var yellowColorLabel: UILabel!
-    @IBOutlet weak var greenColorLabel: UILabel!
+    @IBOutlet weak var blackColorLabel: UILabel!
     
     var locationmanager = CLLocationManager()
     let notificationCenter = UNUserNotificationCenter.current()
@@ -58,6 +58,10 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
     var old_target_weekly = Double()
     var old_target_monthly = Double()
 
+    @IBOutlet weak var startButtonField: UIButton!
+    
+    @IBOutlet weak var endButtonField: UIButton!
+    
     let communicator = Communicator.shared
     var running = Running()
     var tempUserData = TempUserData()
@@ -125,7 +129,6 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
         
         print("running.mail: \(running.mail)")
         
-        
         // prepare data for running
         groupRunningId = groupInfo.groupId ?? 0
         groupRunningBonus = 500
@@ -145,19 +148,19 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
         
     
         // MARK: 判斷是否為揪團跑控制UI顯示.
-        labelArray.append(blackLabel)
+        labelArray.append(greenLabel)
         labelArray.append(grayLabel)
         labelArray.append(blueLabel)
         labelArray.append(orangeLabel)
         labelArray.append(yellowLabel)
-        labelArray.append(greenLabel)
+        labelArray.append(blackLabel)
         
-        labelArray.append(blackColorLabel)
+        labelArray.append(greenColorLabel)
         labelArray.append(grayColorLabel)
         labelArray.append(blueColorLabel)
         labelArray.append(orangeColorLabel)
         labelArray.append(yellowColorLabel)
-        labelArray.append(greenColorLabel)
+        labelArray.append(blackColorLabel)
         
         // Execute moveAndZoomMap() after 3.0 seconds.  //DispatchQueue 是Grant Central DisPath 的應用. //.main 執行在mainQueue
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ){
@@ -184,7 +187,7 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
         
         // Prepare GroupRunning data
         
-//        groupRunningId = 9
+        groupRunningId = 9
         if groupRunningId == 0 {
             moveLocationField.isHidden = true
             imageOfMember.isHidden = true
@@ -245,28 +248,28 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
             
                 if self.memberArray.count == 1 {
                     
-                    self.blackLabel.text = self.mailFilter(self.memberArray[0])
+                    self.greenLabel.text = self.mailFilter(self.memberArray[0])
                     self.firstGroupMail = self.memberArray[0]
-                    for label in self.labelArray where (label != self.blackLabel && label != self.blackColorLabel) {
+                    for label in self.labelArray where (label != self.greenLabel && label != self.greenColorLabel) {
                         label.isHidden = true
                     }
                     
                 } else if self.memberArray.count == 2 {
                     
-                    self.blackLabel.text = self.mailFilter(self.memberArray[0])
+                    self.greenLabel.text = self.mailFilter(self.memberArray[0])
                     self.grayLabel.text = self.mailFilter(self.memberArray[1])
                     
                     self.firstGroupMail = self.memberArray[0]
                     self.secondGroupMail = self.memberArray[1]
                     
-                    for label in self.labelArray where (label != self.blackLabel && label != self.blackColorLabel &&
+                    for label in self.labelArray where (label != self.greenLabel && label != self.greenColorLabel &&
                     label != self.grayLabel && label != self.grayColorLabel) {
                         label.isHidden = true
                     }
                     
                 } else if self.memberArray.count == 3 {
                     
-                    self.blackLabel.text = self.mailFilter(self.memberArray[0])
+                    self.greenLabel.text = self.mailFilter(self.memberArray[0])
                     self.grayLabel.text = self.mailFilter(self.memberArray[1])
                     self.blueLabel.text = self.mailFilter(self.memberArray[2])
                     
@@ -274,7 +277,7 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
                     self.secondGroupMail = self.memberArray[1]
                     self.thirdGroupMail = self.memberArray[2]
                     
-                    for label in self.labelArray where (label != self.blackLabel && label != self.blackColorLabel &&
+                    for label in self.labelArray where (label != self.greenLabel && label != self.greenColorLabel &&
                         label != self.grayLabel && label != self.grayColorLabel &&
                         label != self.blueLabel && label != self.blueColorLabel ) {
                             
@@ -283,7 +286,7 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
                     
                 } else if self.memberArray.count == 4 {
                     
-                    self.blackLabel.text = self.mailFilter(self.memberArray[0])
+                    self.greenLabel.text = self.mailFilter(self.memberArray[0])
                     self.grayLabel.text = self.mailFilter(self.memberArray[1])
                     self.blueLabel.text = self.mailFilter(self.memberArray[2])
                     self.orangeLabel.text = self.mailFilter(self.memberArray[3])
@@ -295,13 +298,13 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
                     
                     self.yellowLabel.isHidden = true
                     self.yellowColorLabel.isHidden = true
-                    self.greenLabel.isHidden = true
-                    self.greenColorLabel.isHidden = true
+                    self.blackLabel.isHidden = true
+                    self.blackColorLabel.isHidden = true
                     
                     
                 } else if self.memberArray.count == 5 {
                     
-                    self.blackLabel.text = self.mailFilter(self.memberArray[0])
+                    self.greenLabel.text = self.mailFilter(self.memberArray[0])
                     self.grayLabel.text = self.mailFilter(self.memberArray[1])
                     self.blueLabel.text = self.mailFilter(self.memberArray[2])
                     self.orangeLabel.text = self.mailFilter(self.memberArray[3])
@@ -312,17 +315,17 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
                     self.fourthGroupMail = self.memberArray[3]
                     self.fifthGroupMail = self.memberArray[4]
                     
-                    self.greenLabel.isHidden = true
-                    self.greenColorLabel.isHidden = true
+                    self.blackLabel.isHidden = true
+                    self.blackColorLabel.isHidden = true
                     
                 } else if self.memberArray.count == 6 {
                     
-                    self.blackLabel.text = self.mailFilter(self.memberArray[0])
+                    self.greenLabel.text = self.mailFilter(self.memberArray[0])
                     self.grayLabel.text = self.mailFilter(self.memberArray[1])
                     self.blueLabel.text = self.mailFilter(self.memberArray[2])
                     self.orangeLabel.text = self.mailFilter(self.memberArray[3])
                     self.yellowLabel.text = self.mailFilter(self.memberArray[4])
-                    self.greenLabel.text = self.mailFilter(self.memberArray[5])
+                    self.blackLabel.text = self.mailFilter(self.memberArray[5])
                     self.firstGroupMail = self.memberArray[0]
                     self.secondGroupMail = self.memberArray[1]
                     self.thirdGroupMail = self.memberArray[2]
@@ -335,7 +338,7 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
         }
         playButtonView.isHidden = true
         pauseButtonView.isHidden = false
-
+        
         timerLabel.layer.cornerRadius = 7.0
         playButtonView.layer.cornerRadius = 5.0
         pauseButtonView.layer.cornerRadius = 5.0
@@ -373,6 +376,7 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
         }
         
         print("groupRunningId:groupRunningId:\(groupRunningId)")
+        
         if groupRunningId != 0 {
             guard let startPointLatitude =  groupInfo.startPointLatitude, let startPointLongitude =  groupInfo.startPointLongitude else {
                 print("groupInfo.startPoint = nil")
@@ -706,6 +710,9 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
     func isInGroupRunningArea(){
         if groupRunningId == 0 {
             groupRunningStateField.isHidden = true
+            startButtonField.isHidden = true
+            endButtonField.isHidden = true
+            
         } else if isGroupRunngingStartInArea == false{
             groupRunningStateField.text = "Not in groupRunning Area"
             showNotInAreaAlert()
@@ -750,7 +757,7 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
         if groupRunningId != 0 {
             
             if firstNameColor {
-                renderer.strokeColor = UIColor.black
+                renderer.strokeColor = UIColor.green
             } else if secondNameColor{
                 renderer.strokeColor = UIColor.lightGray
             } else if thirdNameColor{
@@ -760,7 +767,7 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
             } else if fifthNameColor{
                 renderer.strokeColor = UIColor.yellow
             } else if sixthNameColor{
-                renderer.strokeColor = UIColor.green
+                renderer.strokeColor = UIColor.black
             } else {
                 renderer.strokeColor = UIColor.red
             }
@@ -841,7 +848,57 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
     @IBAction func locationButtonPressed(_ sender: UIButton) {
         
         moveAndZoomMap()
+    }
+    
+    @IBAction func startButtonPressed(_ sender: Any) {
+        guard let startPointLatitude =  groupInfo.startPointLatitude, let startPointLongitude =  groupInfo.startPointLongitude else {
+            print("groupInfo.startPoint = nil")
+            return
+        }
         
+        guard let endPointLatitude =  groupInfo.endPointLatitude, let endPointLongitude =  groupInfo.endPointLongitude else {
+            print("groupInfo.endPoint = nil")
+            return
+        }
+        
+        let anns = [MKPointAnnotation(), MKPointAnnotation()]
+        
+        anns[0].coordinate = CLLocationCoordinate2D(latitude: startPointLatitude,
+                                                    longitude: startPointLongitude)
+        anns[0].title = "起點的位置"
+        
+        anns[1].coordinate = CLLocationCoordinate2D(latitude: endPointLatitude,
+                                                    longitude: endPointLongitude)
+        anns[1].title = "終點的位置"
+        
+        mainMapView.setCenter(anns[0].coordinate, animated: true)
+        
+
+    }
+    
+    @IBAction func endButtonPressed(_ sender: Any) {
+        guard let startPointLatitude =  groupInfo.startPointLatitude, let startPointLongitude =  groupInfo.startPointLongitude else {
+            print("groupInfo.startPoint = nil")
+            return
+        }
+        
+        guard let endPointLatitude =  groupInfo.endPointLatitude, let endPointLongitude =  groupInfo.endPointLongitude else {
+            print("groupInfo.endPoint = nil")
+            return
+        }
+        
+        let anns = [MKPointAnnotation(), MKPointAnnotation()]
+        
+        anns[0].coordinate = CLLocationCoordinate2D(latitude: startPointLatitude,
+                                                    longitude: startPointLongitude)
+        anns[0].title = "起點的位置"
+        
+        anns[1].coordinate = CLLocationCoordinate2D(latitude: endPointLatitude,
+                                                    longitude: endPointLongitude)
+        anns[1].title = "終點的位置"
+        
+        mainMapView.setCenter(anns[1].coordinate, animated: true)
+
     }
     
 }
