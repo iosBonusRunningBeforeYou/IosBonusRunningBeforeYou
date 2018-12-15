@@ -24,9 +24,12 @@
                                 </connections>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hgh-Yr-1nv">
-                                <rect key="frame" x="161.5" y="546" width="52" height="42"/>
+                                <rect key="frame" x="150.5" y="546" width="74" height="42"/>
+                                <color key="backgroundColor" red="0.13206532597541809" green="0.53315812349319458" blue="0.99835878610610962" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <state key="normal" title="Start"/>
+                                <state key="normal" title="START">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <segue destination="I7u-QE-awt" kind="show" identifier="" id="r39-ks-vd5"/>
                                 </connections>
@@ -46,6 +49,9 @@
                     <tabBarItem key="tabBarItem" title="跑步" image="跑步" id="Zji-XL-dA1"/>
                     <navigationItem key="navigationItem" id="q78-Az-amY"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="startButtonField" destination="hgh-Yr-1nv" id="Jcy-pf-m1J"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GNc-Pp-FJL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

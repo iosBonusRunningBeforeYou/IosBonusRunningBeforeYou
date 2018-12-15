@@ -124,6 +124,7 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
         
         print("running.mail: \(running.mail)")
         
+        
         // prepare data for running
         groupRunningId = groupInfo.groupId ?? 0
         groupRunningBonus = 500
@@ -137,6 +138,7 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
         
         // Do any additional setup after loading the view, typically from a nib.
         mainMapView.delegate = self   //Important! 將MKMapViewDelegate的協定,綁在身上.
+        
         guard CLLocationManager.locationServicesEnabled() else {
             //show alert to user.
             return
@@ -207,8 +209,8 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
 //                SVProgressHUD.dismiss()
             }
             
-
-            
+            // Set startLocation and endlocation
+            makeStartAndEndAnnotation()
             navigationItem.title = "GroupRunning"
             
             communicator.getGroupEmail(id: groupRunningId) { (result, error) in
@@ -361,8 +363,6 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
         let region = MKCoordinateRegion(center: location.coordinate, span: span)  //把span的參數 設定給Region
         mainMapView.setRegion(region, animated: true)
         
-        
-        
         // MARK: 判斷揪團跑起點終點位置
         print("groupRunningId:groupRunningId:\(groupRunningId)")
         if groupRunningId != 0 {
@@ -371,7 +371,7 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
                 return
             }
             
-            guard let endPointLatitude =  groupInfo.endPointLongitude, let endPointLongitude =  groupInfo.endPointLongitude else {
+            guard let endPointLatitude =  groupInfo.endPointLatitude, let endPointLongitude =  groupInfo.endPointLongitude else {
                 print("groupInfo.endPoint = nil")
                 return
             }
@@ -383,10 +383,10 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
                 isGroupRunngingStartInArea = true
             }
 
-            if location.coordinate.latitude - endPointLatitude < 0.0005, location.coordinate.longitude - endPointLongitude < 0.0005{
-                if isGroupRunngingStartInArea {
+            if abs(location.coordinate.latitude - endPointLatitude) < 0.0005,
+                abs(location.coordinate.longitude - endPointLongitude) < 0.0005, isGroupRunngingStartInArea{
+                
                     isGroupRunngingEndInArea = true
-                }
             }
             
             if isGroupRunngingStartInArea == false {
@@ -398,13 +398,45 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
             // already move to updataLocation.
 //            if isGroupRunngingEndInArea == true {showEndInArea()}
             
+            
+            
         }
     }
     
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    func makeStartAndEndAnnotation() {
         
-        completionHandler([.alert, .sound])
+        guard let startPointLatitude =  groupInfo.startPointLatitude, let startPointLongitude =  groupInfo.startPointLongitude else {
+            print("groupInfo.startPoint = nil")
+            return
+        }
+        
+        guard let endPointLatitude =  groupInfo.endPointLatitude, let endPointLongitude =  groupInfo.endPointLongitude else {
+            print("groupInfo.endPoint = nil")
+            return
+        }
+
+        let anns = [MKPointAnnotation(), MKPointAnnotation()]
+        
+        anns[0].coordinate = CLLocationCoordinate2D(latitude: startPointLatitude,
+                                                    longitude: startPointLongitude)
+        anns[0].title = "起點的位置"
+        
+        anns[1].coordinate = CLLocationCoordinate2D(latitude: endPointLatitude,
+                                                    longitude: endPointLongitude)
+        anns[1].title = "終點的位置"
+        
+        
+    
+        
+        
+        
+        mainMapView.addAnnotations(anns)
+        mainMapView.setCenter(anns[0].coordinate, animated: true)
+        
+        // show all annotation title.
+        mainMapView.selectAnnotation(anns[0], animated: true)
     }
+
     
     @IBAction func playButton(_ sender: UIButton) {
         
@@ -432,13 +464,16 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
         running.endTime = Int(now.timeIntervalSince1970 * 1000)
         running.totalTime = Double(running.endTime - running.startTime)
         
-        let ann = MKPointAnnotation()
-        ann.coordinate = CLLocationCoordinate2D(latitude: lastLocation.coordinate.latitude, longitude: lastLocation.coordinate.longitude)
-        ann.title = "暫停的位置"
-        mainMapView.addAnnotation(ann)
-        // move map
-        mainMapView.setCenter(ann.coordinate, animated: true)
-        
+        if groupRunningId == 0 {
+            let ann = MKPointAnnotation()
+            ann.coordinate = CLLocationCoordinate2D(latitude: lastLocation.coordinate.latitude,
+                                                    longitude: lastLocation.coordinate.longitude)
+            ann.title = "暫停的位置"
+            mainMapView.addAnnotation(ann)
+            // move map
+            mainMapView.setCenter(ann.coordinate, animated: true)
+            mainMapView.selectAnnotation(ann, animated: true)
+        }
     }
     
     @IBAction func cancelPressed(_ sender: UIBarButtonItem) {
@@ -559,11 +594,11 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
     }
     
     func showEndInArea() {
+        locationmanager.stopUpdatingLocation()
         let alertText = "恭喜您~終點已到達."
         let alert = UIAlertController(title: alertText, message: "請按下方停止紐結束運動,獲取點數", preferredStyle: .alert)
         
         let ok = UIAlertAction(title: "確定", style: .default) { (action) in
-           
         }
         
         alert.addAction(ok)
@@ -696,7 +731,7 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
         } else {
             groupRunningStateField.text = "In groupRunning Area"
             showInAreaAlert()
-            locationmanager.stopUpdatingLocation()
+            
         }
     }
     
@@ -706,9 +741,9 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
         let alertText = "您並不在揪團跑起點範圍內."
         let alert = UIAlertController(title: alertText , message: "\n移動您目前的位置.\n\n 並按左下角◉,\n確認是否在範圍內.", preferredStyle: .alert)
         
-        let ok = UIAlertAction(title: "確定", style: .default){(action) in
-            
-        }
+        let ok = UIAlertAction(title: "確定", style: .default){(action) in}
+        
+        
         
         alert.addAction(ok)
         
@@ -828,6 +863,7 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
     @IBAction func locationButtonPressed(_ sender: UIButton) {
         
         moveAndZoomMap()
+        
     }
     
 }
@@ -841,13 +877,18 @@ extension RunningViewController  :  MKMapViewDelegate {
             return nil
         }
         
+//        guard let annotation = annotation as? StoreAnnotation else{
+//            assertionFailure("Fail to cast as StoreAnnotation.") //assertionFailure, DEBUG用, 用來看不該出現的問題. 不影響使用者.
+//            return nil
+//        }
+        
         var annView = mapView.dequeueReusableAnnotationView(withIdentifier: "Pin")
         if annView == nil{
             annView = MKAnnotationView(annotation: annotation, reuseIdentifier: "Pin")
         }
         
-        annView?.image = UIImage(named: "when_running_finish.png")
-        
+        annView?.image = UIImage(named: "pointRed.png")
+        annView?.canShowCallout = true
         return annView
     }
 }
@@ -861,7 +902,10 @@ extension RunningViewController : CLLocationManagerDelegate{
             return
         }
         
-        if isGroupRunngingEndInArea == true {showEndInArea()}
+        if isGroupRunngingEndInArea == true {
+            showEndInArea()
+            locationmanager.stopUpdatingLocation()
+        }
         
         groupRunningStateField.text = "You’re on your way."
         

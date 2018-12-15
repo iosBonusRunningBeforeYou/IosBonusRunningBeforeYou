@@ -49,8 +49,6 @@
 		18CF909821BFA7FA00374BE7 /* ChatData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CF909721BFA7FA00374BE7 /* ChatData.swift */; };
 		18EC447921C0F53000857CA8 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EC447821C0F53000857CA8 /* ChatMessage.swift */; };
 		18EC447B21C2555B00857CA8 /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EC447A21C2555B00857CA8 /* UIImage+Resize.swift */; };
-		18EC448D21C2BB0600857CA8 /* fromMe.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EC448C21C2BB0600857CA8 /* fromMe.png */; };
-		18EC448F21C2BB0C00857CA8 /* fromMe@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EC448E21C2BB0C00857CA8 /* fromMe@2x.png */; };
 		18F227D021AFF0BD00A66903 /* GroupDeatilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F227CF21AFF0BD00A66903 /* GroupDeatilViewController.swift */; };
 		32456B7F21C1D11000699C0E /* TargetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32456B7E21C1D11000699C0E /* TargetViewController.swift */; };
 		32456B8421C1DFCD00699C0E /* UserItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32456B8321C1DFCD00699C0E /* UserItem.swift */; };
@@ -59,6 +57,8 @@
 		3279D35C21B8C88A00992BA6 /* shopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3279D35921B8C88A00992BA6 /* shopViewController.swift */; };
 		3279D35E21B8C89300992BA6 /* CouponItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3279D35D21B8C89300992BA6 /* CouponItem.swift */; };
 		441F98CF21BFAB040054E44F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 441F98CE21BFAB040054E44F /* Assets.xcassets */; };
+		4424C53521C39D4600B10CEB /* fromMe.png in Resources */ = {isa = PBXBuildFile; fileRef = 4424C53421C39D4600B10CEB /* fromMe.png */; };
+		4424C53721C39D4F00B10CEB /* fromMe@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4424C53621C39D4E00B10CEB /* fromMe@2x.png */; };
 		44A4C79521A57D4B0042E7A1 /* Running.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A4C79421A57D4B0042E7A1 /* Running.swift */; };
 		44A4C79721A57DBB0042E7A1 /* TempUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A4C79621A57DBB0042E7A1 /* TempUserData.swift */; };
 		44A634CB219C18BA0091B1AB /* RunningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A634CA219C18BA0091B1AB /* RunningViewController.swift */; };
@@ -120,8 +120,6 @@
 		18CF909721BFA7FA00374BE7 /* ChatData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatData.swift; sourceTree = "<group>"; };
 		18EC447821C0F53000857CA8 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		18EC447A21C2555B00857CA8 /* UIImage+Resize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
-		18EC448C21C2BB0600857CA8 /* fromMe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fromMe.png; path = ../../../../../../fromMe.png; sourceTree = "<group>"; };
-		18EC448E21C2BB0C00857CA8 /* fromMe@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "fromMe@2x.png"; path = "../../../../../../fromMe@2x.png"; sourceTree = "<group>"; };
 		18F227CF21AFF0BD00A66903 /* GroupDeatilViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDeatilViewController.swift; sourceTree = "<group>"; };
 		32456B7E21C1D11000699C0E /* TargetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetViewController.swift; sourceTree = "<group>"; };
 		32456B8321C1DFCD00699C0E /* UserItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserItem.swift; sourceTree = "<group>"; };
@@ -130,6 +128,8 @@
 		3279D35921B8C88A00992BA6 /* shopViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = shopViewController.swift; sourceTree = "<group>"; };
 		3279D35D21B8C89300992BA6 /* CouponItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CouponItem.swift; sourceTree = "<group>"; };
 		441F98CE21BFAB040054E44F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4424C53421C39D4600B10CEB /* fromMe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fromMe.png; sourceTree = "<group>"; };
+		4424C53621C39D4E00B10CEB /* fromMe@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fromMe@2x.png"; sourceTree = "<group>"; };
 		44A4C79421A57D4B0042E7A1 /* Running.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Running.swift; sourceTree = "<group>"; };
 		44A4C79621A57DBB0042E7A1 /* TempUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempUserData.swift; sourceTree = "<group>"; };
 		44A634CA219C18BA0091B1AB /* RunningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningViewController.swift; sourceTree = "<group>"; };
@@ -245,8 +245,8 @@
 		1860268A219AD5980060B27F /* View */ = {
 			isa = PBXGroup;
 			children = (
-				18EC448C21C2BB0600857CA8 /* fromMe.png */,
-				18EC448E21C2BB0C00857CA8 /* fromMe@2x.png */,
+				4424C53421C39D4600B10CEB /* fromMe.png */,
+				4424C53621C39D4E00B10CEB /* fromMe@2x.png */,
 				18CF909221BFA42B00374BE7 /* fromOthers.png */,
 				18CF909121BFA42B00374BE7 /* fromOthers@2x.png */,
 				18CF908B21BFA40600374BE7 /* ChatView.swift */,
@@ -594,9 +594,9 @@
 				189C826F2195A9C10012A017 /* Running.storyboard in Resources */,
 				189C825C219598BB0012A017 /* Main.storyboard in Resources */,
 				18477A86219D63320081687F /* default_image.png in Resources */,
-				18EC448F21C2BB0C00857CA8 /* fromMe@2x.png in Resources */,
+				4424C53721C39D4F00B10CEB /* fromMe@2x.png in Resources */,
 				189C82752195AE3E0012A017 /* Shop.storyboard in Resources */,
-				18EC448D21C2BB0600857CA8 /* fromMe.png in Resources */,
+				4424C53521C39D4600B10CEB /* fromMe.png in Resources */,
 				189C82712195AB690012A017 /* Target.storyboard in Resources */,
 				441F98CF21BFAB040054E44F /* Assets.xcassets in Resources */,
 				189C82732195AD460012A017 /* Social.storyboard in Resources */,
@@ -856,7 +856,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MSH4HRBWX5;
+				DEVELOPMENT_TEAM = WR23AS49M5;
 				INFOPLIST_FILE = IosBonusRunningBeforeYou/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -877,7 +877,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MSH4HRBWX5;
+				DEVELOPMENT_TEAM = WR23AS49M5;
 				INFOPLIST_FILE = IosBonusRunningBeforeYou/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
