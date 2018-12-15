@@ -18,6 +18,7 @@ let IMAGE_SIZE_KEY = "imageSize"
 let FIND_BY_EMAIL_KEY = "findByEmail"
 let COUPON_ID = "id"
 
+
 typealias DoneHandler = (_ result:Any?, _ error: Error?) -> Void
 typealias DownloadDoneHandler = (_ result:Data?, _ error: Error?) -> Void
 

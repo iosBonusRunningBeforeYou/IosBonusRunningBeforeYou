@@ -111,6 +111,7 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
     
     var labelArray = Array<UILabel>()
     var accountArray = Array<String>()
+    var isShowed = true
     
     // userDefault
     
@@ -133,8 +134,6 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
         
         // Check user in Start area
         isInGroupRunningArea()
-        
-        isGroupRunngingEndInArea = false
         
         // Do any additional setup after loading the view, typically from a nib.
         mainMapView.delegate = self   //Important! 將MKMapViewDelegate的協定,綁在身上.
@@ -356,14 +355,23 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
             return
         }
         
-        isInGroupRunningArea()
-        
         // Move and zoom the map.
         let span = MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)   //Span 地圖縮放 ()
         let region = MKCoordinateRegion(center: location.coordinate, span: span)  //把span的參數 設定給Region
         mainMapView.setRegion(region, animated: true)
         
-        // MARK: 判斷揪團跑起點終點位置
+        groupRunningJudgement()
+    }
+    
+    
+    // MARK: 判斷揪團跑起點終點位置
+    func groupRunningJudgement() {
+        
+        guard let location = locationmanager.location else{
+            print("Location is not ready.")
+            return
+        }
+        
         print("groupRunningId:groupRunningId:\(groupRunningId)")
         if groupRunningId != 0 {
             guard let startPointLatitude =  groupInfo.startPointLatitude, let startPointLongitude =  groupInfo.startPointLongitude else {
@@ -382,23 +390,13 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
                 abs(location.coordinate.longitude - startPointLongitude) < 0.0005{
                 isGroupRunngingStartInArea = true
             }
-
-            if abs(location.coordinate.latitude - endPointLatitude) < 0.0005,
-                abs(location.coordinate.longitude - endPointLongitude) < 0.0005, isGroupRunngingStartInArea{
-                
-                    isGroupRunngingEndInArea = true
-            }
             
-            if isGroupRunngingStartInArea == false {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5 ){
-                    self.showStartErrorAlert()
+            if abs(location.coordinate.latitude - endPointLatitude) < 0.0005,
+                abs(location.coordinate.longitude - endPointLongitude) < 0.0005{
+                if  isGroupRunngingStartInArea == true {
+                    isGroupRunngingEndInArea = true
                 }
             }
-            
-            // already move to updataLocation.
-//            if isGroupRunngingEndInArea == true {showEndInArea()}
-            
-            
             
         }
     }
@@ -424,11 +422,6 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
         anns[1].coordinate = CLLocationCoordinate2D(latitude: endPointLatitude,
                                                     longitude: endPointLongitude)
         anns[1].title = "終點的位置"
-        
-        
-    
-        
-        
         
         mainMapView.addAnnotations(anns)
         mainMapView.setCenter(anns[0].coordinate, animated: true)
@@ -581,18 +574,6 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
     present(alert, animated: true, completion: nil) // present由下往上跳全螢幕.
     }
    
-    func showStartErrorAlert() {
-        let alertText = "距離揪團跑起點太遠, 請接近起點後再次進行揪團跑."
-        let alert = UIAlertController(title: alertText, message: "", preferredStyle: .alert)
-        
-        let ok = UIAlertAction(title: "確定", style: .default) { (action) in
-            
-        }
-        
-        alert.addAction(ok)
-        present(alert, animated: true, completion: nil) // present由下往上跳全螢幕.
-    }
-    
     func showEndInArea() {
         locationmanager.stopUpdatingLocation()
         let alertText = "恭喜您~終點已到達."
@@ -730,19 +711,16 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
             showNotInAreaAlert()
         } else {
             groupRunningStateField.text = "In groupRunning Area"
-            showInAreaAlert()
-            
         }
     }
     
     // Notification user that he was not in correct position.
     func showNotInAreaAlert(){
-    
-        let alertText = "您並不在揪團跑起點範圍內."
-        let alert = UIAlertController(title: alertText , message: "\n移動您目前的位置.\n\n 並按左下角◉,\n確認是否在範圍內.", preferredStyle: .alert)
+        
+        let alertText = "您目前不在揪團跑起點範圍內."
+        let alert = UIAlertController(title: alertText , message: "\n請移動您至起點的位置.\n\n再按下 確定 .\n\n左下角◉,可移動到現在位置.", preferredStyle: .alert)
         
         let ok = UIAlertAction(title: "確定", style: .default){(action) in}
-        
         
         
         alert.addAction(ok)
@@ -902,10 +880,21 @@ extension RunningViewController : CLLocationManagerDelegate{
             return
         }
         
+        moveAndZoomMap()
+        groupRunningJudgement()
+        
         if isGroupRunngingEndInArea == true {
             showEndInArea()
             locationmanager.stopUpdatingLocation()
         }
+        
+        if isGroupRunngingStartInArea == true, isShowed == true {
+            
+            showInAreaAlert()
+            isShowed = false
+        }
+        
+        
         
         groupRunningStateField.text = "You’re on your way."
         
