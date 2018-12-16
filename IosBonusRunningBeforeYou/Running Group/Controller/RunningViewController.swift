@@ -456,7 +456,7 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
             showGroupAlert()
         }
         
-        let now:Date = Date()
+        let now = Date()
         
         running.endTime = Int(now.timeIntervalSince1970 * 1000)
         running.totalTime = Double(running.endTime - running.startTime)
@@ -714,14 +714,18 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
             endButtonField.isHidden = true
             
         } else if isGroupRunngingStartInArea == false{
-            groupRunningStateField.text = "Not in groupRunning Area"
-            showNotInAreaAlert()
+            groupRunningStateField.text = "尚未到達起點哦！"
         } else {
-            groupRunningStateField.text = "In groupRunning Area"
+            groupRunningStateField.text = "到達起點了!"
+            groupRunningStateField.backgroundColor = UIColor.green
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3){
+                self.groupRunningStateField.isHidden = true
+            }
         }
     }
     
     // Notification user that he was not in correct position.
+    // 12/15 擔心起點在座標原點附近,會阻擋掉訊息,而不呼叫此方法. 但保留此方法.
     func showNotInAreaAlert(){
         
         let alertText = "您目前不在揪團跑起點範圍內."
@@ -940,6 +944,9 @@ extension RunningViewController : CLLocationManagerDelegate{
         moveAndZoomMap()
         groupRunningJudgement()
         
+        // Check user in Start area
+        isInGroupRunningArea()
+        
         if isGroupRunngingEndInArea == true {
             showEndInArea()
             locationmanager.stopUpdatingLocation()
@@ -950,10 +957,6 @@ extension RunningViewController : CLLocationManagerDelegate{
             showInAreaAlert()
             isShowed = false
         }
-        
-        
-        
-        groupRunningStateField.text = "You’re on your way."
         
         // MARK: get distance Data
         if startLocation == nil {
@@ -990,233 +993,252 @@ extension RunningViewController : CLLocationManagerDelegate{
             self.draw2D(coordinate: coordinate)
         }
         
-        // MARK: GroupDate upload and drawing
-        // firstMember
-        self.communicator.getTrackByMail(email: firstGroupMail){ (result, error) in
-            print("getTrackByMail = \(String(describing: result))")
-            print("firstGroupMail:\(self.firstGroupMail)")
-            
-            if let error = error {
-                print("Get user error:\(error)")
-                return
-            }
-            
-            guard let result = result else {
-                print("result is nil")
-                return
-            }
-            print("Get track  OK")
-            
-            guard let jsonDate = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)else {
-                print("Fail to generate jsonData.")
-                return
-            }
-            let decoder = JSONDecoder()
-            guard let resultObject = try? decoder.decode([GroupMember].self, from: jsonDate) else
-            {
-                print("Fail to decode jsonData.")
-                return
-            }
-            
-            for data in resultObject{
-                self.firstGroupMember.id = data.id
-                self.firstGroupMember.latitude = data.latitude
-                self.firstGroupMember.longitude = data.longitude
-            }
-            
-        }
-        
-        // secondMember
-        self.communicator.getTrackByMail(email: secondGroupMail){ (result, error) in
-            print("getTrackByMail = \(String(describing: result))")
-            print("firstGroupMail:\(self.secondGroupMail)")
-            
-            if let error = error {
-                print("Get user error:\(error)")
-                return
-            }
-            
-            guard let result = result else {
-                print("result is nil")
-                return
-            }
-            print("Get track  OK")
-            
-            guard let jsonDate = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)else {
-                print("Fail to generate jsonData.")
-                return
-            }
-            let decoder = JSONDecoder()
-            guard let resultObject = try? decoder.decode([GroupMember].self, from: jsonDate) else
-            {
-                print("Fail to decode jsonData.")
-                return
-            }
-            
-            for data in resultObject{
-                self.secondGroupMember.id = data.id
-                self.secondGroupMember.latitude = data.latitude
-                self.secondGroupMember.longitude = data.longitude
-            }
-        }
-        
-        // thirdMember
-        self.communicator.getTrackByMail(email: thirdGroupMail){ (result, error) in
-            print("getTrackByMail = \(String(describing: result))")
-            print("firstGroupMail:\(self.thirdGroupMail)")
-            
-            if let error = error {
-                print("Get user error:\(error)")
-                return
-            }
-            
-            guard let result = result else {
-                print("result is nil")
-                return
-            }
-            print("Get track  OK")
-            
-            guard let jsonDate = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)else {
-                print("Fail to generate jsonData.")
-                return
-            }
-            let decoder = JSONDecoder()
-            guard let resultObject = try? decoder.decode([GroupMember].self, from: jsonDate) else
-            {
-                print("Fail to decode jsonData.")
-                return
-            }
-            
-            for data in resultObject{
-                self.thirdGroupMember.id = data.id
-                self.thirdGroupMember.latitude = data.latitude
-                self.thirdGroupMember.longitude = data.longitude
-            }
-        }
-        
-        // fourthMember
-        self.communicator.getTrackByMail(email: fourthGroupMail){ (result, error) in
-            print("getTrackByMail = \(String(describing: result))")
-            print("firstGroupMail:\(self.fourthGroupMail)")
-            
-            if let error = error {
-                print("Get user error:\(error)")
-                return
-            }
-            
-            guard let result = result else {
-                print("result is nil")
-                return
-            }
-            print("Get track  OK")
-            
-            guard let jsonDate = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)else {
-                print("Fail to generate jsonData.")
-                return
-            }
-            let decoder = JSONDecoder()
-            guard let resultObject = try? decoder.decode([GroupMember].self, from: jsonDate) else
-            {
-                print("Fail to decode jsonData.")
-                return
-            }
-            
-            for data in resultObject{
-                self.fourthGroupMember.id = data.id
-                self.fourthGroupMember.latitude = data.latitude
-                self.fourthGroupMember.longitude = data.longitude
-            }
-        }
-        
-        // fifthMember
-        self.communicator.getTrackByMail(email: fifthGroupMail){ (result, error) in
-            print("getTrackByMail = \(String(describing: result))")
-            print("firstGroupMail:\(self.fifthGroupMail)")
-            
-            if let error = error {
-                print("Get user error:\(error)")
-                return
-            }
-            
-            guard let result = result else {
-                print("result is nil")
-                return
-            }
-            print("Get track  OK")
-            
-            guard let jsonDate = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)else {
-                print("Fail to generate jsonData.")
-                return
-            }
-            let decoder = JSONDecoder()
-            guard let resultObject = try? decoder.decode([GroupMember].self, from: jsonDate) else
-            {
-                print("Fail to decode jsonData.")
-                return
-            }
-            
-            for data in resultObject{
-                self.fifthGroupMember.id = data.id
-                self.fifthGroupMember.latitude = data.latitude
-                self.fifthGroupMember.longitude = data.longitude
-            }
-        }
-        
-        // sixthMember
-        self.communicator.getTrackByMail(email: sixthGroupMail){ (result, error) in
-            print("getTrackByMail = \(String(describing: result))")
-            print("firstGroupMail:\(self.sixthGroupMail)")
-            
-            if let error = error {
-                print("Get user error:\(error)")
-                return
-            }
-            
-            guard let result = result else {
-                print("result is nil")
-                return
-            }
-            print("Get track  OK")
-            
-            guard let jsonDate = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)else {
-                print("Fail to generate jsonData.")
-                return
-            }
-            let decoder = JSONDecoder()
-            guard let resultObject = try? decoder.decode([GroupMember].self, from: jsonDate) else
-            {
-                print("Fail to decode jsonData.")
-                return
-            }
-            
-            for data in resultObject{
-                self.sixthGroupMember.id = data.id
-                self.sixthGroupMember.latitude = data.latitude
-                self.sixthGroupMember.longitude = data.longitude
-            }
-        }
-        
-        print("groupRunningId:\(groupRunningId)")
+ 
         if groupRunningId != 0 {
-        let oldFirstCoordinate = CLLocationCoordinate2DMake(self.firstGroupMember.latitude, self.firstGroupMember.longitude)
-        self.drawFirstMember2D(coordinate: oldFirstCoordinate)
-        
-        let oldsecondCoordinate = CLLocationCoordinate2DMake(self.secondGroupMember.latitude, self.secondGroupMember.longitude)
-        self.drawSecondMember2D(coordinate: oldsecondCoordinate)
-        
-        let oldthirdCoordinate = CLLocationCoordinate2DMake(self.thirdGroupMember.latitude, self.thirdGroupMember.longitude)
-        self.drawThirdMember2D(coordinate: oldthirdCoordinate)
-        
-        let oldfourthCoordinate = CLLocationCoordinate2DMake(self.fourthGroupMember.latitude, self.fourthGroupMember.longitude)
-        self.drawFourthMember2D(coordinate: oldfourthCoordinate)
-        
-        let oldfifthCoordinate = CLLocationCoordinate2DMake(self.fifthGroupMember.latitude, self.fifthGroupMember.longitude)
-        self.drawFifthMember2D(coordinate: oldfifthCoordinate)
-        
-        let oldsixthCoordinate = CLLocationCoordinate2DMake(self.sixthGroupMember.latitude, self.sixthGroupMember.longitude)
-        self.drawSixthMember2D(coordinate: oldsixthCoordinate)
+            
+            self.communicator.getTrackByMail(email: firstGroupMail){ (result, error) in
+                print("getTrackByMail = \(String(describing: result))")
+                print("firstGroupMail:\(self.firstGroupMail)")
+                
+                if let error = error {
+                    print("Get user error:\(error)")
+                    return
+                }
+                
+                guard let result = result else {
+                    print("result is nil")
+                    return
+                }
+                print("Get track  OK")
+                
+                guard let jsonDate = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)else {
+                    print("Fail to generate jsonData.")
+                    return
+                }
+                let decoder = JSONDecoder()
+                guard let resultObject = try? decoder.decode([GroupMember].self, from: jsonDate) else
+                {
+                    print("Fail to decode jsonData.")
+                    return
+                }
+                
+                for data in resultObject{
+                    self.firstGroupMember.id = data.id
+                    self.firstGroupMember.latitude = data.latitude
+                    self.firstGroupMember.longitude = data.longitude
+                    print("data.endTime,data.startTime:\(data.endTime), \(data.startTime)")
+                }
+                
+            }
+            
+            // secondMember
+            self.communicator.getTrackByMail(email: secondGroupMail){ (result, error) in
+                print("getTrackByMail = \(String(describing: result))")
+                print("firstGroupMail:\(self.secondGroupMail)")
+                
+                if let error = error {
+                    print("Get user error:\(error)")
+                    return
+                }
+                
+                guard let result = result else {
+                    print("result is nil")
+                    return
+                }
+                print("Get track  OK")
+                
+                guard let jsonDate = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)else {
+                    print("Fail to generate jsonData.")
+                    return
+                }
+                let decoder = JSONDecoder()
+                guard let resultObject = try? decoder.decode([GroupMember].self, from: jsonDate) else
+                {
+                    print("Fail to decode jsonData.")
+                    return
+                }
+                
+                for data in resultObject{
+                    self.secondGroupMember.id = data.id
+                    self.secondGroupMember.latitude = data.latitude
+                    self.secondGroupMember.longitude = data.longitude
+                }
+            }
+            
+            // thirdMember
+            self.communicator.getTrackByMail(email: thirdGroupMail){ (result, error) in
+                print("getTrackByMail = \(String(describing: result))")
+                print("firstGroupMail:\(self.thirdGroupMail)")
+                
+                if let error = error {
+                    print("Get user error:\(error)")
+                    return
+                }
+                
+                guard let result = result else {
+                    print("result is nil")
+                    return
+                }
+                print("Get track  OK")
+                
+                guard let jsonDate = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)else {
+                    print("Fail to generate jsonData.")
+                    return
+                }
+                let decoder = JSONDecoder()
+                guard let resultObject = try? decoder.decode([GroupMember].self, from: jsonDate) else
+                {
+                    print("Fail to decode jsonData.")
+                    return
+                }
+                
+                for data in resultObject{
+                    self.thirdGroupMember.id = data.id
+                    self.thirdGroupMember.latitude = data.latitude
+                    self.thirdGroupMember.longitude = data.longitude
+                }
+            }
+            
+            // fourthMember
+            self.communicator.getTrackByMail(email: fourthGroupMail){ (result, error) in
+                print("getTrackByMail = \(String(describing: result))")
+                print("firstGroupMail:\(self.fourthGroupMail)")
+                
+                if let error = error {
+                    print("Get user error:\(error)")
+                    return
+                }
+                
+                guard let result = result else {
+                    print("result is nil")
+                    return
+                }
+                print("Get track  OK")
+                
+                guard let jsonDate = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)else {
+                    print("Fail to generate jsonData.")
+                    return
+                }
+                let decoder = JSONDecoder()
+                guard let resultObject = try? decoder.decode([GroupMember].self, from: jsonDate) else
+                {
+                    print("Fail to decode jsonData.")
+                    return
+                }
+                
+                for data in resultObject{
+                    self.fourthGroupMember.id = data.id
+                    self.fourthGroupMember.latitude = data.latitude
+                    self.fourthGroupMember.longitude = data.longitude
+                }
+            }
+            
+            // fifthMember
+            self.communicator.getTrackByMail(email: fifthGroupMail){ (result, error) in
+                print("getTrackByMail = \(String(describing: result))")
+                print("firstGroupMail:\(self.fifthGroupMail)")
+                
+                if let error = error {
+                    print("Get user error:\(error)")
+                    return
+                }
+                
+                guard let result = result else {
+                    print("result is nil")
+                    return
+                }
+                print("Get track  OK")
+                
+                guard let jsonDate = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)else {
+                    print("Fail to generate jsonData.")
+                    return
+                }
+                let decoder = JSONDecoder()
+                guard let resultObject = try? decoder.decode([GroupMember].self, from: jsonDate) else
+                {
+                    print("Fail to decode jsonData.")
+                    return
+                }
+                
+                for data in resultObject{
+                    self.fifthGroupMember.id = data.id
+                    self.fifthGroupMember.latitude = data.latitude
+                    self.fifthGroupMember.longitude = data.longitude
+                }
+            }
+            
+            // sixthMember
+            self.communicator.getTrackByMail(email: sixthGroupMail){ (result, error) in
+                print("getTrackByMail = \(String(describing: result))")
+                print("firstGroupMail:\(self.sixthGroupMail)")
+                
+                if let error = error {
+                    print("Get user error:\(error)")
+                    return
+                }
+                
+                guard let result = result else {
+                    print("result is nil")
+                    return
+                }
+                print("Get track  OK")
+                
+                guard let jsonDate = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)else {
+                    print("Fail to generate jsonData.")
+                    return
+                }
+                let decoder = JSONDecoder()
+                guard let resultObject = try? decoder.decode([GroupMember].self, from: jsonDate) else
+                {
+                    print("Fail to decode jsonData.")
+                    return
+                }
+                
+                for data in resultObject{
+                    self.sixthGroupMember.id = data.id
+                    self.sixthGroupMember.latitude = data.latitude
+                    self.sixthGroupMember.longitude = data.longitude
+                }
+            }
+            
+            print("groupRunningId:\(groupRunningId)")
+            if groupRunningId != 0 {
+                // today's date
+                let todayFormatter = DateFormatter()
+                todayFormatter.dateFormat = "dd"
+                
+                // groupRunning date
+                let groupRunningToday = groupInfo.groupRunningTime ?? "2018-12-16  08:07:17"
+                let dayStart = groupRunningToday.index(groupRunningToday.startIndex, offsetBy: 08)
+                let dayEnd = groupRunningToday.index(dayStart, offsetBy: 1)
+                let today = groupRunningToday[dayStart...dayEnd]
+                
+                // check it.
+                print("String(describing time: \(todayFormatter.string(from: now)), \(today)")
+                print("true or false : \((todayFormatter.string(from: now)) == today)")
+                
+                if todayFormatter.string(from: now) == today {
+                    
+                    let oldFirstCoordinate = CLLocationCoordinate2DMake(self.firstGroupMember.latitude, self.firstGroupMember.longitude)
+                    self.drawFirstMember2D(coordinate: oldFirstCoordinate)
+                    
+                    let oldsecondCoordinate = CLLocationCoordinate2DMake(self.secondGroupMember.latitude, self.secondGroupMember.longitude)
+                    self.drawSecondMember2D(coordinate: oldsecondCoordinate)
+                    
+                    let oldthirdCoordinate = CLLocationCoordinate2DMake(self.thirdGroupMember.latitude, self.thirdGroupMember.longitude)
+                    self.drawThirdMember2D(coordinate: oldthirdCoordinate)
+                    
+                    let oldfourthCoordinate = CLLocationCoordinate2DMake(self.fourthGroupMember.latitude, self.fourthGroupMember.longitude)
+                    self.drawFourthMember2D(coordinate: oldfourthCoordinate)
+                    
+                    let oldfifthCoordinate = CLLocationCoordinate2DMake(self.fifthGroupMember.latitude, self.fifthGroupMember.longitude)
+                    self.drawFifthMember2D(coordinate: oldfifthCoordinate)
+                    
+                    let oldsixthCoordinate = CLLocationCoordinate2DMake(self.sixthGroupMember.latitude, self.sixthGroupMember.longitude)
+                    self.drawSixthMember2D(coordinate: oldsixthCoordinate)
+                }
+            }
         }
-        
     }
     
     func draw2D(coordinate: CLLocationCoordinate2D) {
