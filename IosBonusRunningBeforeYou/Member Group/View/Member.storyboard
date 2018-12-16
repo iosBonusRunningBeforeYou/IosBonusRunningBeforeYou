@@ -259,9 +259,8 @@
                                             <constraint firstAttribute="width" constant="80" id="F2z-Dw-caT"/>
                                         </constraints>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="miM-42-EbT">
-                                        <rect key="frame" x="239" y="25" width="71" height="35"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="miM-42-EbT">
+                                        <rect key="frame" x="239" y="28" width="62" height="30"/>
                                         <color key="backgroundColor" red="0.8392164111" green="0.84312981369999995" blue="0.84313768150000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <state key="normal" title="更換相片">
                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -274,6 +273,8 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="wI2-EE-jHZ" firstAttribute="centerX" secondItem="izd-8G-e8v" secondAttribute="centerX" id="FKc-6e-IsU"/>
+                                    <constraint firstItem="miM-42-EbT" firstAttribute="centerY" secondItem="izd-8G-e8v" secondAttribute="centerY" id="e2w-X0-zI3"/>
+                                    <constraint firstItem="miM-42-EbT" firstAttribute="leading" secondItem="wI2-EE-jHZ" secondAttribute="trailing" constant="11.5" id="enp-nX-Fgo"/>
                                     <constraint firstItem="wI2-EE-jHZ" firstAttribute="centerY" secondItem="izd-8G-e8v" secondAttribute="centerY" id="mFN-bV-kqg"/>
                                     <constraint firstAttribute="height" constant="86" id="sc8-8t-84e"/>
                                 </constraints>
