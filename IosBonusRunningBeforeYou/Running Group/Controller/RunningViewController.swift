@@ -124,7 +124,7 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        self.timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(drawGroup2D), userInfo: nil, repeats: true)
+        self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(getTrack), userInfo: nil, repeats: true)
 
         // userDefault
         running.mail = userDefault.string(forKey: "email")!
@@ -995,7 +995,12 @@ extension RunningViewController : CLLocationManagerDelegate{
             self.draw2D(coordinate: coordinate)
         }
         
- 
+        getTrack()
+        
+    }
+    
+    @objc func getTrack() {
+        
         if groupRunningId != 0 {
             
             self.communicator.getTrackByMail(email: firstGroupMail){ (result, error) in
