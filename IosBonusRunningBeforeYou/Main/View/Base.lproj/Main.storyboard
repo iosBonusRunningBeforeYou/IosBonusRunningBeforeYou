@@ -88,8 +88,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login" translatesAutoresizingMaskIntoConstraints="NO" id="tiQ-dk-UVd">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                            </imageView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="請輸入密碼" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tMh-00-3bu">
-                                <rect key="frame" x="16" y="263.5" width="343" height="30"/>
+                                <rect key="frame" x="16" y="343.5" width="343" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="OLJ-QT-lY2"/>
                                 </constraints>
@@ -98,7 +101,7 @@
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tR7-QP-pbh">
-                                <rect key="frame" x="16" y="318.5" width="343" height="30"/>
+                                <rect key="frame" x="16" y="398.5" width="343" height="30"/>
                                 <color key="backgroundColor" red="0.69411963219999995" green="0.69803267719999995" blue="0.69803971050000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal" title="登入">
@@ -109,7 +112,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="duL-ka-G8z">
-                                <rect key="frame" x="289" y="368.5" width="70" height="30"/>
+                                <rect key="frame" x="289" y="448.5" width="70" height="30"/>
                                 <color key="backgroundColor" red="0.69411963219999995" green="0.69803267719999995" blue="0.69803971050000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="3jS-BR-LIg"/>
@@ -123,7 +126,7 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="請輸入帳號" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bZ5-DS-qKI">
-                                <rect key="frame" x="16" y="213.5" width="343" height="30"/>
+                                <rect key="frame" x="16" y="293.5" width="343" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="S7O-qr-7vs"/>
                                 </constraints>
@@ -132,7 +135,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dRy-7J-0a0">
-                                <rect key="frame" x="16" y="368.5" width="70" height="30"/>
+                                <rect key="frame" x="16" y="448.5" width="70" height="30"/>
                                 <color key="backgroundColor" red="0.65098279709999995" green="0.6548956037" blue="0.65490227940000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="cSv-wE-CSm"/>
@@ -146,7 +149,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z7t-hj-b7d">
-                                <rect key="frame" x="16" y="177" width="343" height="20.5"/>
+                                <rect key="frame" x="16" y="257" width="343" height="20.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20.5" id="JSR-XZ-F0D"/>
                                 </constraints>
@@ -157,7 +160,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="tR7-QP-pbh" firstAttribute="centerY" secondItem="GL0-1W-Ubx" secondAttribute="centerY" id="0Hh-h9-U4i"/>
+                            <constraint firstItem="tR7-QP-pbh" firstAttribute="centerY" secondItem="GL0-1W-Ubx" secondAttribute="centerY" constant="80" id="0Hh-h9-U4i"/>
                             <constraint firstItem="tMh-00-3bu" firstAttribute="top" secondItem="bZ5-DS-qKI" secondAttribute="bottom" constant="20" id="2KY-38-EHL"/>
                             <constraint firstItem="Wcq-s0-vN3" firstAttribute="trailing" secondItem="tMh-00-3bu" secondAttribute="trailing" constant="16" id="8er-jj-LMW"/>
                             <constraint firstItem="bZ5-DS-qKI" firstAttribute="top" secondItem="Z7t-hj-b7d" secondAttribute="bottom" constant="16" id="9Cg-ab-igd"/>
@@ -170,10 +173,14 @@
                             <constraint firstItem="Wcq-s0-vN3" firstAttribute="trailing" secondItem="tR7-QP-pbh" secondAttribute="trailing" constant="16" id="XA8-Eh-BlD"/>
                             <constraint firstItem="dRy-7J-0a0" firstAttribute="leading" secondItem="Wcq-s0-vN3" secondAttribute="leading" constant="16" id="Xns-se-BYY"/>
                             <constraint firstItem="dRy-7J-0a0" firstAttribute="top" secondItem="tR7-QP-pbh" secondAttribute="bottom" constant="20" id="ZBT-xG-DyR"/>
+                            <constraint firstItem="tiQ-dk-UVd" firstAttribute="trailing" secondItem="Wcq-s0-vN3" secondAttribute="trailing" id="fOH-hx-Nx2"/>
                             <constraint firstItem="tMh-00-3bu" firstAttribute="leading" secondItem="Wcq-s0-vN3" secondAttribute="leading" constant="16" id="fkM-6t-RYe"/>
                             <constraint firstItem="Wcq-s0-vN3" firstAttribute="trailing" secondItem="bZ5-DS-qKI" secondAttribute="trailing" constant="16" id="gKu-ID-xkY"/>
+                            <constraint firstItem="tiQ-dk-UVd" firstAttribute="leading" secondItem="Wcq-s0-vN3" secondAttribute="leading" id="j8d-ze-sZ6"/>
+                            <constraint firstItem="tiQ-dk-UVd" firstAttribute="top" secondItem="Wcq-s0-vN3" secondAttribute="top" id="l0f-qZ-7wm"/>
                             <constraint firstItem="tR7-QP-pbh" firstAttribute="leading" secondItem="Wcq-s0-vN3" secondAttribute="leading" constant="16" id="llQ-R3-qpE"/>
                             <constraint firstItem="duL-ka-G8z" firstAttribute="top" secondItem="tR7-QP-pbh" secondAttribute="bottom" constant="20" id="qhO-Bz-aym"/>
+                            <constraint firstItem="tiQ-dk-UVd" firstAttribute="bottom" secondItem="Wcq-s0-vN3" secondAttribute="bottom" id="wdv-6L-fdL"/>
                             <constraint firstItem="tR7-QP-pbh" firstAttribute="centerX" secondItem="GL0-1W-Ubx" secondAttribute="centerX" id="x9f-zK-2ha"/>
                             <constraint firstItem="Wcq-s0-vN3" firstAttribute="trailing" secondItem="duL-ka-G8z" secondAttribute="trailing" constant="16" id="zYl-tZ-Jbd"/>
                         </constraints>
@@ -189,7 +196,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hIs-RZ-2qf" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="202" y="-934"/>
+            <point key="canvasLocation" x="200.80000000000001" y="-934.18290854572717"/>
         </scene>
         <!--Register View Controller-->
         <scene sceneID="Hlp-tV-P4Z">
@@ -487,7 +494,11 @@
             <point key="canvasLocation" x="-714" y="-934"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="login" width="247" height="350"/>
+    </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="gkH-kO-IOh"/>
         <segue reference="CKb-Rg-FmD"/>
         <segue reference="2Ky-ET-pPX"/>
     </inferredMetricsTieBreakers>

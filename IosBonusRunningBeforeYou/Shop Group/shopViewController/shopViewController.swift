@@ -18,17 +18,25 @@ class ShopViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     let communicator = Communicator.shared
     
+    
     var couponItem = [CouponItem]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "商城"
         
         tableView.delegate = self
         tableView.dataSource = self
-        
-        
-        getCouponList()
 
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getCouponList()
+    }
+    
+    @IBAction func unwindToShop(_ unwindSegue: UIStoryboardSegue) {
+        // Use data from the view controller which initiated the unwind segue
+        self.view.showToast(text: "購買成功")
     }
     
 //    @IBAction func detailBtn(_ sender: AnyObject) {
@@ -37,6 +45,10 @@ class ShopViewController: UIViewController, UITableViewDelegate, UITableViewData
 //        print(indexPath)
 
 //    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        couponItem.removeAll()
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let controller = segue.destination as? ExchangeViewController
@@ -62,10 +74,6 @@ class ShopViewController: UIViewController, UITableViewDelegate, UITableViewData
         return 200 // 設定cell高度
     }
     
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 3 // 間距高度
-//    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:ShopTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as! ShopTableViewCell
         
@@ -90,7 +98,7 @@ class ShopViewController: UIViewController, UITableViewDelegate, UITableViewData
                 print("result is nil")
                 return
             }
-            print("Get all  OK")
+//            print("Get all  OK")
             
             guard let jsonDate = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)else {
                 print("Fail to generate jsonData.")
@@ -121,11 +129,12 @@ class ShopViewController: UIViewController, UITableViewDelegate, UITableViewData
                 print("Data is nil")
                 return
             }
-            print("Get Image OK.")
+//            print("Get Image OK.")
             
             image.image = UIImage(data: data)
         }
     }
+    
     
 }
 

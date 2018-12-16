@@ -13,7 +13,7 @@
         <scene sceneID="j0h-U2-f1l">
             <objects>
                 <navigationController storyboardIdentifier="MainMemberVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="geT-9F-KXK" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="會員" id="A1N-wN-CZQ"/>
+                    <tabBarItem key="tabBarItem" title="會員" image="個人檔案 拷貝" id="A1N-wN-CZQ"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="eqH-iK-Tzz">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -592,7 +592,7 @@
                                                         <constraint firstAttribute="width" constant="170" id="eHZ-pe-uGc"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.20519068839999999" green="0.70659744739999997" blue="0.89807075260000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -658,7 +658,7 @@
                                                         <constraint firstAttribute="width" constant="170" id="Z1j-VO-mQu"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.27906000609999998" green="0.73260957000000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -689,7 +689,7 @@
                                                         <constraint firstAttribute="width" constant="170" id="9rZ-ZA-TTf"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.27906000609999998" green="0.73260957000000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -720,7 +720,7 @@
                                                         <constraint firstAttribute="width" constant="170" id="ndG-4u-ukQ"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.27906000609999998" green="0.73260957000000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -751,7 +751,7 @@
                                                         <constraint firstAttribute="width" constant="170" id="LUK-AL-Ian"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.27906000609999998" green="0.73260957000000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -782,7 +782,7 @@
                                                         <constraint firstAttribute="width" constant="170" id="nNj-Ae-2WJ"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.27906000609999998" green="0.73260957000000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -1005,5 +1005,6 @@
         <image name="default photo" width="96" height="96"/>
         <image name="default_image" width="128" height="128"/>
         <image name="dollar" width="32" height="32"/>
+        <image name="個人檔案 拷貝" width="22.5" height="22.5"/>
     </resources>
 </document>

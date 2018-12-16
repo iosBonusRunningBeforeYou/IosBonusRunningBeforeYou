@@ -18,3 +18,18 @@ struct CouponItem: Codable {
     var image: Int
     
 }
+
+struct Order: Codable {
+    
+    var useremail: String = ""
+    var id: Int = 0
+    var totalquantity: Int = 0
+    
+}
+
+struct PointsRecord: Codable {
+    var record_name: String = ""
+    var record_points: Int = 0
+    var record_date: String = ""
+    var email: String = ""
+}

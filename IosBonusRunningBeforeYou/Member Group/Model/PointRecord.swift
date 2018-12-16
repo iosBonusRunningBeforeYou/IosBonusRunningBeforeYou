@@ -14,4 +14,5 @@ struct PointRecord: Codable {
     var record_points: Int = 0
     var record_date: String = ""
     var email: String = ""
+    
 }
