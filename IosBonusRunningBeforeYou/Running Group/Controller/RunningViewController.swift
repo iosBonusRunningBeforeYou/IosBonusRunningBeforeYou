@@ -124,7 +124,7 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(drawGroup2D), userInfo: nil, repeats: true)
+//        self.timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(drawGroup2D), userInfo: nil, repeats: true)
 
         // userDefault
         running.mail = userDefault.string(forKey: "email")!
