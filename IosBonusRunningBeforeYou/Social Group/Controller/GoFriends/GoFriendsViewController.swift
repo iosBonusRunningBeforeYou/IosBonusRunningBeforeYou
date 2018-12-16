@@ -9,8 +9,11 @@
 
 import UIKit
 import SVProgressHUD
+import Starscream
 
-class GoFriendsViewController: UIViewController {
+class GoFriendsViewController: UIViewController,WebSocketDelegate {
+   
+    
     
     @IBOutlet weak var goFriendsTVC: UITableView!
     @IBOutlet weak var goFriendCV: UICollectionView!
@@ -23,6 +26,7 @@ class GoFriendsViewController: UIViewController {
     var isfromCreatNewGroup = false
     var indexPathForCV:Int?
     let userDefault = UserDefaults.standard
+    var socket:WebSocket!
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +50,9 @@ class GoFriendsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         NotificationCenter.default.post(name: Notification.Name(rawValue: "currentPageChanged"), object: 1)
+       socketConnectGoFriends(emailAccount:email)
         if isfromCreatNewGroup {
+            
         }else{
             showJoinGroup()
             showGroup()
@@ -63,6 +69,12 @@ class GoFriendsViewController: UIViewController {
     @IBAction func unwindToGroupList(_ segue: UIStoryboardSegue){
         if  segue.identifier == "save" {
             isfromCreatNewGroup = true
+//             socketConnectGoFriends(emailAccount:email)
+            
+            let chatMessage = ChatMessage.init(sender: nil, receiver:nil , message: nil, messageType: "goFriends")
+            let chatMessageData = try! JSONEncoder().encode(chatMessage)
+            let chatMessageString = String(data: chatMessageData, encoding: .utf8)!
+            socket.write(string: chatMessageString)
         }
         //        guard let creatNewGroupCV = segue.source as? CreatNewGroupViewController else{
         //            return
@@ -148,10 +160,40 @@ class GoFriendsViewController: UIViewController {
             }
             
             PrintHelper.println(tag: self.tag, line: 149, "userJoinGroup = \(self.userJoinGroup),@@@@@@ groupItems = \(self.groupItems)")
+            
             self.goFriendCV.reloadData()
             self.goFriendsTVC.reloadData()
             SVProgressHUD.dismiss()
         }
+    }
+    func socketConnectGoFriends(emailAccount:String){
+        socket = WebSocket(url: URL(string: communicator.GOFRIENDS_SOCKET_URL + emailAccount)!)
+        socket.delegate = self
+        socket.connect()
+    }
+    
+    func websocketDidConnect(socket: WebSocketClient) {
+        print("websocket isConnect")
+    }
+    
+    func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
+         print("websocket Disconnect ")
+    }
+    
+    func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
+        print("websocket ReceiveMessage text = \(text)")
+        let decoder = JSONDecoder()
+        let jsonData = text.data(using: String.Encoding.utf8, allowLossyConversion: true)!
+        let message = try! decoder.decode(ChatMessage.self, from: jsonData)
+        if message.messageType == "goFriends"{
+            groupItems.removeAll()
+            userJoinGroup.removeAll()
+            showGroup()
+        }
+    }
+    
+    func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
+         print("websocket ReceiveData data = \(data.count)")
     }
 }
 

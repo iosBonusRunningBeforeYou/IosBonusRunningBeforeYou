@@ -24,8 +24,6 @@ class ChatRoomViewController: UIViewController, WebSocketDelegate, UITextFieldDe
     var email = "123@gamil.com"
     let userDefault = UserDefaults.standard
     var socket:WebSocket!
-    
-    
     var firstView = 0
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -141,6 +139,7 @@ class ChatRoomViewController: UIViewController, WebSocketDelegate, UITextFieldDe
         let chatMessageData = try! JSONEncoder().encode(chatMessage)
         let chatMessageString = String(data: chatMessageData, encoding: .utf8)!
         socket.write(string: chatMessageString)
+        
          let emailAccount = self.mailFilter(email)
         let text = "\(emailAccount ?? ""): \(inputTextField.text ?? "") \(stringTime ?? "")"
         
@@ -244,7 +243,7 @@ class ChatRoomViewController: UIViewController, WebSocketDelegate, UITextFieldDe
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyy-MM-dd HH:mm:ss"
         let stringTime = dateFormatter.string(from: now)
-        let emailAccount = self.mailFilter(message.sender)
+            let emailAccount = self.mailFilter(message.sender!)
         let text = "\(emailAccount ?? ""): \(message.message ?? "") \(stringTime ?? "")"
         let chatItem = ChatItem(text:  text, image: nil, senderType: .fromOthers)
         chatView.add(chatItem: chatItem)
@@ -272,7 +271,7 @@ class ChatRoomViewController: UIViewController, WebSocketDelegate, UITextFieldDe
             return
         }
         print("\(resultObject)")
-        let emailAccount = self.mailFilter(resultObject.sender)
+        let emailAccount = self.mailFilter(resultObject.sender!)
         let textDetail = "\(emailAccount): "
         let type: ChatSenderType = .fromOthers
         let base64String = resultObject.message
@@ -307,7 +306,7 @@ class ChatRoomViewController: UIViewController, WebSocketDelegate, UITextFieldDe
         })
     }
 }
-extension UIViewController {
+extension ChatRoomViewController {
     //彈出鍵盤時提高畫面
     @objc
     func keyboardHight(_ notification:Notification){

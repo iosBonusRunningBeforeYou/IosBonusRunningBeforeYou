@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class CreatNewGroupViewController: UIViewController,UITextFieldDelegate {
+class CreatNewGroupViewController: UIViewController,UITextViewDelegate {
     
     @IBOutlet weak var datePickerView: UIView!
     @IBOutlet weak var timePicker: UIDatePicker!
@@ -31,6 +31,9 @@ class CreatNewGroupViewController: UIViewController,UITextFieldDelegate {
     var results:[Int] = []
     var email = "Lisa@gmail.com"
     let userDefault = UserDefaults.standard
+
+    var isSelectedTextView = false
+    var isSelectedTextField = false
     
     var hidden = true{
         didSet{
@@ -39,18 +42,17 @@ class CreatNewGroupViewController: UIViewController,UITextFieldDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-//        //監聽鍵盤狀態
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIWindow.keyboardWillShowNotification, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIWindow.keyboardWillHideNotification, object: nil)
         email = userDefault.string(forKey: "email")!
-        
-         NotificationCenter.default.addObserver(self, selector: #selector(keyboardHight), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        groupIntroduceTextView.delegate = self
     }
  
     override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        registerNotification()
+    }
     @IBAction func unwindToGraetNewGroup(_ segue: UIStoryboardSegue){
         guard  segue.identifier == "saveLocation"  else {
             return
@@ -92,6 +94,7 @@ class CreatNewGroupViewController: UIViewController,UITextFieldDelegate {
             hidden = true
         }
     }
+    
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -136,18 +139,75 @@ class CreatNewGroupViewController: UIViewController,UITextFieldDelegate {
         mapVC.endLongitude = endLongitude
 //        PrintHelper.println(tag: tag, line: 201, "prepare: mapVC.startLatitude \(mapVC.startLatitude), mapVC.startLongitude \(mapVC.startLongitude), mapVC.endLatitude \(mapVC.endLatitude), mapVC.endLongitude \(mapVC.endLongitude)")
     }
+
     
-    
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        groupNameTextField.resignFirstResponder()
-        return true
+    @objc
+    func keyboardState(notification: NSNotification){
+        
+        if isSelectedTextField == false && isSelectedTextView == false{
+            isSelectedTextView = true
+        }else if isSelectedTextField == false && isSelectedTextView == true{
+            isSelectedTextView = false
+        }
     }
+    
+    //MARK: 註冊鍵盤監聽
+  func registerNotification(){
+    
+    NotificationCenter.default.addObserver(self, selector: #selector(keyboardState), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    
+    NotificationCenter.default.addObserver(self, selector: #selector(keyboardHight), name: UIResponder.keyboardWillShowNotification, object: nil)
+    
+    NotificationCenter.default.addObserver(self, selector: #selector(keyboardHight), name: UIResponder.keyboardWillHideNotification, object: nil)
+   
+    }
+    // MARK: 取消監聽鍵盤
+    func releaseNotification(){
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
 }
 
+extension CreatNewGroupViewController: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        isSelectedTextField = true
+        isSelectedTextView = false
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+          isSelectedTextField = false
+    }
+}
+
+extension CreatNewGroupViewController {
+    //彈出鍵盤時提高畫面
+    @objc
+    func keyboardHight(_ notification:Notification){
+       
+            let info = notification.userInfo
+            let kbRect = (info?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+            let offsetY = kbRect.origin.y - UIScreen.main.bounds.height
+            UIView.animate(withDuration: 0.1) {
+                print("\(offsetY)")
+                if offsetY == 0 {
+                    self.view.transform = CGAffineTransform(translationX: 0, y: 0)
+                }else if  self.isSelectedTextView{
+                    self.view.transform = CGAffineTransform(translationX: 0, y: offsetY)
+                }
+            }
+        
+    }
+}
 extension Communicator {
     
     func insertNewGroup(newGroup: GoFriendItem,completion:@escaping DoneHandler){

@@ -10,8 +10,8 @@ import Foundation
 
 struct ChatMessage:Codable {
     
-    var  sender:String
-    var  receiver:Int
+    var  sender:String?
+    var  receiver:Int?
     var  message:String?
     var  messageType:String?
     

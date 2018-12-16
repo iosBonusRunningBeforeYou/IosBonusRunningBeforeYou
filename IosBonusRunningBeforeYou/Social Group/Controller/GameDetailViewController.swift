@@ -171,6 +171,7 @@ class GameDetailViewController: UIViewController {
                     print("gameId")
                     return
                 }
+                self.rankOfGameItem.removeAll()
                 self.getRankOfGame(gameId: gameId, ruleId: ruleId)
             }else {
                 print("insertGameJoinState fail")

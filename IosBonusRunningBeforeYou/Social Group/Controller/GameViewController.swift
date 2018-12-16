@@ -50,7 +50,10 @@ class GameViewController: UIViewController {
                 //                print("\(#line)\(game)")
                 self.gameItem.append(game)
             }
-            self.gameTVC.reloadData()
+            DispatchQueue.main.async {
+                self.gameTVC.reloadData()
+            }
+            
             //            print("gameItem = \(self.gameItem)")
             SVProgressHUD.dismiss()
         }
