@@ -116,14 +116,16 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
     var labelArray = Array<UILabel>()
     var accountArray = Array<String>()
     var isShowed = true
-    
+
     // userDefault
     
     let userDefault = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
+        self.timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(drawGroup2D), userInfo: nil, repeats: true)
+
         // userDefault
         running.mail = userDefault.string(forKey: "email")!
         
@@ -1202,41 +1204,46 @@ extension RunningViewController : CLLocationManagerDelegate{
             }
             
             print("groupRunningId:\(groupRunningId)")
-            if groupRunningId != 0 {
-                // today's date
-                let todayFormatter = DateFormatter()
-                todayFormatter.dateFormat = "dd"
+            drawGroup2D()
+        }
+    }
+    
+    @objc func drawGroup2D() {
+        let now = Date()
+        if groupRunningId != 0 {
+            // today's date
+            let todayFormatter = DateFormatter()
+            todayFormatter.dateFormat = "dd"
+            
+            // groupRunning date
+            let groupRunningToday = groupInfo.groupRunningTime ?? "2018-12-16  08:07:17"
+            let dayStart = groupRunningToday.index(groupRunningToday.startIndex, offsetBy: 08)
+            let dayEnd = groupRunningToday.index(dayStart, offsetBy: 1)
+            let today = groupRunningToday[dayStart...dayEnd]
+            
+            // check it.
+            print("String(describing time: \(todayFormatter.string(from: now)), \(today)")
+            print("true or false : \((todayFormatter.string(from: now)) == today)")
+            
+            if todayFormatter.string(from: now) == today {
                 
-                // groupRunning date
-                let groupRunningToday = groupInfo.groupRunningTime ?? "2018-12-16  08:07:17"
-                let dayStart = groupRunningToday.index(groupRunningToday.startIndex, offsetBy: 08)
-                let dayEnd = groupRunningToday.index(dayStart, offsetBy: 1)
-                let today = groupRunningToday[dayStart...dayEnd]
+                let oldFirstCoordinate = CLLocationCoordinate2DMake(self.firstGroupMember.latitude, self.firstGroupMember.longitude)
+                self.drawFirstMember2D(coordinate: oldFirstCoordinate)
                 
-                // check it.
-                print("String(describing time: \(todayFormatter.string(from: now)), \(today)")
-                print("true or false : \((todayFormatter.string(from: now)) == today)")
+                let oldsecondCoordinate = CLLocationCoordinate2DMake(self.secondGroupMember.latitude, self.secondGroupMember.longitude)
+                self.drawSecondMember2D(coordinate: oldsecondCoordinate)
                 
-                if todayFormatter.string(from: now) == today {
-                    
-                    let oldFirstCoordinate = CLLocationCoordinate2DMake(self.firstGroupMember.latitude, self.firstGroupMember.longitude)
-                    self.drawFirstMember2D(coordinate: oldFirstCoordinate)
-                    
-                    let oldsecondCoordinate = CLLocationCoordinate2DMake(self.secondGroupMember.latitude, self.secondGroupMember.longitude)
-                    self.drawSecondMember2D(coordinate: oldsecondCoordinate)
-                    
-                    let oldthirdCoordinate = CLLocationCoordinate2DMake(self.thirdGroupMember.latitude, self.thirdGroupMember.longitude)
-                    self.drawThirdMember2D(coordinate: oldthirdCoordinate)
-                    
-                    let oldfourthCoordinate = CLLocationCoordinate2DMake(self.fourthGroupMember.latitude, self.fourthGroupMember.longitude)
-                    self.drawFourthMember2D(coordinate: oldfourthCoordinate)
-                    
-                    let oldfifthCoordinate = CLLocationCoordinate2DMake(self.fifthGroupMember.latitude, self.fifthGroupMember.longitude)
-                    self.drawFifthMember2D(coordinate: oldfifthCoordinate)
-                    
-                    let oldsixthCoordinate = CLLocationCoordinate2DMake(self.sixthGroupMember.latitude, self.sixthGroupMember.longitude)
-                    self.drawSixthMember2D(coordinate: oldsixthCoordinate)
-                }
+                let oldthirdCoordinate = CLLocationCoordinate2DMake(self.thirdGroupMember.latitude, self.thirdGroupMember.longitude)
+                self.drawThirdMember2D(coordinate: oldthirdCoordinate)
+                
+                let oldfourthCoordinate = CLLocationCoordinate2DMake(self.fourthGroupMember.latitude, self.fourthGroupMember.longitude)
+                self.drawFourthMember2D(coordinate: oldfourthCoordinate)
+                
+                let oldfifthCoordinate = CLLocationCoordinate2DMake(self.fifthGroupMember.latitude, self.fifthGroupMember.longitude)
+                self.drawFifthMember2D(coordinate: oldfifthCoordinate)
+                
+                let oldsixthCoordinate = CLLocationCoordinate2DMake(self.sixthGroupMember.latitude, self.sixthGroupMember.longitude)
+                self.drawSixthMember2D(coordinate: oldsixthCoordinate)
             }
         }
     }
