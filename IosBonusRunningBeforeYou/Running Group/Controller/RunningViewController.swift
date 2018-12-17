@@ -361,7 +361,7 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
         }
         
         // Move and zoom the map.
-        let span = MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)   //Span 地圖縮放 ()
+        let span = MKCoordinateSpan(latitudeDelta: 0.0008, longitudeDelta: 0.0008)   //Span 地圖縮放 ()
         let region = MKCoordinateRegion(center: location.coordinate, span: span)  //把span的參數 設定給Region
         mainMapView.setRegion(region, animated: true)
         
@@ -942,8 +942,8 @@ extension RunningViewController : CLLocationManagerDelegate{
             assertionFailure("Invaild coordinate or location.")  //assertionFailure, DEBUG用, 用來看不該出現的問題. 不影響使用者.
             return
         }
-        
-        moveAndZoomMap()
+        // MARK: FOR RECORD
+//        moveAndZoomMap()
         groupRunningJudgement()
         
         // Check user in Start area
