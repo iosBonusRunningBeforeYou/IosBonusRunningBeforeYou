@@ -43,9 +43,13 @@ class GoFriendsViewController: UIViewController,WebSocketDelegate {
     @objc
     func reloadDatas(notification: Notification) {
         //        showAlert(title: "reloadData", message: "")
-        SVProgressHUD.show()
-        showJoinGroup()
-        showGroup()
+//        SVProgressHUD.show()
+        let chatMessage = ChatMessage.init(sender: nil, receiver:nil , message: nil, messageType: "goFriends")
+        let chatMessageData = try! JSONEncoder().encode(chatMessage)
+        let chatMessageString = String(data: chatMessageData, encoding: .utf8)!
+        socket.write(string: chatMessageString)
+//        showJoinGroup()
+//        showGroup()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,10 +75,10 @@ class GoFriendsViewController: UIViewController,WebSocketDelegate {
             isfromCreatNewGroup = true
 //             socketConnectGoFriends(emailAccount:email)
             
-            let chatMessage = ChatMessage.init(sender: nil, receiver:nil , message: nil, messageType: "goFriends")
-            let chatMessageData = try! JSONEncoder().encode(chatMessage)
-            let chatMessageString = String(data: chatMessageData, encoding: .utf8)!
-            socket.write(string: chatMessageString)
+//            let chatMessage = ChatMessage.init(sender: nil, receiver:nil , message: nil, messageType: "goFriends")
+//            let chatMessageData = try! JSONEncoder().encode(chatMessage)
+//            let chatMessageString = String(data: chatMessageData, encoding: .utf8)!
+//            socket.write(string: chatMessageString)
         }
         //        guard let creatNewGroupCV = segue.source as? CreatNewGroupViewController else{
         //            return
@@ -117,7 +121,7 @@ class GoFriendsViewController: UIViewController,WebSocketDelegate {
                 return
             }
             self.userJoinGroupId = result as! [Int]
-            PrintHelper.println(tag: self.tag, line: 135, "getUserJoinGroup = \(result)")
+//            PrintHelper.println(tag: self.tag, line: 135, "getUserJoinGroup = \(result)")
         }
     }
     
@@ -159,7 +163,7 @@ class GoFriendsViewController: UIViewController,WebSocketDelegate {
                 }
             }
             
-            PrintHelper.println(tag: self.tag, line: 149, "userJoinGroup = \(self.userJoinGroup),@@@@@@ groupItems = \(self.groupItems)")
+//            PrintHelper.println(tag: self.tag, line: 149, "userJoinGroup = \(self.userJoinGroup),@@@@@@ groupItems = \(self.groupItems)")
             
             self.goFriendCV.reloadData()
             self.goFriendsTVC.reloadData()
@@ -188,7 +192,10 @@ class GoFriendsViewController: UIViewController,WebSocketDelegate {
         if message.messageType == "goFriends"{
             groupItems.removeAll()
             userJoinGroup.removeAll()
+            showJoinGroup()
             showGroup()
+          
+            
         }
     }
     
