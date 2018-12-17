@@ -34,6 +34,9 @@ class EditUserDataViewController: UIViewController {
         height = userDefaults.integer(forKey: "height")
         weight = userDefaults.float(forKey: "weight")
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
+        view.addGestureRecognizer(tap)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,6 +46,15 @@ class EditUserDataViewController: UIViewController {
         editHeightTextField.text = String(height)
         editWeightTextField.text = String(weight)
         
+    }
+    
+    @objc func closeKeyboard() {
+        self.view.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     @IBAction func finishBtnPressed(_ sender: UIButton) {

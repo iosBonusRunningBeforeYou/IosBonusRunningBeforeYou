@@ -27,7 +27,7 @@ class PointRecordViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        pointRecords.removeAll()
         showTotalPoint()
         showAllRecords()
     }

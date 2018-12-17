@@ -9,8 +9,8 @@
 import UIKit
 import Alamofire
 
+class RegisterViewController: UIViewController, UITextFieldDelegate {
 
-class RegisterViewController: UIViewController {
     
     @IBOutlet weak var maleBtn: RadioButton!
     @IBOutlet weak var femaleBtn: RadioButton!
@@ -34,7 +34,18 @@ class RegisterViewController: UIViewController {
         userData.gender = 1
         femaleBtn.isSelected = false
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
+        view.addGestureRecognizer(tap)
         
+    }
+    
+    @objc func closeKeyboard() {
+        self.view.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     @IBAction func maleBtnPressed(_ sender: RadioButton) {

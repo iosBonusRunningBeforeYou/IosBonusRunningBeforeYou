@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -29,7 +29,10 @@ class LoginViewController: UIViewController {
         if (email != "") {
             self.performSegue(withIdentifier: "loginSuccessful", sender: nil)   // 接 running
         }
-
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
+        view.addGestureRecognizer(tap)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,6 +44,15 @@ class LoginViewController: UIViewController {
         errorMessage.text = ""
         userNameTextField.text = nil
         passwordTextField.text = nil
+    }
+    
+    @objc func closeKeyboard() {
+        self.view.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 
     @IBAction func loginButtonPressed(_ sender: UIButton) {

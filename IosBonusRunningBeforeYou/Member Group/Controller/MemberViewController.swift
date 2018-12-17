@@ -76,7 +76,7 @@ class MemberViewController: UIViewController {
         controllers.append(memberDataViewController)
         
         //接收頁面的廣播通知
-        NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.currentPageChanged(notification:)), name: Notification.Name(rawValue: "currentPageChanged"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.currentPageChanged(notification:)), name: Notification.Name(rawValue: "currentMemberPageChanged"), object: nil)
         
     }
     

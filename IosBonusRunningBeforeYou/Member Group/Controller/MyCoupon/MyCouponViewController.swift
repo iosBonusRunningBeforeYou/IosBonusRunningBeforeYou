@@ -29,7 +29,7 @@ class MyCouponViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        myCoupons.removeAll()
         showAllCoupons()
     }
     

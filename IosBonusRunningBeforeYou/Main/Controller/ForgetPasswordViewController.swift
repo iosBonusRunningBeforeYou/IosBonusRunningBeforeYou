@@ -8,15 +8,25 @@
 
 import UIKit
 
-class ForgetPasswordViewController: UIViewController {
+class ForgetPasswordViewController: UIViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        let tap = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
+        view.addGestureRecognizer(tap)
+        
     }
     
-
+    @objc func closeKeyboard() {
+        self.view.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
     /*
     // MARK: - Navigation
 

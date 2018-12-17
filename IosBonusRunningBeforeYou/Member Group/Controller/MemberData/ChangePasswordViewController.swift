@@ -23,9 +23,20 @@ class ChangePasswordViewController: UIViewController {
         super.viewDidLoad()
 
         email = userDefaults.string(forKey: "email")!
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
+        view.addGestureRecognizer(tap)
+        
     }
     
+    @objc func closeKeyboard() {
+        self.view.endEditing(true)
+    }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
     
     @IBAction func changePassword(_ sender: Any) {
         
