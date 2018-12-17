@@ -944,7 +944,7 @@ extension RunningViewController : CLLocationManagerDelegate{
             return
         }
         // MARK: FOR RECORD
-//        moveAndZoomMap()
+        moveAndZoomMap()
         groupRunningJudgement()
         
         // Check user in Start area
