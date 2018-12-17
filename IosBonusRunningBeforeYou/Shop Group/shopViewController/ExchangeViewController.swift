@@ -207,6 +207,7 @@ class ExchangeViewController: UIViewController, UITableViewDelegate {
                 return
             }
             self.nowquantity = result as? Int
+//            print("nowquantity: \(String(describing: self.nowquantity))")
 //            print("Get Nowquantity OK.")
         }
     }

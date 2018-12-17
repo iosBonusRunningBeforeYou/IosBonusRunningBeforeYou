@@ -26,14 +26,14 @@ class Communicator {
    
     
 
-    let SOCKET_URL = "ws://192.168.50.77:8080/Running_MySQL_Web/ChatServer/" //5g
+    let SOCKET_URL = "ws://192.168.50.49:8080/Running_MySQL_Web/ChatServer/" //5g
 //    let SOCKET_URL = "ws://172.20.10.9:8080/Running_MySQL_WebOld/ChatServer/" //家
     
-    let GOFRIENDS_SOCKET_URL = "ws://192.168.50.77:8080/Running_MySQL_Web/GoFriendsServer/"
+    let GOFRIENDS_SOCKET_URL = "ws://192.168.50.49:8080/Running_MySQL_Web/GoFriendsServer/"
 
 //    static let BASEURL = "http://172.20.10.2:8080/Running_MySQL_Web"//ip自己要再改 教室5G
 
-    static let BASEURL = "http://192.168.50.77:8080/Running_MySQL_Web"//ip自己要再改 手機
+    static let BASEURL = "http://192.168.50.49:8080/Running_MySQL_Web"//ip自己要再改 手機
 
 //static let BASEURL = "http://192.168.196.127:8080/Running_MySQL_Web"//ip自己要再改 III
 

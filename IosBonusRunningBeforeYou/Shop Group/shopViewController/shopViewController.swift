@@ -31,6 +31,7 @@ class ShopViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        couponItem.removeAll()
         getCouponList()
     }
     
