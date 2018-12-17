@@ -113,21 +113,26 @@ extension PointRecordViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "PointRecordCell", for: indexPath) as! PointRecordTableViewCell
-        let item = pointRecords[indexPath.row]
-        if (item.record_points < 0) {
-            cell.recordNameLabel.text = item.record_name
-            cell.recordPointsLabel.text = "花費\(item.record_points * -1)點"
-            cell.recordDateLabel.text = item.record_date
-            cell.backgroundColor = UIColor.yellow
+        print("PointRecordCell indexPath.row = \(indexPath.row), pointRecords.count = \(pointRecords.count)")
+        if(indexPath.row > pointRecords.count-1){
+            return UITableViewCell()
+        }else{
+            let item = pointRecords[indexPath.row]
+            if (item.record_points < 0) {
+                cell.recordNameLabel.text = item.record_name
+                cell.recordPointsLabel.text = "花費\(item.record_points * -1)點"
+                cell.recordDateLabel.text = item.record_date
+                cell.backgroundColor = UIColor.yellow
+            }
+            else {
+                cell.recordNameLabel.text = item.record_name
+                cell.recordPointsLabel.text = "獲得\(item.record_points)點"
+                cell.recordDateLabel.text = item.record_date
+                cell.backgroundColor = UIColor.white
+            }
+            
+            return cell
         }
-        else {
-            cell.recordNameLabel.text = item.record_name
-            cell.recordPointsLabel.text = "獲得\(item.record_points)點"
-            cell.recordDateLabel.text = item.record_date
-            cell.backgroundColor = UIColor.white
-        }
-        
-        return cell
     }
 }
 

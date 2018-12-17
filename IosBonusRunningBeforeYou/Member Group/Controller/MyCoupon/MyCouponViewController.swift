@@ -120,69 +120,77 @@ extension MyCouponViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyCouponCell", for: indexPath) as! MyCouponTableViewCell
-        let item = myCoupons[indexPath.row]
         
-        cell.myCouponRemainingAmount.text = String(item.amount)
-        
-        communicator.getAll(url: communicator.ShopServlet_URL) { (result, error) in
-            if let error = error {
-                print("Get all error:\(error)")
-                return
-            }
-            guard let result = result else {
-                print("result is nil")
-                return
-            }
-            print("Get all  OK")
+        if(indexPath.row > myCoupons.count-1){
+            return UITableViewCell()
+        }else{
             
-            guard let jsonDate = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)else {
-                print("Fail to generate jsonData.")
-                return
+            let item = myCoupons[indexPath.row]
+            
+            cell.myCouponRemainingAmount.text = String(item.amount)
+            
+            communicator.getAll(url: communicator.ShopServlet_URL) { (result, error) in
+                if let error = error {
+                    print("Get all error:\(error)")
+                    return
+                }
+                guard let result = result else {
+                    print("result is nil")
+                    return
+                }
+                print("Get all  OK")
+                
+                guard let jsonDate = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)else {
+                    print("Fail to generate jsonData.")
+                    return
+                }
+                
+                let decoder = JSONDecoder()
+                guard let resultObject = try? decoder.decode([CouponItem].self, from: jsonDate) else {
+                    print("Fail to decode jsonData.")
+                    return
+                }
+                
+                for coupon in resultObject {
+                    self.couponList.append(coupon)
+                }
+                
             }
             
-            let decoder = JSONDecoder()
-            guard let resultObject = try? decoder.decode([CouponItem].self, from: jsonDate) else {
-                print("Fail to decode jsonData.")
-                return
+            communicator.getCouponName(id: item.coupon_id) { (result, error) in
+                
+                if let error = error {
+                    print("Get CouponName error: \(error)")
+                    return
+                }
+                
+                guard let result = result else {
+                    print("result is nil")
+                    return
+                }
+                print("Get CouponName OK")
+                
+                cell.myCouponTitle.text = (result as! String)
+                
+            }
+            communicator.getCouponImage(url: communicator.ShopServlet_URL, id: item.coupon_id) { (data, error) in
+                if let error = error {
+                    print("Get image error:\(error)")
+                    return
+                }
+                guard let data = data else {
+                    print("Data is nil")
+                    return
+                }
+                print("Get Image OK.")
+                
+                cell.myCouponImage.image = UIImage(data: data)
             }
             
-            for coupon in resultObject {
-                self.couponList.append(coupon)
-            }
-            
+            return cell
         }
         
-        communicator.getCouponName(id: item.coupon_id) { (result, error) in
-            
-            if let error = error {
-                print("Get CouponName error: \(error)")
-                return
-            }
-            
-            guard let result = result else {
-                print("result is nil")
-                return
-            }
-            print("Get CouponName OK")
-            
-            cell.myCouponTitle.text = (result as! String)
-            
-        }
-        communicator.getCouponImage(url: communicator.ShopServlet_URL, id: item.coupon_id) { (data, error) in
-            if let error = error {
-                print("Get image error:\(error)")
-                return
-            }
-            guard let data = data else {
-                print("Data is nil")
-                return
-            }
-            print("Get Image OK.")
-            
-            cell.myCouponImage.image = UIImage(data: data)
-        }
         
-        return cell
     }
 }
 

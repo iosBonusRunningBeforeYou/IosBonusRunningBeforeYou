@@ -219,11 +219,16 @@ extension GoFriendsViewController: UICollectionViewDelegate, UICollectionViewDat
         guard let finalCell = cell as? UserJoinGroupCollectionViewCell else{
             return cell
         }
+        if(indexPath.row > userJoinGroup.count-1){
+            print("(indexPath.row > userJoinGroup.count-1)")
+            return UICollectionViewCell()
+        }else{
         let item = userJoinGroup[indexPath.row]
         finalCell.textLabel.text = item.groupName
         finalCell.userJoinImageView.layer.cornerRadius = 10
         cell.layer.cornerRadius = 10
         return cell
+    }
     }
 }
 
@@ -238,20 +243,25 @@ extension GoFriendsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GoFriendsCell", for: indexPath) as! JoinGroupTableViewCell
-
-        let item = groupItems[indexPath.row]
-        
-        guard let groupName = item.groupName, let groupJoinPeople = item.groupJoinPeople,
-            let lastDay = item.lastDay, let lastHour = item.lastHour,
-            let lastMinute = item.lastMinute else {
-                return cell
+        if(indexPath.row > groupItems.count-1){
+            print("(indexPath.row > groupItems.count-1)")
+            return UITableViewCell()
+        }else{
+            let item = groupItems[indexPath.row]
+            
+            guard let groupName = item.groupName, let groupJoinPeople = item.groupJoinPeople,
+                let lastDay = item.lastDay, let lastHour = item.lastHour,
+                let lastMinute = item.lastMinute else {
+                    return cell
+            }
+            
+            cell.groupNameLabel.text = groupName
+            cell.joinPeopleLabel.text = groupJoinPeople
+            cell.lastTimeLabel.text = "\(lastDay)\(lastHour)\(lastMinute)"
+            cell.nunJoinCellView.layer.cornerRadius = 20
+            return cell
         }
         
-        cell.groupNameLabel.text = groupName
-        cell.joinPeopleLabel.text = groupJoinPeople
-        cell.lastTimeLabel.text = "\(lastDay)\(lastHour)\(lastMinute)"
-        cell.nunJoinCellView.layer.cornerRadius = 20
-        return cell
     }
 }
 //MARK: - UITableViewDelegate

@@ -103,14 +103,20 @@ extension GameViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GameCell", for: indexPath) as! GameTableViewCell
         //        cell.coverImageView.sd_setImage(with: URL(string: movie.imageURL))
         //        cell.titleLabel.text = movie.title
-        let item = gameItem[indexPath.row]
-        print("\(image.count)  ================   \(indexPath.row)")
-        cell.userImageView.image = UIImage(named: image[indexPath.row])
-        cell.titleLabel.text = item.gameName
-        cell.finalTimeLabel.text = "\(item.lastDay)\(item.lastHour)\(item.lastMinute)"
-        cell.joinPeopleLabel.text = item.gameJoinPeople
+          print("\(self.image.count)  ================   \(indexPath.row)")
+        if(indexPath.row > gameItem.count-1) || (indexPath.row > image.count-1) {
+            print("(indexPath.row > gameItem.count-1)")
+            return UITableViewCell()
+        }else{
+                let item = self.gameItem[indexPath.row]
+                print("\(self.image.count)  ================   \(indexPath.row)")
+                cell.userImageView.image = UIImage(named: self.image[indexPath.row])
+                cell.titleLabel.text = item.gameName
+                cell.finalTimeLabel.text = "\(item.lastDay)\(item.lastHour)\(item.lastMinute)"
+                cell.joinPeopleLabel.text = item.gameJoinPeople
+            return cell
+        }
         
-        return cell
     }
 }
 
