@@ -124,7 +124,7 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(getTrack), userInfo: nil, repeats: true)
+        self.timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(getTrack), userInfo: nil, repeats: true)
 
         // userDefault
         running.mail = userDefault.string(forKey: "email")!
@@ -392,13 +392,14 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
             
             print("oldCoordinate:\(oldCoordinate)")
             
-            if abs(location.coordinate.latitude - startPointLatitude) < 0.0005,
-                abs(location.coordinate.longitude - startPointLongitude) < 0.0005{
+            // 0.0005 for demo,  0.00008 for recode
+            if abs(location.coordinate.latitude - startPointLatitude) < 0.00008,
+                abs(location.coordinate.longitude - startPointLongitude) < 0.00008{
                 isGroupRunngingStartInArea = true
             }
             
-            if abs(location.coordinate.latitude - endPointLatitude) < 0.0005,
-                abs(location.coordinate.longitude - endPointLongitude) < 0.0005{
+            if abs(location.coordinate.latitude - endPointLatitude) < 0.00008,
+                abs(location.coordinate.longitude - endPointLongitude) < 0.00008{
                 if  isGroupRunngingStartInArea == true {
                     isGroupRunngingEndInArea = true
                 }
