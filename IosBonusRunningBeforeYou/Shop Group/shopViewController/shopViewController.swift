@@ -78,15 +78,20 @@ class ShopViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:ShopTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as! ShopTableViewCell
         
-        let coupon = self.couponItem[indexPath.row]
+        if (indexPath.row > couponItem.count - 1) {
+            return UITableViewCell()
+        } else {
+            let coupon = self.couponItem[indexPath.row]
+            
+            cell.CouponidLable.text = "\(coupon.couponid)"
+            cell.QuantityLable.text = "剩餘數量：\(coupon.quantity)"
+            cell.ExpiredateLable.text = "\(coupon.expiredate)"
+            cell.PriceLable.text = "\(coupon.price)"
+            getCouponImage(cell.CouponImage, coupon.id)
+            
+            return cell
+        }
         
-        cell.CouponidLable.text = "\(coupon.couponid)"
-        cell.QuantityLable.text = "剩餘數量：\(coupon.quantity)"
-        cell.ExpiredateLable.text = "\(coupon.expiredate)"
-        cell.PriceLable.text = "\(coupon.price)"
-        getCouponImage(cell.CouponImage, coupon.id)
-        
-        return cell
     }
     
     func getCouponList() {
