@@ -227,6 +227,7 @@ class ChatRoomViewController: UIViewController, WebSocketDelegate, UITextFieldDe
     
     func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
         print("websocket Disconnect ")
+        print("websocket Disconnect error:\(error), socket:\(socket)")
     }
     
     func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
@@ -247,7 +248,7 @@ class ChatRoomViewController: UIViewController, WebSocketDelegate, UITextFieldDe
         let text = "\(emailAccount ?? ""): \(message.message ?? "") \(stringTime ?? "")"
         let chatItem = ChatItem(text:  text, image: nil, senderType: .fromOthers)
         chatView.add(chatItem: chatItem)
-        notice(message: message.message ?? "")
+//        notice(message: message.message ?? "")
         }else{
 //
 //            let text = "\(message.sender ?? ""):"

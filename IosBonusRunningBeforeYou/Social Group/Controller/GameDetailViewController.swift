@@ -208,6 +208,7 @@ extension GameDetailViewController: UITableViewDataSource {
         let item = rankOfGameItem[indexPath.row]
         cell.rankImageView.layer.cornerRadius = 25
         cell.rankImageView.clipsToBounds = true
+        cell.rankImageView.image = UIImage(named: "default_image")
         getImage(cell.rankImageView, item.emailAccount)
         cell.rankNumLabel.text = String(item.rankNum)
         cell.rankOfUserNameLabel.text = item.rankName
