@@ -107,6 +107,10 @@ extension PointRecordViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         print("pointRecords count: \(pointRecords.count)")
+        if (pointRecords.count == 0) {
+            self.view.showToast(text: "沒有紀錄!")
+        }
+
         return pointRecords.count
     }
     

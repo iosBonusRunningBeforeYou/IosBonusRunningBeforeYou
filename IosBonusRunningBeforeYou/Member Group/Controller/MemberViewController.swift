@@ -90,10 +90,16 @@ class MemberViewController: UIViewController {
         currentPage = sender.tag - 100
     }
    
-    
-    
     @IBAction func unwindToMember(segue: UIStoryboardSegue) {
-        
+        if (segue.identifier == "changePasswordSuccessful") {
+            view.showToast(text: "修改密碼成功")
+        }
+        else if (segue.identifier == "updateUserDataSuccessful") {
+            view.showToast(text: "編輯個人資料成功")
+        }
+        else if (segue.identifier == "useCouponSuccessful") {
+            view.showToast(text: "優惠券已使用")
+        }
     }
     
 }

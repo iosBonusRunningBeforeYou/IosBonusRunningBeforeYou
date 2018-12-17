@@ -24,7 +24,7 @@ class UseMyCouponViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.title = "優惠券"
         couponNameLabel.text = couponName
         deadlineLabel.text = deadLine
 

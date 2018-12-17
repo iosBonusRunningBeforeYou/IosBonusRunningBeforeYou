@@ -996,7 +996,7 @@
                     <navigationItem key="navigationItem" title="會員中心" id="OBr-ih-0s8">
                         <barButtonItem key="rightBarButtonItem" title="登出" id="iYJ-a1-MjY">
                             <connections>
-                                <segue destination="Vuq-Qp-jh1" kind="unwind" identifier="changePasswordSuccessful" unwindAction="unwindToLoginWithSegue:" id="q9M-dz-hGF"/>
+                                <segue destination="Vuq-Qp-jh1" kind="unwind" identifier="" unwindAction="unwindToLoginWithSegue:" id="q9M-dz-hGF"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

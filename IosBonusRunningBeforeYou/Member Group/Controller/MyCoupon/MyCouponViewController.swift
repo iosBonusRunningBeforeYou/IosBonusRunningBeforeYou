@@ -114,17 +114,29 @@ extension MyCouponViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         print("myCoupons count: \(myCoupons.count)")
+        if (myCoupons.count == 0) {
+            self.view.showToast(text: "沒有優惠券!")
+        }
         return myCoupons.count
     }
+    
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 180 // 設定cell高度
+//    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyCouponCell", for: indexPath) as! MyCouponTableViewCell
         
+
         if(indexPath.row > myCoupons.count-1){
             return UITableViewCell()
-        }else{
-            
+        }
+        else {
+
+            cell.layer.cornerRadius = 10.0
+            cell.myCouponUseBtn.layer.cornerRadius = 10.0
+        
             let item = myCoupons[indexPath.row]
             
             cell.myCouponRemainingAmount.text = String(item.amount)
@@ -140,13 +152,13 @@ extension MyCouponViewController: UITableViewDataSource {
                 }
                 print("Get all  OK")
                 
-                guard let jsonDate = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)else {
+                guard let jsonData = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)else {
                     print("Fail to generate jsonData.")
                     return
                 }
                 
                 let decoder = JSONDecoder()
-                guard let resultObject = try? decoder.decode([CouponItem].self, from: jsonDate) else {
+                guard let resultObject = try? decoder.decode([CouponItem].self, from: jsonData) else {
                     print("Fail to decode jsonData.")
                     return
                 }

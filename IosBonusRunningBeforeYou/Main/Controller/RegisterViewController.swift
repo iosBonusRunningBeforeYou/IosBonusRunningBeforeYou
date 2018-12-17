@@ -29,6 +29,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "註冊"
 
         maleBtn.isSelected = true
         userData.gender = 1
@@ -147,7 +148,6 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                     }
                 
                 }
-                
                 self.performSegue(withIdentifier: "registerSuccessful", sender: nil)   // 接 running
             }
         }

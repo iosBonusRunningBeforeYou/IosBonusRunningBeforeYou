@@ -28,10 +28,6 @@ class MemberDataViewController: UIViewController, UINavigationControllerDelegate
 
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        
-    }
-    
     func getImage(_ image: UIImageView,_ email: String) {
         
         communicator.getImage(url: communicator.UserServlet_URL, email: email, imageSize: 270) { (data, error) in
@@ -61,7 +57,10 @@ class MemberDataViewController: UIViewController, UINavigationControllerDelegate
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
         userPhoto.image = image
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true) {
+            self.view.showToast(text: "圖片更新成功")
+        }
+        
         
         guard let selectedImage = userPhoto.image else {
             print("Image not found!")
@@ -100,6 +99,8 @@ class MemberDataViewController: UIViewController, UINavigationControllerDelegate
         popover?.permittedArrowDirections = .any
         
         show(imagePickerVC, sender: self)
+        
+        
         
     }
     
