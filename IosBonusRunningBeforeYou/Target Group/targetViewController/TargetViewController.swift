@@ -38,21 +38,25 @@ class TargetViewController: UIViewController {
     var useremail = ""
     let now:Date = Date()
     
+    var userpoint: Int = 0
+    var nowpoint: Int = 0
+    
     var userItem = [UserItem]()
     var daykm: String = ""
     var monthkm: String = ""
     var pointRecords = PointsRecord()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // userDefault
         useremail = userDefault.string(forKey: "email")!
-        
         self.title = "目標"
     }
     
     override func viewWillAppear(_ animated: Bool) {
         getUserKm(email: useremail)
+        getUserPoint(email: useremail)
     }
     
     @IBAction func targetDbtn(_ sender: UIButton) {
@@ -74,9 +78,18 @@ class TargetViewController: UIViewController {
             communicator.inserPoint(pointRecords: pointRecordString!) { (result, error) in
                 print("inserPoint = \(String(describing: result))")
             }
+            
+            nowpoint = userpoint + 10
+            communicator.updateTotalPoint(email: useremail, totalPoint: nowpoint) { (result, error) in
+                if let error = error {
+                    print("Get updateTotalPoint error:\(error)")
+                    return
+                }
+            }
         }
         
         if targetD2circle.isHidden == false {
+            
             self.view.showToast(text: "點數領取成功D2")
             self.pointRecords.email = useremail
             self.pointRecords.record_name = "完成每日目標3公里"
@@ -92,6 +105,14 @@ class TargetViewController: UIViewController {
             let pointRecordString = String(data: pointRecordData, encoding: .utf8)
             communicator.inserPoint(pointRecords: pointRecordString!) { (result, error) in
                 print("inserPoint = \(String(describing: result))")
+            }
+            
+            nowpoint = userpoint + 20
+            communicator.updateTotalPoint(email: useremail, totalPoint: nowpoint) { (result, error) in
+                if let error = error {
+                    print("Get updateTotalPoint error:\(error)")
+                    return
+                }
             }
         }
         
@@ -111,6 +132,14 @@ class TargetViewController: UIViewController {
             let pointRecordString = String(data: pointRecordData, encoding: .utf8)
             communicator.inserPoint(pointRecords: pointRecordString!) { (result, error) in
                 print("inserPoint = \(String(describing: result))")
+            }
+            
+            nowpoint = userpoint + 40
+            communicator.updateTotalPoint(email: useremail, totalPoint: nowpoint) { (result, error) in
+                if let error = error {
+                    print("Get updateTotalPoint error:\(error)")
+                    return
+                }
             }
         }
         
@@ -138,6 +167,14 @@ class TargetViewController: UIViewController {
             communicator.inserPoint(pointRecords: pointRecordString!) { (result, error) in
                 print("inserPoint = \(String(describing: result))")
             }
+            
+            nowpoint = userpoint + 50
+            communicator.updateTotalPoint(email: useremail, totalPoint: nowpoint) { (result, error) in
+                if let error = error {
+                    print("Get updateTotalPoint error:\(error)")
+                    return
+                }
+            }
         }
         
         if targetM2circle.isHidden == false {
@@ -157,6 +194,14 @@ class TargetViewController: UIViewController {
             communicator.inserPoint(pointRecords: pointRecordString!) { (result, error) in
                 print("inserPoint = \(String(describing: result))")
             }
+            
+            nowpoint = userpoint + 60
+            communicator.updateTotalPoint(email: useremail, totalPoint: nowpoint) { (result, error) in
+                if let error = error {
+                    print("Get updateTotalPoint error:\(error)")
+                    return
+                }
+            }
         }
         
         if targetM3circle.isHidden == false {
@@ -175,6 +220,14 @@ class TargetViewController: UIViewController {
             let pointRecordString = String(data: pointRecordData, encoding: .utf8)
             communicator.inserPoint(pointRecords: pointRecordString!) { (result, error) in
                 print("inserPoint = \(String(describing: result))")
+            }
+            
+            nowpoint = userpoint + 80
+            communicator.updateTotalPoint(email: useremail, totalPoint: nowpoint) { (result, error) in
+                if let error = error {
+                    print("Get updateTotalPoint error:\(error)")
+                    return
+                }
             }
         }
         
@@ -282,6 +335,20 @@ class TargetViewController: UIViewController {
         
     }
     
+    func getUserPoint(email: String) {
+        communicator.findTotalPoint(email: email) { (data, error) in
+            if let error = error {
+                print("Get point error:\(error)")
+                return
+            }
+            guard let data = data else {
+                print("Data is nil")
+                return
+            }
+            
+            self.userpoint = data as! Int
+        }
+    }
 }
 
 extension Communicator {
