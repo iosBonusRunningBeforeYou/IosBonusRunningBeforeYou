@@ -23,7 +23,7 @@ typealias DoneHandler = (_ result:Any?, _ error: Error?) -> Void
 typealias DownloadDoneHandler = (_ result:Data?, _ error: Error?) -> Void
 
 class Communicator {
-
+    
     let SOCKET_URL = "ws://192.168.50.170:8080/Running_MySQL_Web/ChatServer/" //5g
 
 //    let SOCKET_URL = "ws://172.20.10.9:8080/Running_MySQL_WebOld/ChatServer/" //家
