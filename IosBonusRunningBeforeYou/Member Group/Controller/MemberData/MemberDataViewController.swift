@@ -55,7 +55,7 @@ class MemberDataViewController: UIViewController, UINavigationControllerDelegate
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+        let image = info[UIImagePickerController.InfoKey.editedImage] as! UIImage
         userPhoto.image = image
         dismiss(animated: true) {
             self.view.showToast(text: "圖片更新成功")
@@ -88,6 +88,7 @@ class MemberDataViewController: UIViewController, UINavigationControllerDelegate
         
         let imagePickerVC = UIImagePickerController()
         imagePickerVC.sourceType = .photoLibrary
+        imagePickerVC.allowsEditing = true
         imagePickerVC.delegate = self
         
         imagePickerVC.modalPresentationStyle = .popover
