@@ -51,9 +51,7 @@ class ExchangeViewController: UIViewController, UITableViewDelegate {
         useremail = userDefault.string(forKey: "email")!
         
         changeDisplay()
-        getUserPoint(email: useremail)
         isUserValid(email: useremail, id: id! + 1)
-        getNowQuantity(email: useremail, id: id! + 1)
         print(now)
         
         if couponquantity! <= 0 {
@@ -62,6 +60,13 @@ class ExchangeViewController: UIViewController, UITableViewDelegate {
             cheackBtn.alpha = 0.4
             coupnStepper.isEnabled = false
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getUserPoint(email: useremail)
+        getNowQuantity(email: useremail, id_coupon: id! + 1)
+
     }
     
     func changeDisplay() {
@@ -104,7 +109,7 @@ class ExchangeViewController: UIViewController, UITableViewDelegate {
                 
             } else {
                 if userValid == true {
-                    getNowQuantity(email: useremail, id: id! + 1)
+                    getNowQuantity(email: useremail, id_coupon: id! + 1)
                     updateSumCoupon(email: useremail, id: id! + 1, sumcoupon: Int(couponQuantity.text!)! + nowquantity!)
                     print("\(String(describing: totalQuantityLabel.text))")
                 } else {
@@ -196,18 +201,18 @@ class ExchangeViewController: UIViewController, UITableViewDelegate {
         }
     }
     
-    func getNowQuantity(email: String, id: Int) { // 取得現有優惠卷比對
-        communicator.findNowQuantity(email: email, id: id) { (result, error) in
+    func getNowQuantity(email: String, id_coupon: Int) { // 取得現有優惠卷比對
+        communicator.findNowQuantity(email: email, id: id_coupon) { (data, error) in
             if let error = error {
                 print("Get Nowquantity error:\(error)")
                 return
             }
-            guard let result = result else {
+            guard let data = data else {
                 print("Data is nil")
                 return
             }
-            self.nowquantity = result as? Int
-//            print("nowquantity: \(String(describing: self.nowquantity))")
+            self.nowquantity = data as? Int
+            print("nowquantity: \(String(describing: self.nowquantity))")
 //            print("Get Nowquantity OK.")
         }
     }

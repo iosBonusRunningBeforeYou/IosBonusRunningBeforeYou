@@ -108,7 +108,7 @@
                                                     <color key="textColor" red="0.99607843139999996" green="0.6588235294" blue="0.1960784314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TIz-Oz-d1H">
+                                                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TIz-Oz-d1H">
                                                     <rect key="frame" x="250" y="144" width="100" height="45"/>
                                                     <color key="backgroundColor" red="0.0" green="0.4566611071051625" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <constraints>
@@ -117,13 +117,16 @@
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                     <state key="normal" title="商品詳情">
-                                                        <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                             <integer key="value" value="10"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
+                                                    <connections>
+                                                        <action selector="detailBtn:" destination="M0S-4w-COP" eventType="touchUpInside" id="4Bg-jE-0QB"/>
+                                                    </connections>
                                                 </button>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_image.png" translatesAutoresizingMaskIntoConstraints="NO" id="YNZ-56-Yi6">
                                                     <rect key="frame" x="15" y="89" width="200" height="100"/>
@@ -164,7 +167,7 @@
                                             <outlet property="ExpiredateLable" destination="9vh-zU-bcU" id="lSJ-8n-1xV"/>
                                             <outlet property="PriceLable" destination="8Jm-Yc-pFM" id="hzV-3o-mkG"/>
                                             <outlet property="QuantityLable" destination="VbI-4C-K8n" id="oZX-H8-KVz"/>
-                                            <segue destination="RtA-Dd-5yY" kind="show" id="vZ7-Qi-sxh"/>
+                                            <segue destination="RtA-Dd-5yY" kind="show" id="e57-GL-hDd"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -307,6 +310,7 @@
                                     <constraint firstAttribute="width" constant="120" id="5zy-CL-DWF"/>
                                     <constraint firstAttribute="height" constant="50" id="pdu-w0-Z7q"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                 <state key="normal" title="確認兌換">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>

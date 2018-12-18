@@ -40,11 +40,12 @@ class ShopViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.view.showToast(text: "購買成功")
     }
     
-//    @IBAction func detailBtn(_ sender: AnyObject) {
+//    @IBAction func detailBtn(_ sender: UIButton) {
 //        let buttonPosition:CGPoint = sender.convert(CGPoint.zero, to:self.tableView)
 //        let indexPath = self.tableView.indexPathForRow(at: buttonPosition)
-//        print(indexPath)
-
+//
+//
+//
 //    }
     
     override func viewWillDisappear(_ animated: Bool) {
