@@ -35,6 +35,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
     }
     
+    @objc func closeKeyboard() {
+        self.view.endEditing(true)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         guard let email = userDefaults.string(forKey: "email") else {
             return
@@ -44,10 +48,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         errorMessage.text = ""
         userNameTextField.text = nil
         passwordTextField.text = nil
-    }
-    
-    @objc func closeKeyboard() {
-        self.view.endEditing(true)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

@@ -69,6 +69,10 @@ class MyCouponViewController: UIViewController {
                 }
             }
             
+            if (self.myCoupons.count == 0) {
+                self.view.showToast(text: "沒有優惠券!")
+            }
+            
             self.myCouponTableView.reloadData()
             
         }
@@ -114,9 +118,6 @@ extension MyCouponViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         print("myCoupons count: \(myCoupons.count)")
-        if (myCoupons.count == 0) {
-            self.view.showToast(text: "沒有優惠券!")
-        }
         return myCoupons.count
     }
     
@@ -129,7 +130,7 @@ extension MyCouponViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyCouponCell", for: indexPath) as! MyCouponTableViewCell
         
 
-        if(indexPath.row > myCoupons.count-1){
+        if(indexPath.row > myCoupons.count-1) {
             return UITableViewCell()
         }
         else {

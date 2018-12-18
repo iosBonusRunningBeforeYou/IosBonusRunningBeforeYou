@@ -89,6 +89,11 @@ class PointRecordViewController: UIViewController {
                     self.pointRecords.append(pointRecord)
                 }
             }
+            
+            if (self.pointRecords.count == 0) {
+                self.view.showToast(text: "沒有紀錄!")
+            }
+            
             self.pointRecords.reverse()
             self.pointRecordTableView.reloadData()
             
@@ -107,10 +112,6 @@ extension PointRecordViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         print("pointRecords count: \(pointRecords.count)")
-        if (pointRecords.count == 0) {
-            self.view.showToast(text: "沒有紀錄!")
-        }
-
         return pointRecords.count
     }
     
@@ -118,9 +119,11 @@ extension PointRecordViewController: UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "PointRecordCell", for: indexPath) as! PointRecordTableViewCell
         print("PointRecordCell indexPath.row = \(indexPath.row), pointRecords.count = \(pointRecords.count)")
-        if(indexPath.row > pointRecords.count-1){
+        
+        if(indexPath.row > pointRecords.count-1) {
             return UITableViewCell()
-        }else{
+        }
+        else {
             let item = pointRecords[indexPath.row]
             if (item.record_points < 0) {
                 cell.recordNameLabel.text = item.record_name
