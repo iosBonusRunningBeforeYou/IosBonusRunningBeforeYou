@@ -933,25 +933,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="9dD-uk-HAr">
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9dD-uk-HAr">
                                 <rect key="frame" x="0.0" y="64" width="375" height="43"/>
                                 <subviews>
                                     <button opaque="NO" tag="100" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cfr-hi-D0s">
-                                        <rect key="frame" x="0.0" y="0.0" width="119.5" height="43"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="125" height="43"/>
                                         <state key="normal" title="點數中心"/>
                                         <connections>
                                             <action selector="changeCurrentPage:" destination="Wl7-5k-FiN" eventType="touchUpInside" id="SFM-cx-442"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2d3-K0-P11">
-                                        <rect key="frame" x="127.5" y="0.0" width="120" height="43"/>
+                                        <rect key="frame" x="125" y="0.0" width="125" height="43"/>
                                         <state key="normal" title="我的優惠券"/>
                                         <connections>
                                             <action selector="changeCurrentPage:" destination="Wl7-5k-FiN" eventType="touchUpInside" id="GwV-v7-ekA"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ArG-lq-6dM">
-                                        <rect key="frame" x="255.5" y="0.0" width="119.5" height="43"/>
+                                        <rect key="frame" x="250" y="0.0" width="125" height="43"/>
                                         <state key="normal" title="修改個人資料"/>
                                         <connections>
                                             <action selector="changeCurrentPage:" destination="Wl7-5k-FiN" eventType="touchUpInside" id="UTh-uW-Fa7"/>
@@ -959,9 +959,9 @@
                                     </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="2d3-K0-P11" firstAttribute="width" secondItem="ArG-lq-6dM" secondAttribute="width" id="NOI-qP-bMn"/>
+                                    <constraint firstItem="2d3-K0-P11" firstAttribute="width" secondItem="ArG-lq-6dM" secondAttribute="width" id="bmu-Qy-bkA"/>
                                     <constraint firstAttribute="height" constant="43" id="dUa-Vh-7O1"/>
-                                    <constraint firstItem="Cfr-hi-D0s" firstAttribute="width" secondItem="2d3-K0-P11" secondAttribute="width" id="xft-4B-UQG"/>
+                                    <constraint firstItem="Cfr-hi-D0s" firstAttribute="width" secondItem="2d3-K0-P11" secondAttribute="width" id="jt9-4n-sF9"/>
                                 </constraints>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7rF-Lm-kdj" userLabel="Slider View">
