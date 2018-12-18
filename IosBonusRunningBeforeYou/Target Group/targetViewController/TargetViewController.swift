@@ -45,6 +45,13 @@ class TargetViewController: UIViewController {
     var daykm: String = ""
     var monthkm: String = ""
     var pointRecords = PointsRecord()
+    var targetD1point = 0
+    var targetD2point = 0
+    var targetD3point = 0
+   
+    var targetM1point = 0
+    var targetM2point = 0
+    var targetM3point = 0
     
     
     override func viewDidLoad() {
@@ -79,13 +86,8 @@ class TargetViewController: UIViewController {
                 print("inserPoint = \(String(describing: result))")
             }
             
-            nowpoint = userpoint + 10
-            communicator.updateTotalPoint(email: useremail, totalPoint: nowpoint) { (result, error) in
-                if let error = error {
-                    print("Get updateTotalPoint error:\(error)")
-                    return
-                }
-            }
+            targetD1point = 10
+
         }
         
         if targetD2circle.isHidden == false {
@@ -107,13 +109,8 @@ class TargetViewController: UIViewController {
                 print("inserPoint = \(String(describing: result))")
             }
             
-            nowpoint = userpoint + 20
-            communicator.updateTotalPoint(email: useremail, totalPoint: nowpoint) { (result, error) in
-                if let error = error {
-                    print("Get updateTotalPoint error:\(error)")
-                    return
-                }
-            }
+           targetD2point = 20
+
         }
         
         if targetD3circle.isHidden == false {
@@ -134,12 +131,15 @@ class TargetViewController: UIViewController {
                 print("inserPoint = \(String(describing: result))")
             }
             
-            nowpoint = userpoint + 40
-            communicator.updateTotalPoint(email: useremail, totalPoint: nowpoint) { (result, error) in
-                if let error = error {
-                    print("Get updateTotalPoint error:\(error)")
-                    return
-                }
+            targetD3point = 40
+
+        }
+        
+        nowpoint = userpoint + targetD1point + targetD2point + targetD3point
+        communicator.updateTotalPoint(email: useremail, totalPoint: nowpoint) { (result, error) in
+            if let error = error {
+                print("Get updateTotalPoint error:\(error)")
+                return
             }
         }
         
@@ -168,13 +168,8 @@ class TargetViewController: UIViewController {
                 print("inserPoint = \(String(describing: result))")
             }
             
-            nowpoint = userpoint + 50
-            communicator.updateTotalPoint(email: useremail, totalPoint: nowpoint) { (result, error) in
-                if let error = error {
-                    print("Get updateTotalPoint error:\(error)")
-                    return
-                }
-            }
+            targetM1point = 50
+            
         }
         
         if targetM2circle.isHidden == false {
@@ -195,13 +190,8 @@ class TargetViewController: UIViewController {
                 print("inserPoint = \(String(describing: result))")
             }
             
-            nowpoint = userpoint + 60
-            communicator.updateTotalPoint(email: useremail, totalPoint: nowpoint) { (result, error) in
-                if let error = error {
-                    print("Get updateTotalPoint error:\(error)")
-                    return
-                }
-            }
+            targetM2point = 60
+            
         }
         
         if targetM3circle.isHidden == false {
@@ -222,12 +212,15 @@ class TargetViewController: UIViewController {
                 print("inserPoint = \(String(describing: result))")
             }
             
-            nowpoint = userpoint + 80
-            communicator.updateTotalPoint(email: useremail, totalPoint: nowpoint) { (result, error) in
-                if let error = error {
-                    print("Get updateTotalPoint error:\(error)")
-                    return
-                }
+           targetM3point = 80
+            
+        }
+        
+        nowpoint = userpoint + targetM1point + targetM2point + targetM3point
+        communicator.updateTotalPoint(email: useremail, totalPoint: nowpoint) { (result, error) in
+            if let error = error {
+                print("Get updateTotalPoint error:\(error)")
+                return
             }
         }
         
