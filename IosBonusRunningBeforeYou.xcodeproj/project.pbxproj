@@ -57,6 +57,8 @@
 		3279D35C21B8C88A00992BA6 /* shopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3279D35921B8C88A00992BA6 /* shopViewController.swift */; };
 		3279D35E21B8C89300992BA6 /* CouponItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3279D35D21B8C89300992BA6 /* CouponItem.swift */; };
 		441F98CF21BFAB040054E44F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 441F98CE21BFAB040054E44F /* Assets.xcassets */; };
+		4423679E21C7F36E00957534 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4423679D21C7F36E00957534 /* ARViewController.swift */; };
+		442367A021C7F50300957534 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 4423679F21C7F50300957534 /* art.scnassets */; };
 		4424C53521C39D4600B10CEB /* fromMe.png in Resources */ = {isa = PBXBuildFile; fileRef = 4424C53421C39D4600B10CEB /* fromMe.png */; };
 		4424C53721C39D4F00B10CEB /* fromMe@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4424C53621C39D4E00B10CEB /* fromMe@2x.png */; };
 		44A4C79521A57D4B0042E7A1 /* Running.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A4C79421A57D4B0042E7A1 /* Running.swift */; };
@@ -128,6 +130,8 @@
 		3279D35921B8C88A00992BA6 /* shopViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = shopViewController.swift; sourceTree = "<group>"; };
 		3279D35D21B8C89300992BA6 /* CouponItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CouponItem.swift; sourceTree = "<group>"; };
 		441F98CE21BFAB040054E44F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4423679D21C7F36E00957534 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
+		4423679F21C7F50300957534 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		4424C53421C39D4600B10CEB /* fromMe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fromMe.png; sourceTree = "<group>"; };
 		4424C53621C39D4E00B10CEB /* fromMe@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fromMe@2x.png"; sourceTree = "<group>"; };
 		44A4C79421A57D4B0042E7A1 /* Running.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Running.swift; sourceTree = "<group>"; };
@@ -379,6 +383,7 @@
 				18602688219AD56C0060B27F /* Social Group */,
 				18602699219AD6E00060B27F /* Member Group */,
 				441F98CE21BFAB040054E44F /* Assets.xcassets */,
+				4423679F21C7F50300957534 /* art.scnassets */,
 				189C825F219598C10012A017 /* LaunchScreen.storyboard */,
 				189C8262219598C10012A017 /* Info.plist */,
 			);
@@ -449,6 +454,7 @@
 			isa = PBXGroup;
 			children = (
 				44A634CA219C18BA0091B1AB /* RunningViewController.swift */,
+				4423679D21C7F36E00957534 /* ARViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -591,6 +597,7 @@
 				18CF909421BFA42B00374BE7 /* fromOthers.png in Resources */,
 				189C82772195B4A20012A017 /* Member.storyboard in Resources */,
 				189C8261219598C10012A017 /* LaunchScreen.storyboard in Resources */,
+				442367A021C7F50300957534 /* art.scnassets in Resources */,
 				189C826F2195A9C10012A017 /* Running.storyboard in Resources */,
 				189C825C219598BB0012A017 /* Main.storyboard in Resources */,
 				18477A86219D63320081687F /* default_image.png in Resources */,
@@ -695,6 +702,7 @@
 				FD10FB0821BCF6F600CF6F7D /* ChangePasswordViewController.swift in Sources */,
 				189C8259219598BB0012A017 /* ViewController.swift in Sources */,
 				180A18E821ACFFCA00632238 /* MapViewController.swift in Sources */,
+				4423679E21C7F36E00957534 /* ARViewController.swift in Sources */,
 				FDA3CBD821B8FD3300C8128B /* MyCouponViewController.swift in Sources */,
 				44A634CB219C18BA0091B1AB /* RunningViewController.swift in Sources */,
 				1852439121BA93040003B251 /* RegisterViewController.swift in Sources */,
@@ -856,7 +864,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = WR23AS49M5;
 				INFOPLIST_FILE = IosBonusRunningBeforeYou/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -877,7 +885,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = WR23AS49M5;
 				INFOPLIST_FILE = IosBonusRunningBeforeYou/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
