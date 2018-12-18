@@ -975,9 +975,9 @@ extension RunningViewController : CLLocationManagerDelegate{
             
             // MARK: Preparefor DEMO
             if groupRunningId == 0 {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 5 ){
-                    self.kiloMetreLabel.text = "\(10000/1000) 公里"
-                    self.traveledDistance = 1000
+                DispatchQueue.main.asyncAfter(deadline: .now() + 10 ){
+                    self.kiloMetreLabel.text = "\(3000/1000) 公里"
+                    self.traveledDistance = 3000
                 }
             } else {
                 self.kiloMetreLabel.text = "\(self.traveledDistance/1000) 公里"
