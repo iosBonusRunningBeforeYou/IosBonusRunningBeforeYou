@@ -99,8 +99,11 @@ class CreatNewGroupViewController: UIViewController,UITextViewDelegate {
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "save"{
+           
             newGroup.groupName = groupNameTextField.text
             newGroup.groupRunningIntroduce = groupIntroduceTextView.text
+            print("prepare = \(newGroup.groupName), \(newGroup.groupRunningTime)")
+            timeNotice(groupName: newGroup.groupName, groupRunningTime: newGroup.groupRunningTime)
             //建立新揪團並取得autoId
             communicator.insertNewGroup(newGroup: newGroup) { (result, error) in
                 guard let result = result ,let resultInts = result as? [Int] else{

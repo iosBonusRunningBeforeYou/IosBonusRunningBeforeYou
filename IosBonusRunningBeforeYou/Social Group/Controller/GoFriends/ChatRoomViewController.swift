@@ -250,13 +250,6 @@ class ChatRoomViewController: UIViewController, WebSocketDelegate, UITextFieldDe
         chatView.add(chatItem: chatItem)
 //        notice(message: message.message ?? "")
         }else{
-//
-//            let text = "\(message.sender ?? ""):"
-//            let base64String = message.message
-//            let base64Data = Data(base64Encoded: base64String!, options: NSData.Base64DecodingOptions(rawValue: 0))
-//            let image = UIImage(data: base64Data!)
-//            let chatItem = ChatItem(text:  text, image:image , senderType: .fromOthers)
-//            chatView.add(chatItem: chatItem)
             
         }
         

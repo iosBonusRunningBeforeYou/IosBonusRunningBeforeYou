@@ -12,6 +12,8 @@ class MainViewController: UIViewController {
 
     var pageViewController: UIPageViewController!
     @IBOutlet weak var sliderView: UIView!
+    @IBOutlet weak var gameBtn: UIButton!
+    @IBOutlet weak var gofriendBtn: UIButton!
     
     var gameViewController: GameViewController!
     var goFriendsViewController: GoFriendsViewController!
@@ -64,9 +66,12 @@ class MainViewController: UIViewController {
         controllers.append(gameViewController)
         controllers.append(goFriendsViewController)
         
+        
         //接收頁面的廣播通知
         NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.currentPageChanged(notification:)), name: Notification.Name(rawValue: "currentPageChanged"), object: nil)
 
+//                gameBtn.buttomBorder(width: 1, borderColor: UIColor.darkGray)
+//                gofriendBtn.buttomBorder(width: 1, borderColor: UIColor.darkGray)
     }
     //通知方法
     @objc

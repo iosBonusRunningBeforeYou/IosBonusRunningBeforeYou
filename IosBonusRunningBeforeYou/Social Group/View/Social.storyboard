@@ -560,6 +560,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="bxk-Nv-8ho"/>
                     <connections>
+                        <outlet property="gameBtn" destination="5y6-OI-SO6" id="duL-Mb-hrh"/>
+                        <outlet property="gofriendBtn" destination="286-QN-4S9" id="qdt-B9-61V"/>
                         <outlet property="sliderView" destination="Jvm-i3-PA2" id="x2w-gP-0pB"/>
                     </connections>
                 </viewController>
