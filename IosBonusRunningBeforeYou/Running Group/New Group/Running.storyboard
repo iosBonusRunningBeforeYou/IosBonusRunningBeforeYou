@@ -273,7 +273,7 @@
                                         <rect key="frame" x="324" y="7" width="44" height="44"/>
                                         <state key="normal" image="AR"/>
                                         <connections>
-                                            <segue destination="i0T-wJ-8M1" kind="show" id="7N2-zu-Q4h"/>
+                                            <segue destination="i0T-wJ-8M1" kind="show" identifier="arsegue" id="7N2-zu-Q4h"/>
                                         </connections>
                                     </button>
                                 </subviews>

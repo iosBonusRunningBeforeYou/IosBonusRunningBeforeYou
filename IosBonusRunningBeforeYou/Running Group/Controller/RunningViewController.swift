@@ -125,7 +125,7 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
         super.viewDidLoad()
         
         self.timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(getTrack), userInfo: nil, repeats: true)
-
+        
         // userDefault
         running.mail = userDefault.string(forKey: "email")!
         
@@ -972,7 +972,16 @@ extension RunningViewController : CLLocationManagerDelegate{
             running.points = traveledDistance / 10
             
             traveledDistance = traveledDistance.rounded(.towardZero)
-            kiloMetreLabel.text = "\(traveledDistance/1000) 公里"
+            
+            // MARK: Preparefor DEMO
+            if groupRunningId == 0 {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 5 ){
+                    self.kiloMetreLabel.text = "\(10000/1000) 公里"
+                    self.traveledDistance = 1000
+                }
+            } else {
+                self.kiloMetreLabel.text = "\(self.traveledDistance/1000) 公里"
+            }
         }
         lastLocation = locations.last
         
@@ -998,6 +1007,13 @@ extension RunningViewController : CLLocationManagerDelegate{
         
         getTrack()
         
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "arsegue" {
+            let controller = segue.destination as! ARViewController
+            controller.kiloMeter = traveledDistance
+        }
     }
     
     @objc func getTrack() {
