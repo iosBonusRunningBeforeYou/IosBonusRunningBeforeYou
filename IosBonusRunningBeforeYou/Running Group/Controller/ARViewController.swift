@@ -38,6 +38,12 @@ class ARViewController: UIViewController,ARSCNViewDelegate {
             sceneView.scene = scene
             copyRightField.text = "© Pepijn Rijnders"
             musicCopyRightField.text = "© K'NAAN - Wavin' Flag"
+            
+            copyRightField.clipsToBounds = true
+            copyRightField.layer.cornerRadius = 3
+            musicCopyRightField.clipsToBounds = true
+            musicCopyRightField.layer.cornerRadius = 3
+    
             playSound(soundFileName: "My audio2")
             
         } else {
@@ -45,7 +51,14 @@ class ARViewController: UIViewController,ARSCNViewDelegate {
             sceneView.scene = scene
             copyRightField.text = "© Benjamin Farrell"
             musicCopyRightField.text = "© K'NAAN - Wavin' Flag"
+            
+            copyRightField.clipsToBounds = true
+            copyRightField.layer.cornerRadius = 3
+            musicCopyRightField.clipsToBounds = true
+            musicCopyRightField.layer.cornerRadius = 3
+            
             playSound(soundFileName: "My Audio")
+            
         }
         
         
