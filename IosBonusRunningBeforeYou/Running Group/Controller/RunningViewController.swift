@@ -822,15 +822,15 @@ class RunningViewController: UIViewController,UNUserNotificationCenterDelegate {
     func getFakeData() {
         
         if groupRunningId == 0 {
-            self.running.name = "Running"
+            self.running.name = "跑步"
         } else {
-            self.running.name = "GroupRunning"
+            self.running.name = "揪團跑"
         }
         
         self.running.id = 1
         self.tempUserData.email_account = self.running.mail
         self.pointRecords.email = self.running.mail
-        self.pointRecords.record_name = "GroupRunning"
+        self.pointRecords.record_name = "揪團跑"
         self.pointRecords.record_date = String(self.running.endTime)
 
     }
@@ -944,7 +944,7 @@ extension RunningViewController : CLLocationManagerDelegate{
             return
         }
         // MARK: FOR RECORD
-        moveAndZoomMap()
+//        moveAndZoomMap()
         groupRunningJudgement()
         
         // Check user in Start area

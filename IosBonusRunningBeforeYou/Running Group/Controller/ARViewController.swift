@@ -103,35 +103,35 @@ class ARViewController: UIViewController,ARSCNViewDelegate {
         }
     }
     
-//    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-//
-//        if anchor is ARPlaneAnchor{
-//
-//            let planeAnchor = anchor as! ARPlaneAnchor
-//            
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+
+        if anchor is ARPlaneAnchor{
+
+            let planeAnchor = anchor as! ARPlaneAnchor
+            
 //            let plane = SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.z))
-//
-//            let planeNode = SCNNode()
-//
-//            planeNode.position = SCNVector3(x: planeAnchor.center.x, y:0, z: planeAnchor.center.z)
-//
-//            planeNode.transform = SCNMatrix4MakeRotation(-Float.pi/2, 1, 0, 0)
-//
+
+            let planeNode = SCNNode()
+
+            planeNode.position = SCNVector3(x: planeAnchor.center.x, y:0, z: planeAnchor.center.z)
+
+            planeNode.transform = SCNMatrix4MakeRotation(-Float.pi/2, 1, 0, 0)
+
 //            let gridmaterial = SCNMaterial()
-//
+
 //            gridmaterial.diffuse.contents = UIImage(named: "art.scnassets/grid.png")
-//
+
 //            plane.materials = [gridmaterial]
-//
+
 //            planeNode.geometry = plane
-//
-//            node.addChildNode(planeNode)
-//
-//        } else {
-//            return
-//        }
-//
-//    }
+
+            node.addChildNode(planeNode)
+
+        } else {
+            return
+        }
+
+    }
     
     func playSound(soundFileName : String) {
         let soundURL = Bundle.main.url(forResource: soundFileName, withExtension: "wav")
