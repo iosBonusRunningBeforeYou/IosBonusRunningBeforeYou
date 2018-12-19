@@ -169,7 +169,7 @@ class GroupDeatilViewController: UIViewController,CLLocationManagerDelegate, MKM
     @objc
     func closeJoinBtn(notification: Notification){
         
-        if joinNum == 6 {
+        if joinNum >= 6 {
             joinBtn.isEnabled = false
             showAlert(title: "動作太慢囉～", message: "揪團跑最多六人！")
         }
