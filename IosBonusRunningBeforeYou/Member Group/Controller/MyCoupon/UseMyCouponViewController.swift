@@ -31,6 +31,10 @@ class UseMyCouponViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        self.performSegue(withIdentifier: "UseCouponUnfinish", sender: nil)
+    }
+    
     @IBAction func finishBtnPressed(_ sender: UIButton) {
         
         communicator.updateMyCoupon(email: userDefaults.string(forKey: "email")!, id: couponID, amount: couponAmount-1) { (result, error) in

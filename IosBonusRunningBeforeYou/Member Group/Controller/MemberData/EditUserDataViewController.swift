@@ -48,6 +48,10 @@ class EditUserDataViewController: UIViewController {
         
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        self.performSegue(withIdentifier: "editUserDataUnfinish", sender: nil)
+    }
+    
     @objc func closeKeyboard() {
         self.view.endEditing(true)
     }

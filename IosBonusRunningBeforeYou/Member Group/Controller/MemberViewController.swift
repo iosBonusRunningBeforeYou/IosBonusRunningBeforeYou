@@ -79,6 +79,11 @@ class MemberViewController: UIViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        currentPage = 0
+        pageViewController.setViewControllers([pointRecordViewController], direction: UIPageViewController.NavigationDirection.forward, animated: true, completion: nil)
+    }
+    
     //通知方法
     @objc
     func currentPageChanged(notification: Notification) {

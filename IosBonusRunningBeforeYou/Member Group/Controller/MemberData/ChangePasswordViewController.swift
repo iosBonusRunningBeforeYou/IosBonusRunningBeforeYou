@@ -29,6 +29,10 @@ class ChangePasswordViewController: UIViewController {
         
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        self.performSegue(withIdentifier: "changePasswordUnfinish", sender: nil)
+    }
+    
     @objc func closeKeyboard() {
         self.view.endEditing(true)
     }
