@@ -22,6 +22,8 @@ class UseMyCouponViewController: UIViewController {
     var couponAmount = Int()
     var deadLine = String()
     
+    var pageShouldChange = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "優惠券"
@@ -32,7 +34,9 @@ class UseMyCouponViewController: UIViewController {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        self.performSegue(withIdentifier: "UseCouponUnfinish", sender: nil)
+        if (pageShouldChange) {
+            self.performSegue(withIdentifier: "useCouponUnfinish", sender: nil)
+        }
     }
     
     @IBAction func finishBtnPressed(_ sender: UIButton) {
@@ -49,6 +53,7 @@ class UseMyCouponViewController: UIViewController {
                 return
             }
             else {
+                self.pageShouldChange = false
                 self.performSegue(withIdentifier: "useCouponSuccessful", sender: nil)
             }
             

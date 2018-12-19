@@ -25,6 +25,7 @@ class EditUserDataViewController: UIViewController {
     var height = Int()
     var weight = Float()
     
+    var pageShouldChange = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +50,9 @@ class EditUserDataViewController: UIViewController {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        self.performSegue(withIdentifier: "editUserDataUnfinish", sender: nil)
+        if (pageShouldChange) {
+            self.performSegue(withIdentifier: "editUserDataUnfinish", sender: nil)
+        }
     }
     
     @objc func closeKeyboard() {
@@ -88,6 +91,7 @@ class EditUserDataViewController: UIViewController {
                 return
             }
             else {
+                self.pageShouldChange = false
                 self.performSegue(withIdentifier: "updateUserDataSuccessful", sender: nil)
             }
             

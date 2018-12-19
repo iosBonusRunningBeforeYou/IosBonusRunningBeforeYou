@@ -25,6 +25,8 @@ class MemberViewController: UIViewController {
     
     let userDefaults = UserDefaults.standard
     
+    var pageShouldChange = true
+    
     var lastPage = 0
     var currentPage: Int = 0 {
         didSet {
@@ -49,8 +51,6 @@ class MemberViewController: UIViewController {
         pointCenterBtn.buttomBorder(width: 1, borderColor: UIColor.darkGray)
         myCouponBtn.buttomBorder(width: 1, borderColor: UIColor.darkGray)
         editUserDataBtn.buttomBorder(width: 1, borderColor: UIColor.darkGray)
-        
-        
         
         
         pageViewController = self.children.first as! UIPageViewController
@@ -80,8 +80,12 @@ class MemberViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        currentPage = 0
-        pageViewController.setViewControllers([pointRecordViewController], direction: UIPageViewController.NavigationDirection.forward, animated: true, completion: nil)
+        
+        if (pageShouldChange) {
+            currentPage = 0
+            pageViewController.setViewControllers([pointRecordViewController], direction: UIPageViewController.NavigationDirection.forward, animated: true, completion: nil)
+        }
+        
     }
     
     //通知方法
@@ -95,14 +99,27 @@ class MemberViewController: UIViewController {
     }
    
     @IBAction func unwindToMember(segue: UIStoryboardSegue) {
+    
         if (segue.identifier == "changePasswordSuccessful") {
+            pageShouldChange = false
             view.showToast(text: "修改密碼成功")
         }
+        else if (segue.identifier == "changePasswordUnfinish") {
+            pageShouldChange = true
+        }
         else if (segue.identifier == "updateUserDataSuccessful") {
+            pageShouldChange = false
             view.showToast(text: "編輯個人資料成功")
         }
+        else if (segue.identifier == "editUserDataUnfinish") {
+            pageShouldChange = true
+        }
         else if (segue.identifier == "useCouponSuccessful") {
+            pageShouldChange = false
             view.showToast(text: "優惠券已使用")
+        }
+        else if (segue.identifier == "useCouponUnfinish") {
+            pageShouldChange = true
         }
     }
     

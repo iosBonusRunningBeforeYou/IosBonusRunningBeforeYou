@@ -19,6 +19,8 @@ class ChangePasswordViewController: UIViewController {
     let userDefaults = UserDefaults.standard
     var email = String()
     
+    var pageShouldChange = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,7 +32,9 @@ class ChangePasswordViewController: UIViewController {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        self.performSegue(withIdentifier: "changePasswordUnfinish", sender: nil)
+        if (pageShouldChange) {
+            self.performSegue(withIdentifier: "changePasswordUnfinish", sender: nil)
+        }
     }
     
     @objc func closeKeyboard() {
@@ -74,6 +78,7 @@ class ChangePasswordViewController: UIViewController {
                             return
                         }
                         else {
+                            self.pageShouldChange = false
                             self.performSegue(withIdentifier: "changePasswordSuccessful", sender: nil)
                         }
                     })
