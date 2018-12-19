@@ -64,6 +64,8 @@
 		44A4C79521A57D4B0042E7A1 /* Running.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A4C79421A57D4B0042E7A1 /* Running.swift */; };
 		44A4C79721A57DBB0042E7A1 /* TempUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A4C79621A57DBB0042E7A1 /* TempUserData.swift */; };
 		44A634CB219C18BA0091B1AB /* RunningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A634CA219C18BA0091B1AB /* RunningViewController.swift */; };
+		44FDC25321C9C06C00453952 /* My Audio.wav in Resources */ = {isa = PBXBuildFile; fileRef = 44FDC25221C9C06C00453952 /* My Audio.wav */; };
+		44FDC25521C9C2AC00453952 /* My audio2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 44FDC25421C9C2AC00453952 /* My audio2.wav */; };
 		FD10FB0321BA66C500CF6F7D /* PointRecordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD10FB0221BA66C500CF6F7D /* PointRecordTableViewCell.swift */; };
 		FD10FB0621BA69D100CF6F7D /* PointRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD10FB0521BA69D100CF6F7D /* PointRecord.swift */; };
 		FD10FB0821BCF6F600CF6F7D /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD10FB0721BCF6F600CF6F7D /* ChangePasswordViewController.swift */; };
@@ -137,6 +139,8 @@
 		44A4C79421A57D4B0042E7A1 /* Running.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Running.swift; sourceTree = "<group>"; };
 		44A4C79621A57DBB0042E7A1 /* TempUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempUserData.swift; sourceTree = "<group>"; };
 		44A634CA219C18BA0091B1AB /* RunningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningViewController.swift; sourceTree = "<group>"; };
+		44FDC25221C9C06C00453952 /* My Audio.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "My Audio.wav"; sourceTree = "<group>"; };
+		44FDC25421C9C2AC00453952 /* My audio2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "My audio2.wav"; sourceTree = "<group>"; };
 		9CFC6C5DF9E8A2F2C638AC34 /* Pods-IosBonusRunningBeforeYou.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IosBonusRunningBeforeYou.release.xcconfig"; path = "Pods/Target Support Files/Pods-IosBonusRunningBeforeYou/Pods-IosBonusRunningBeforeYou.release.xcconfig"; sourceTree = "<group>"; };
 		B27C918BC83B098C1F3FB523 /* Pods-IosBonusRunningBeforeYou.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IosBonusRunningBeforeYou.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IosBonusRunningBeforeYou/Pods-IosBonusRunningBeforeYou.debug.xcconfig"; sourceTree = "<group>"; };
 		C953E18E3FD390A2E51FFC81 /* Pods_IosBonusRunningBeforeYou.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IosBonusRunningBeforeYou.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -455,6 +459,8 @@
 			children = (
 				44A634CA219C18BA0091B1AB /* RunningViewController.swift */,
 				4423679D21C7F36E00957534 /* ARViewController.swift */,
+				44FDC25221C9C06C00453952 /* My Audio.wav */,
+				44FDC25421C9C2AC00453952 /* My audio2.wav */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -595,7 +601,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				18CF909421BFA42B00374BE7 /* fromOthers.png in Resources */,
+				44FDC25321C9C06C00453952 /* My Audio.wav in Resources */,
 				189C82772195B4A20012A017 /* Member.storyboard in Resources */,
+				44FDC25521C9C2AC00453952 /* My audio2.wav in Resources */,
 				189C8261219598C10012A017 /* LaunchScreen.storyboard in Resources */,
 				442367A021C7F50300957534 /* art.scnassets in Resources */,
 				189C826F2195A9C10012A017 /* Running.storyboard in Resources */,
