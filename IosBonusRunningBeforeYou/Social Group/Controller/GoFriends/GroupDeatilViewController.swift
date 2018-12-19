@@ -53,7 +53,7 @@ class GroupDeatilViewController: UIViewController,CLLocationManagerDelegate, MKM
             handelViewForNonJoinSegue()
         }
         navigationItem.title = groupDetail.groupName
-        NotificationCenter.default.addObserver(self, selector: #selector(closeJoinBtn(notification:)), name: Notification.Name(rawValue: "getJoinInfo"), object: nil)
+     
         
     }
     
@@ -176,6 +176,7 @@ class GroupDeatilViewController: UIViewController,CLLocationManagerDelegate, MKM
     }
     
     func handelViewForNonJoinSegue(){
+           NotificationCenter.default.addObserver(self, selector: #selector(closeJoinBtn(notification:)), name: Notification.Name(rawValue: "getJoinInfo"), object: nil)
         joinBtn.isHidden = false
         joinPeopleBtn.isHidden = true
         goRunningBtn.isEnabled = false
