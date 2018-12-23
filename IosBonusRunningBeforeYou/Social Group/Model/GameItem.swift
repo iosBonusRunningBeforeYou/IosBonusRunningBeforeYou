@@ -9,7 +9,7 @@
 import Foundation
 
 struct GameItem:Codable {
-     var emailAccount:String
+     var emailAccount:String?
      var gameId:Int
      var gameName:String
      var gameDetail:String
@@ -17,6 +17,6 @@ struct GameItem:Codable {
      var lastDay:String
      var lastHour:String
      var lastMinute:String
-     var gameJoinPeople:String
+     var gameJoinPeople:String?
      var ruleId:Int
 }

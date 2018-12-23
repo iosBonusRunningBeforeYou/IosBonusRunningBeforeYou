@@ -16,16 +16,19 @@ let GET_IMAGE_KEY = "getImage"
 let EMAIL_KEY = "email"
 let IMAGE_SIZE_KEY = "imageSize"
 let FIND_BY_EMAIL_KEY = "findByEmail"
+let COUPON_ID = "id"
 
 typealias DoneHandler = (_ result:Any?, _ error: Error?) -> Void
 typealias DownloadDoneHandler = (_ result:Data?, _ error: Error?) -> Void
 
-
 class Communicator {
     // Constants
     
-    static let BASEURL = "http://172.20.10.9:8080/Running_MySQL_Web"//ip自己要再改
-    
+
+    static let BASEURL = "http://192.168.50.170:8080/Running_MySQL_Web"//ip自己要再改 教室5G
+
+//    static let BASEURL = "http://172.20.10.9:8080/Running_MySQL_Web"//ip自己要再改 手機
+
     //各個功能的URL
     let GameServlet_URL = BASEURL + "/GameServlet"
     let GameDetailServlet_URL = BASEURL + "/GameDetailServlet"
@@ -34,12 +37,13 @@ class Communicator {
     let RunningServlet_URL = BASEURL + "/RunningServlet"
     let RunningDataServlet_URL = BASEURL + "/RunningDataServlet"
     let UserServlet_URL = BASEURL + "/UserServlet"
+    let GoFriendsServlet_URL = BASEURL + "/GoFriendsServlet"
     
     static let shared = Communicator()
     private init() {
         
     }
-
+    
     func getImage(url:String ,email:String , imageSize:Int = 1024, completion:@escaping DownloadDoneHandler ){
         let paramters:[String:Any] = [ACTION_KEY : GET_IMAGE_KEY,
                                       EMAIL_KEY : email,
@@ -47,7 +51,7 @@ class Communicator {
         
         doPostForImage(urlString: url, parameters: paramters, completion: completion)
     }
-
+    
     func getAll(url:String, completion:@escaping DoneHandler){
         let parameters:[String:Any] = [ACTION_KEY : GET_ALL_KEY]
         
@@ -55,14 +59,14 @@ class Communicator {
         
     }
     
-    func findByEmail(url:String,eamil:String,completion:@escaping DoneHandler ){
+    func findByEmail(url:String, eamil:String, completion:@escaping DoneHandler){
         let parameters:[String:Any] = [ACTION_KEY : FIND_BY_EMAIL_KEY,
                                        EMAIL_KEY : eamil]
         doPost(urlString: url, parameters: parameters, completion: completion)
     }
     
     //取文字用
-    private func doPost(urlString: String, parameters: [String: Any], completion: @escaping DoneHandler){
+    func doPost(urlString: String, parameters: [String: Any], completion: @escaping DoneHandler){
         
         Alamofire.request(urlString, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
             
@@ -78,9 +82,9 @@ class Communicator {
         }
     }
     //取圖片用
-    private func doPostForImage(urlString: String,
-                                parameters: [String: Any],
-                                completion: @escaping DownloadDoneHandler) {
+    func doPostForImage(urlString: String,
+                        parameters: [String: Any],
+                        completion: @escaping DownloadDoneHandler) {
         
         Alamofire.request(urlString, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseData { (response) in
             
@@ -97,4 +101,11 @@ class Communicator {
         completion(data, nil)
     }
     
+    func getCouponImage(url:String ,id:Int , imageSize:Int = 1024, completion:@escaping DownloadDoneHandler ){
+        let paramters:[String:Any] = [ACTION_KEY : GET_IMAGE_KEY,
+                                      COUPON_ID : id,
+                                      IMAGE_SIZE_KEY : imageSize]
+        
+        doPostForImage(urlString: url, parameters: paramters, completion: completion)
+    }
 }
