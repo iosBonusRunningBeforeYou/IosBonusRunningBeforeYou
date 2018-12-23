@@ -15,13 +15,13 @@ class PointRecordViewController: UIViewController {
     
     let userDefaults = UserDefaults.standard
     let communicator = Communicator.shared
-//    var pointRecords = [PointRecord]()
+    var pointRecords = [PointRecord]()
     var email = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        email = userDefaults.string(forKey: "email")!
-        email = "123@gamil.com"
+        email = userDefaults.string(forKey: "email")!
+//        email = "123@gamil.com"
         pointRecordTableView.dataSource = self
         pointRecordTableView.delegate = self
         

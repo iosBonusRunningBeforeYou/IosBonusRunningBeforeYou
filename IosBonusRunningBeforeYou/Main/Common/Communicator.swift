@@ -24,10 +24,10 @@ typealias DownloadDoneHandler = (_ result:Data?, _ error: Error?) -> Void
 
 class Communicator {
 
-    let SOCKET_URL = "ws://192.168.2.100:8080/Running_MySQL_WebOld/ChatServer/"
+    let SOCKET_URL = "ws://172.20.10.9:8080/Running_MySQL_WebOld/ChatServer/"
 
-    let GOFRIENDS_SOCKET_URL = "ws://192.168.2.100:8080/Running_MySQL_WebOld/GoFriendsServer/"
-    static let BASEURL = "http://192.168.2.100:8080/Running_MySQL_WebOld"
+    let GOFRIENDS_SOCKET_URL = "ws://172.20.10.9:8080/Running_MySQL_WebOld/GoFriendsServer/"
+    static let BASEURL = "http://172.20.10.9:8080/Running_MySQL_WebOld"
 
     //各個功能的URL
     let GameServlet_URL = BASEURL + "/GameServlet"
