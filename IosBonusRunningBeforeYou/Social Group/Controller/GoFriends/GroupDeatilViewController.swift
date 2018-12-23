@@ -197,55 +197,7 @@ class GroupDeatilViewController: UIViewController,CLLocationManagerDelegate, MKM
         print("startLat = \(startLat), \(startLon),end = \(endLat), \(endLon)")
         drawLine(startLat: startLat, startLon: startLon, endLat: endLat, endLon: endLon, mapView: detailMapView)
     }
-    
-//    // MARK: timeNoticeForGroup
-//    func timeNotice(){
-//        let content = UNMutableNotificationContent()
-//        content.title = "\(groupDetail.groupName ?? ""),揪團跑即將開始"
-//        content.subtitle = "請至活動頁面按下開始跑步進行活動"
-//        content.body = "五分鐘內未開始者視同放棄"
-//        content.badge = 1
-//        content.sound = UNNotificationSound.default
-//
-//        let calendar = Calendar.current
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "yyy-MM-dd HH:mm:ss"
-//
-//        guard let dataTime = groupDetail.groupRunningTime else{
-//            return
-//        }
-//        print("dataTime = \(dataTime)")
-//        let date = dateFormatter.date(from: dataTime)
-//        print("date = \(date), groupDetail.groupRunningTime = \(groupDetail.groupRunningTime)")
-//        guard let dateForCalender = date else {
-//            return
-//        }
-//
-//        let year = calendar.component(.year, from: dateForCalender)
-//        let month = calendar.component(.month, from: dateForCalender)
-//        let day = calendar.component(.day, from: dateForCalender)
-//        let hour = calendar.component(.hour, from: dateForCalender)
-//        let min = calendar.component(.minute, from: dateForCalender)
-//        let sec = calendar.component(.second, from: dateForCalender)
-//
-//        print("year \(year), month \(month), day \(day),hour \(hour), min \(min), sec \(sec)")
-//        //        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
-//
-//        let dateComponents = DateComponents(calendar: Calendar.current, year: year, month: month, day: day, hour: hour, minute: min , second: sec)
-//
-//        //指定時間通知 ！
-//        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
-//        let request = UNNotificationRequest(identifier: "isTime", content: content, trigger: trigger)
-//
-//        UNUserNotificationCenter.current().add(request, withCompletionHandler: {error in
-//            if let error = error {
-//                print("UNUserNotificationCenter error:\(error)")
-//                return
-//            }
-//            print("成功建立通知...")
-//        })
-//    }
-    
+
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 

@@ -101,8 +101,6 @@ extension GameViewController: UITableViewDataSource {
         
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "GameCell", for: indexPath) as! GameTableViewCell
-        //        cell.coverImageView.sd_setImage(with: URL(string: movie.imageURL))
-        //        cell.titleLabel.text = movie.title
           print("\(self.image.count)  ================   \(indexPath.row)")
         if(indexPath.row > gameItem.count-1) || (indexPath.row > image.count-1) {
             print("(indexPath.row > gameItem.count-1)")

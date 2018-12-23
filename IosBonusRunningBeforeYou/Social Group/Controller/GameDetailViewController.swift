@@ -204,7 +204,10 @@ extension GameDetailViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RankCell", for: indexPath) as! RankTableViewCell
-        
+        if(indexPath.row > rankOfGameItem.count-1){
+            print("(indexPath.row > rankOfGameItem.count-1)")
+            return UITableViewCell()
+        }else{
         let item = rankOfGameItem[indexPath.row]
         cell.rankImageView.layer.cornerRadius = 25
         cell.rankImageView.clipsToBounds = true
@@ -215,6 +218,7 @@ extension GameDetailViewController: UITableViewDataSource {
         cell.rankOfRuleLabel.text = item.rankKm
         
         return cell
+    }
     }
 }
 

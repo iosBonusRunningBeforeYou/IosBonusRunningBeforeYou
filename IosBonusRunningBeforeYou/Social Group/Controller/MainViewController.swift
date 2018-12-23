@@ -4,7 +4,7 @@
 //
 //  Created by Apple on 2018/11/19.
 //  Copyright © 2018 Apple. All rights reserved.
-//
+//@Justin
 
 import UIKit
 
@@ -95,7 +95,7 @@ extension MainViewController: UIPageViewControllerDataSource {
         return nil
     }
     
-    //返回當前頁面的下一頁
+    //返回當前頁面的上一頁
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         
         if viewController.isKind(of: GoFriendsViewController.self) {

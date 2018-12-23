@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="RZt-ir-YFn">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -85,14 +85,16 @@
             <objects>
                 <viewController id="3Ii-2y-30k" customClass="LoginViewController" customModule="IosBonusRunningBeforeYou" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="GL0-1W-Ubx">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login" translatesAutoresizingMaskIntoConstraints="NO" id="tiQ-dk-UVd">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+
+                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+
                             </imageView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="請輸入密碼" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tMh-00-3bu">
-                                <rect key="frame" x="16" y="343.5" width="343" height="30"/>
+                                <rect key="frame" x="16" y="378" width="382" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="OLJ-QT-lY2"/>
                                 </constraints>
@@ -104,7 +106,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tR7-QP-pbh">
-                                <rect key="frame" x="16" y="398.5" width="343" height="30"/>
+                                <rect key="frame" x="16" y="433" width="382" height="30"/>
                                 <color key="backgroundColor" red="0.69411963219999995" green="0.69803267719999995" blue="0.69803971050000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal" title="登入">
@@ -115,7 +117,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="duL-ka-G8z">
-                                <rect key="frame" x="289" y="448.5" width="70" height="30"/>
+                                <rect key="frame" x="328" y="483" width="70" height="30"/>
                                 <color key="backgroundColor" red="0.69411963219999995" green="0.69803267719999995" blue="0.69803971050000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="3jS-BR-LIg"/>
@@ -129,7 +131,7 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="請輸入帳號" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bZ5-DS-qKI">
-                                <rect key="frame" x="16" y="293.5" width="343" height="30"/>
+                                <rect key="frame" x="16" y="328" width="382" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="S7O-qr-7vs"/>
                                 </constraints>
@@ -141,7 +143,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dRy-7J-0a0">
-                                <rect key="frame" x="16" y="448.5" width="70" height="30"/>
+                                <rect key="frame" x="16" y="483" width="70" height="30"/>
                                 <color key="backgroundColor" red="0.65098279709999995" green="0.6548956037" blue="0.65490227940000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="cSv-wE-CSm"/>
@@ -155,7 +157,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z7t-hj-b7d">
-                                <rect key="frame" x="16" y="257" width="343" height="20.5"/>
+                                <rect key="frame" x="16" y="291.66666666666669" width="382" height="20.333333333333314"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20.5" id="JSR-XZ-F0D"/>
                                 </constraints>
@@ -209,11 +211,11 @@
             <objects>
                 <viewController id="kqv-ZE-1LY" customClass="RegisterViewController" customModule="IosBonusRunningBeforeYou" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QLo-AP-EYc">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="請再次確認密碼" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="raj-CH-dqB">
-                                <rect key="frame" x="16" y="190" width="343" height="30"/>
+                                <rect key="frame" x="16" y="190" width="382" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="muA-Ym-v1G"/>
                                 </constraints>
@@ -225,7 +227,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="請輸入姓名" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7bh-1l-hns">
-                                <rect key="frame" x="16" y="228" width="343" height="30"/>
+                                <rect key="frame" x="16" y="228" width="382" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Fun-M2-R5q"/>
                                 </constraints>
@@ -237,7 +239,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="請輸入年齡" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gsE-Nv-rjM">
-                                <rect key="frame" x="16" y="304" width="343" height="30"/>
+                                <rect key="frame" x="16" y="304" width="382" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="dxN-w5-nt4"/>
                                 </constraints>
@@ -249,7 +251,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="請輸入身高" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7zW-Ij-kGU">
-                                <rect key="frame" x="16" y="342" width="343" height="30"/>
+                                <rect key="frame" x="16" y="342" width="382" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="5AX-nE-aQQ"/>
                                 </constraints>
@@ -261,7 +263,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="請輸入體重" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ryx-Ez-uEm">
-                                <rect key="frame" x="16" y="380" width="343" height="30"/>
+                                <rect key="frame" x="16" y="380" width="382" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="eaV-Nn-3M7"/>
                                 </constraints>
@@ -273,7 +275,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="請輸入帳號(Email)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DDy-uo-PGR">
-                                <rect key="frame" x="16" y="114" width="343" height="30"/>
+                                <rect key="frame" x="16" y="114" width="382" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="jrs-IT-uAz"/>
                                 </constraints>
@@ -286,7 +288,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="請輸入密碼" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="feO-Oq-ZXj">
-                                <rect key="frame" x="16" y="152" width="343" height="30"/>
+                                <rect key="frame" x="16" y="152" width="382" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="TTB-pe-6lu"/>
                                 </constraints>
@@ -316,7 +318,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Z7-yF-CcC">
-                                <rect key="frame" x="0.0" y="460" width="375" height="45"/>
+                                <rect key="frame" x="0.0" y="460" width="414" height="45"/>
                                 <color key="backgroundColor" red="0.27906000609999998" green="0.73260957000000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="AYA-9t-4zY"/>
@@ -361,7 +363,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eE6-5c-GSZ">
-                                <rect key="frame" x="16" y="80" width="343" height="18"/>
+                                <rect key="frame" x="16" y="80" width="382" height="18"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="18" id="glK-nC-ut6"/>
                                 </constraints>
@@ -440,11 +442,11 @@
             <objects>
                 <viewController id="BPA-oh-IWi" customClass="ForgetPasswordViewController" customModule="IosBonusRunningBeforeYou" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DfC-BZ-q4j">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="請輸入帳號(Email)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fEX-fT-hsI">
-                                <rect key="frame" x="16" y="116" width="343" height="30"/>
+                                <rect key="frame" x="16" y="116" width="382" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Abo-Y6-kEw"/>
                                 </constraints>
@@ -457,7 +459,7 @@
                                 </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="送出後，系統會將密碼寄送到您的e-mail信箱" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mEp-FO-aFE">
-                                <rect key="frame" x="16" y="80" width="343" height="20"/>
+                                <rect key="frame" x="16" y="80" width="382" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="3ow-8t-5Dc"/>
                                 </constraints>
@@ -466,7 +468,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xMP-kQ-fd5">
-                                <rect key="frame" x="16" y="178" width="343" height="45"/>
+                                <rect key="frame" x="16" y="178" width="382" height="45"/>
                                 <color key="backgroundColor" red="0.27906000609999998" green="0.73260957000000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="rDM-YM-LBz"/>
@@ -508,7 +510,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="RZt-ir-YFn" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="sQt-mC-mXK">
-                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                        <rect key="frame" x="0.0" y="20" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

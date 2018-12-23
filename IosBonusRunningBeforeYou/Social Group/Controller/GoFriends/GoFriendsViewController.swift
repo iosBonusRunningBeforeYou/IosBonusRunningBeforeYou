@@ -73,12 +73,7 @@ class GoFriendsViewController: UIViewController,WebSocketDelegate {
     @IBAction func unwindToGroupList(_ segue: UIStoryboardSegue){
         if  segue.identifier == "save" {
             isfromCreatNewGroup = true
-//             socketConnectGoFriends(emailAccount:email)
-            
-//            let chatMessage = ChatMessage.init(sender: nil, receiver:nil , message: nil, messageType: "goFriends")
-//            let chatMessageData = try! JSONEncoder().encode(chatMessage)
-//            let chatMessageString = String(data: chatMessageData, encoding: .utf8)!
-//            socket.write(string: chatMessageString)
+
         }
         //        guard let creatNewGroupCV = segue.source as? CreatNewGroupViewController else{
         //            return

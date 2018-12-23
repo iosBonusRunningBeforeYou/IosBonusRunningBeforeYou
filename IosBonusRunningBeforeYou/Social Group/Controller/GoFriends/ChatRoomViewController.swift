@@ -4,7 +4,7 @@
 //
 //  Created by Apple on 2018/12/11.
 //  Copyright © 2018 Apple. All rights reserved.
-//
+//@ Justin
 
 import UIKit
 import Starscream
@@ -76,7 +76,6 @@ class ChatRoomViewController: UIViewController, WebSocketDelegate, UITextFieldDe
         let picker = UIImagePickerController()
         picker.delegate = self
         //picker.mediaTypes = ["public.image", "public.movie"] //user 可以選擇照片或影片
-        //上面跟下面是一樣的不同寫法 下面要import MobileCoreServices
         picker.mediaTypes = [kUTTypeImage, kUTTypeMovie] as [String]
         picker.sourceType = source
         picker.allowsEditing = true //可以讓user裁切照片只能正方形,影片也能
@@ -111,7 +110,7 @@ class ChatRoomViewController: UIViewController, WebSocketDelegate, UITextFieldDe
             let chatMessageString = String(data: chatMessageData, encoding: .utf8)!
             socket.write(string: chatMessageString)
             let emailAccount = self.mailFilter(email)
-            let text = "\(emailAccount ?? ""): "
+            let text = "\(emailAccount ): "
             let image = UIImage(data: jpgData!)
             
             let chatItem = ChatItem(text:  text, image: image, senderType: .fromMe)
@@ -141,7 +140,7 @@ class ChatRoomViewController: UIViewController, WebSocketDelegate, UITextFieldDe
         socket.write(string: chatMessageString)
         
          let emailAccount = self.mailFilter(email)
-        let text = "\(emailAccount ?? ""): \(inputTextField.text ?? "") \(stringTime ?? "")"
+        let text = "\(emailAccount ): \(inputTextField.text ?? "") \(stringTime )"
         
         let chatItem = ChatItem(text:  text, image: nil, senderType: .fromMe)
         chatView.add(chatItem: chatItem)

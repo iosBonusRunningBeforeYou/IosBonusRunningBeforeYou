@@ -21,6 +21,7 @@ class JoinPeopleCollectionViewController: UICollectionViewController {
         SVProgressHUD.show()
     }
     override func viewWillAppear(_ animated: Bool) {
+
         
     }
     
