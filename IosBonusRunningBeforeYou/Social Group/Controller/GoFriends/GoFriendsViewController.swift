@@ -12,7 +12,7 @@ import SVProgressHUD
 import Starscream
 
 class GoFriendsViewController: UIViewController,WebSocketDelegate {
-   
+    
     
     
     @IBOutlet weak var goFriendsTVC: UITableView!
@@ -27,14 +27,14 @@ class GoFriendsViewController: UIViewController,WebSocketDelegate {
     var indexPathForCV:Int?
     let userDefault = UserDefaults.standard
     var socket:WebSocket!
-   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         goFriendsTVC.dataSource = self
         goFriendsTVC.delegate = self
         goFriendCV.dataSource = self
         goFriendCV.delegate = self
-         email = userDefault.string(forKey: "email")!
+        email = userDefault.string(forKey: "email")!
         //接收頁面的廣播通知
         NotificationCenter.default.addObserver(self, selector: #selector(GoFriendsViewController.reloadDatas(notification:)), name: Notification.Name(rawValue: "creatGroupOk"), object: nil)
     }
@@ -43,18 +43,18 @@ class GoFriendsViewController: UIViewController,WebSocketDelegate {
     @objc
     func reloadDatas(notification: Notification) {
         //        showAlert(title: "reloadData", message: "")
-//        SVProgressHUD.show()
+        //        SVProgressHUD.show()
         let chatMessage = ChatMessage.init(sender: nil, receiver:nil , message: nil, messageType: "goFriends")
         let chatMessageData = try! JSONEncoder().encode(chatMessage)
         let chatMessageString = String(data: chatMessageData, encoding: .utf8)!
         socket.write(string: chatMessageString)
-//        showJoinGroup()
-//        showGroup()
+        //        showJoinGroup()
+        //        showGroup()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         NotificationCenter.default.post(name: Notification.Name(rawValue: "currentPageChanged"), object: 1)
-       socketConnectGoFriends(emailAccount:email)
+        socketConnectGoFriends(emailAccount:email)
         if isfromCreatNewGroup {
             
         }else{
@@ -73,7 +73,7 @@ class GoFriendsViewController: UIViewController,WebSocketDelegate {
     @IBAction func unwindToGroupList(_ segue: UIStoryboardSegue){
         if  segue.identifier == "save" {
             isfromCreatNewGroup = true
-
+            
         }
         //        guard let creatNewGroupCV = segue.source as? CreatNewGroupViewController else{
         //            return
@@ -116,7 +116,7 @@ class GoFriendsViewController: UIViewController,WebSocketDelegate {
                 return
             }
             self.userJoinGroupId = result as! [Int]
-//            PrintHelper.println(tag: self.tag, line: 135, "getUserJoinGroup = \(result)")
+            //            PrintHelper.println(tag: self.tag, line: 135, "getUserJoinGroup = \(result)")
         }
     }
     
@@ -158,7 +158,7 @@ class GoFriendsViewController: UIViewController,WebSocketDelegate {
                 }
             }
             
-//            PrintHelper.println(tag: self.tag, line: 149, "userJoinGroup = \(self.userJoinGroup),@@@@@@ groupItems = \(self.groupItems)")
+            //            PrintHelper.println(tag: self.tag, line: 149, "userJoinGroup = \(self.userJoinGroup),@@@@@@ groupItems = \(self.groupItems)")
             
             self.goFriendCV.reloadData()
             self.goFriendsTVC.reloadData()
@@ -176,7 +176,7 @@ class GoFriendsViewController: UIViewController,WebSocketDelegate {
     }
     
     func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
-         print("websocket Disconnect ")
+        print("websocket Disconnect ")
     }
     
     func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
@@ -189,13 +189,13 @@ class GoFriendsViewController: UIViewController,WebSocketDelegate {
             userJoinGroup.removeAll()
             showJoinGroup()
             showGroup()
-          
+            
             
         }
     }
     
     func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
-         print("websocket ReceiveData data = \(data.count)")
+        print("websocket ReceiveData data = \(data.count)")
     }
 }
 
@@ -218,12 +218,11 @@ extension GoFriendsViewController: UICollectionViewDelegate, UICollectionViewDat
             print("(indexPath.row > userJoinGroup.count-1)")
             return UICollectionViewCell()
         }else{
-        let item = userJoinGroup[indexPath.row]
-        finalCell.textLabel.text = item.groupName
-        finalCell.userJoinImageView.layer.cornerRadius = 10
-        cell.layer.cornerRadius = 10
-        return cell
-    }
+            let item = userJoinGroup[indexPath.row]
+            finalCell.textLabel.text = item.groupName
+            setCorner(view: finalCell.userJoinImageView, radius: 10)
+            return finalCell
+        }
     }
 }
 
@@ -253,7 +252,7 @@ extension GoFriendsViewController: UITableViewDataSource {
             cell.groupNameLabel.text = groupName
             cell.joinPeopleLabel.text = groupJoinPeople
             cell.lastTimeLabel.text = "\(lastDay)\(lastHour)\(lastMinute)"
-            cell.nunJoinCellView.layer.cornerRadius = 20
+            setCorner(view: cell.nunJoinCellView, radius: 20)
             return cell
         }
         

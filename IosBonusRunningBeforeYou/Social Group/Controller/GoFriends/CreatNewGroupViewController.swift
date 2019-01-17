@@ -44,6 +44,7 @@ class CreatNewGroupViewController: UIViewController,UITextViewDelegate {
         super.viewDidLoad()
         email = userDefault.string(forKey: "email")!
         groupIntroduceTextView.delegate = self
+        
     }
  
     override func viewWillDisappear(_ animated: Bool) {

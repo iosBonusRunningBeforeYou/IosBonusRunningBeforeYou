@@ -38,8 +38,7 @@ class GameDetailViewController: UIViewController {
         userInfoView.isHidden = true
         rankOfGameTVC.delegate = self
         rankOfGameTVC.dataSource = self
-         userImageView.clipsToBounds = true
-        userImageView.layer.cornerRadius = 25
+        setCorner(view: userImageView, radius: 25)
        email = userDefault.string(forKey: "email")!
     }
     
@@ -209,8 +208,7 @@ extension GameDetailViewController: UITableViewDataSource {
             return UITableViewCell()
         }else{
         let item = rankOfGameItem[indexPath.row]
-        cell.rankImageView.layer.cornerRadius = 25
-        cell.rankImageView.clipsToBounds = true
+            setCorner(view: cell.rankImageView, radius: 25)
         cell.rankImageView.image = UIImage(named: "default_image")
         getImage(cell.rankImageView, item.emailAccount)
         cell.rankNumLabel.text = String(item.rankNum)
@@ -273,4 +271,13 @@ extension String {
             return nil
         }
     }
+}
+
+extension UIViewController {
+    
+    func setCorner(view:UIView, radius:CGFloat){
+        view.clipsToBounds = true
+        view.layer.cornerRadius = radius
+    }
+    
 }
